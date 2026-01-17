@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,10 +18,10 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Brands", href: "#brands" },
-    { name: "Global Network", href: "#global" },
-    { name: "Exhibitions", href: "#exhibitions" },
-    { name: "Contact", href: "#contact" },
+    { name: "About Us", href: "/about" },
+    { name: "Global Network", href: "/#global" },
+    { name: "Exhibitions", href: "/#exhibitions" },
+    { name: "Contact", href: "/#contact" },
   ];
 
   return (
@@ -40,13 +41,16 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors tracking-wide"
+              className={cn(
+                "text-sm font-medium transition-colors tracking-wide",
+                location === link.href ? "text-white underline underline-offset-8" : "text-gray-300 hover:text-white"
+              )}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
           <button className="px-5 py-2 text-xs font-bold tracking-widest uppercase border border-white/20 hover:bg-white hover:text-black transition-all duration-300 rounded-none cursor-pointer">
             Get Quote
@@ -66,14 +70,17 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 py-8 px-6 flex flex-col space-y-4">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
               href={link.href}
-              className="text-lg font-display text-white/80 hover:text-white"
+              className={cn(
+                "text-lg font-display transition-colors",
+                location === link.href ? "text-white" : "text-white/80 hover:text-white"
+              )}
               onClick={() => setIsOpen(false)}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
         </div>
       )}
