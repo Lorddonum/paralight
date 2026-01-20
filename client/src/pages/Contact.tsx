@@ -139,12 +139,17 @@ export default function Contact() {
         </div>
       </main>
 
-      {/* Map Placeholder */}
-      <section className="h-[400px] bg-zinc-900 flex items-center justify-center border-y border-white/10 grayscale opacity-50">
-         <div className="text-center">
-           <MapPin className="w-8 h-8 mx-auto mb-4" />
-           <p className="font-mono text-xs uppercase tracking-widest">Global Logistics Hub Jiangmen</p>
-         </div>
+      {/* Google Maps Embed */}
+      <section className="h-[500px] w-full border-y border-white/10 grayscale">
+         <iframe 
+           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3681.3320625624775!2d113.123456!3d22.56789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzA0LjQiTiAxMTPCsDA3JzI0LjQiRQ!5e0!3m2!1sen!2s!4v1612345678901!5m2!1sen!2s" 
+           width="100%" 
+           height="100%" 
+           style={{ border: 0 }} 
+           allowFullScreen={true} 
+           loading="lazy" 
+           referrerPolicy="no-referrer-when-downgrade"
+         ></iframe>
       </section>
 
       <Footer />
