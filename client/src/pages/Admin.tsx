@@ -10,6 +10,8 @@ interface Product {
   name: string;
   modelNumber: string;
   description: string;
+  series: string;
+  brand: "Paralight" | "Maglinear";
   wattage: string;
   dimensions: string;
   voltage: string;
@@ -53,6 +55,8 @@ export default function Admin() {
     name: "",
     modelNumber: "",
     description: "",
+    series: "",
+    brand: "Paralight" as const,
     wattage: "",
     dimensions: "",
     voltage: "",
@@ -95,6 +99,8 @@ export default function Admin() {
       name: "",
       modelNumber: "",
       description: "",
+      series: "",
+      brand: "Paralight",
       wattage: "",
       dimensions: "",
       voltage: "",
@@ -213,6 +219,33 @@ export default function Admin() {
                       />
                     </div>
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Series *</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.series}
+                        onChange={(e) => setFormData({...formData, series: e.target.value})}
+                        className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
+                        placeholder="e.g. Magnetic Track"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Brand *</label>
+                      <select 
+                        required
+                        value={formData.brand}
+                        onChange={(e) => setFormData({...formData, brand: e.target.value as "Paralight" | "Maglinear"})}
+                        className="w-full bg-zinc-900 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
+                      >
+                        <option value="Paralight">Paralight</option>
+                        <option value="Maglinear">Maglinear</option>
+                      </select>
+                    </div>
+                  </div>
+
                   <div className="space-y-2">
                     <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Description *</label>
                     <textarea 
@@ -284,7 +317,10 @@ export default function Admin() {
                         </div>
                         <div>
                           <h4 className="text-sm font-bold uppercase tracking-widest">{product.name}</h4>
-                          <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">{product.modelNumber}</p>
+                          <div className="flex gap-4 mt-1">
+                            <p className="text-[10px] text-gray-500 uppercase tracking-widest">{product.modelNumber}</p>
+                            <span className="text-[10px] text-zinc-600 uppercase tracking-widest border-l border-white/10 pl-4">{product.brand} - {product.series}</span>
+                          </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">

@@ -9,6 +9,8 @@ interface Product {
   name: string;
   modelNumber: string;
   description: string;
+  series: string;
+  brand: "Paralight" | "Maglinear";
   wattage: string;
   dimensions: string;
   voltage: string;
@@ -31,6 +33,7 @@ const CONTROL_ICONS = [
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [activeBrand, setActiveBrand] = useState<string>("All");
 
   useEffect(() => {
     const stored = localStorage.getItem("paralight_products");
@@ -43,6 +46,8 @@ export default function Products() {
           name: "MAGNETIC DOT LIGHT",
           modelNumber: "MAG-05/10-ML-D80",
           description: "Precision engineered accent lighting system for architectural magnetic tracks.",
+          series: "Magnetic Track",
+          brand: "Paralight",
           wattage: "5W",
           dimensions: "D60",
           voltage: "DC24V",
@@ -57,12 +62,16 @@ export default function Products() {
     }
   }, []);
 
+  const filteredProducts = activeBrand === "All" 
+    ? products 
+    : products.filter(p => p.brand === activeBrand);
+
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
       <Navbar />
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mb-20">
+          <div className="max-w-4xl mb-12">
             <motion.h1 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -81,8 +90,24 @@ export default function Products() {
               From precision aluminum profiles to advanced magnetic track systems.
             </motion.p>
           </div>
+
+          {/* Filter Bar */}
+          <div className="flex gap-8 mb-20 border-b border-white/10 pb-6">
+            {["All", "Paralight", "Maglinear"].map(brand => (
+              <button
+                key={brand}
+                onClick={() => setActiveBrand(brand)}
+                className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${
+                  activeBrand === brand ? "text-white" : "text-gray-500 hover:text-white"
+                }`}
+              >
+                {brand}
+              </button>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 gap-24">
-            {products.map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <motion.section 
                 key={product.id}
                 initial={{ opacity: 0, y: 40 }}
@@ -97,8 +122,9 @@ export default function Products() {
                     <div className="w-full h-full flex items-center justify-center">
                       <Package className="w-20 h-20 text-white/5" />
                     </div>
-                    <div className="absolute top-6 left-6 z-20">
-                      <span className="bg-white text-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New System</span>
+                    <div className="absolute top-6 left-6 z-20 flex gap-2">
+                      <span className="bg-white text-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest">{product.brand}</span>
+                      <span className="bg-zinc-800 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest">{product.series}</span>
                     </div>
                   </div>
                   <div>
