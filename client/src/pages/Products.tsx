@@ -39,6 +39,8 @@ export default function Products() {
     const stored = localStorage.getItem("paralight_products");
     if (stored) {
       setProducts(JSON.parse(stored));
+    } else {
+      setProducts([]);
     }
   }, []);
 
