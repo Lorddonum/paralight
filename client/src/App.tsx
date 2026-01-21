@@ -5,12 +5,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ScrollToTop from "@/components/ScrollToTop";
 import NotFound from "@/pages/not-found";
-import Home from "@/pages/Home";
-import About from "@/pages/About";
-import Contact from "@/pages/Contact";
-import Admin from "@/pages/Admin";
-import Products from "@/pages/Products";
-import ProductDetail from "@/pages/ProductDetail";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
+import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 
 function Router() {
   return (

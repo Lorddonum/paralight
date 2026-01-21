@@ -29,11 +29,14 @@ export default function Navbar() {
         "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
         scrolled
           ? "bg-black/80 backdrop-blur-md border-white/10 py-4"
-          : "bg-transparent py-6"
+          : "bg-transparent py-6",
       )}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-display font-bold tracking-tighter text-white hover:opacity-80 transition-opacity">
+        <Link
+          href="/"
+          className="text-2xl font-display font-bold tracking-tighter text-white hover:opacity-80 transition-opacity"
+        >
           PARALIGHT
         </Link>
 
@@ -45,14 +48,16 @@ export default function Navbar() {
               href={link.href}
               className={cn(
                 "text-sm font-medium transition-colors tracking-wide",
-                location === link.href ? "text-white underline underline-offset-8" : "text-gray-300 hover:text-white"
+                location === link.href
+                  ? "text-white underline underline-offset-8"
+                  : "text-gray-300 hover:text-white",
               )}
             >
               {link.name}
             </Link>
           ))}
           <button className="px-5 py-2 text-xs font-bold tracking-widest uppercase border border-white/20 hover:bg-white hover:text-black transition-all duration-300 rounded-none cursor-pointer">
-            Get Quote
+            TMP
           </button>
         </div>
 
@@ -74,7 +79,9 @@ export default function Navbar() {
               href={link.href}
               className={cn(
                 "text-lg font-display transition-colors",
-                location === link.href ? "text-white" : "text-white/80 hover:text-white"
+                location === link.href
+                  ? "text-white"
+                  : "text-white/80 hover:text-white",
               )}
               onClick={() => setIsOpen(false)}
             >
