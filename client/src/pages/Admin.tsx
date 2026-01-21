@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Plus, Trash2, LogOut, Package, ChevronRight, Upload, Settings, Edit2, X, Image as ImageIcon } from "lucide-react";
+import { Plus, Trash2, LogOut, Package, ChevronRight, Upload, Settings, Edit2, X, Image as ImageIcon, FileText } from "lucide-react";
 
 interface Product {
   id: number;
@@ -20,6 +20,7 @@ interface Product {
   cct: string;
   beamAngle: string;
   image?: string;
+  catalogueUrl?: string;
 }
 
 const STORAGE_KEY = "paralight_products";
@@ -69,7 +70,8 @@ export default function Admin() {
     cri: "",
     cct: "",
     beamAngle: "",
-    image: ""
+    image: "",
+    catalogueUrl: ""
   });
 
   useEffect(() => {
@@ -97,12 +99,12 @@ export default function Admin() {
     setLocation("/");
   };
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>, field: 'image' | 'catalogueUrl') => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData(prev => ({ ...prev, image: reader.result as string }));
+        setFormData(prev => ({ ...prev, [field]: reader.result as string }));
       };
       reader.readAsDataURL(file);
     }
@@ -132,7 +134,8 @@ export default function Admin() {
       cri: "",
       cct: "",
       beamAngle: "",
-      image: ""
+      image: "",
+      catalogueUrl: ""
     });
   };
 
@@ -151,7 +154,8 @@ export default function Admin() {
       cri: product.cri,
       cct: product.cct,
       beamAngle: product.beamAngle,
-      image: product.image || ""
+      image: product.image || "",
+      catalogueUrl: product.catalogueUrl || ""
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -298,28 +302,57 @@ export default function Admin() {
                     </div>
                   </div>
 
-                  {/* Image Upload Area */}
-                  <div className="space-y-2 pt-6 border-t border-white/10">
-                    <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Product Image</label>
-                    <div className="relative group">
-                      <input 
-                        type="file" 
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
-                      />
-                      <div className={`border-2 border-dashed border-white/10 p-8 text-center transition-colors ${formData.image ? 'bg-white/5' : 'hover:border-white/20'}`}>
-                        {formData.image ? (
-                          <div className="flex flex-col items-center gap-4">
-                            <img src={formData.image} alt="Preview" className="w-32 h-32 object-contain border border-white/10" />
-                            <p className="text-[8px] uppercase tracking-widest text-gray-500 italic">Click or drag to replace</p>
-                          </div>
-                        ) : (
-                          <>
-                            <ImageIcon className="w-8 h-8 text-gray-500 mx-auto mb-4 group-hover:text-white transition-colors" />
-                            <p className="text-xs text-gray-500 uppercase tracking-widest">Click or drag product picture</p>
-                          </>
-                        )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-white/10">
+                    {/* Image Upload Area */}
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Product Image</label>
+                      <div className="relative group">
+                        <input 
+                          type="file" 
+                          accept="image/*"
+                          onChange={(e) => handleFileChange(e, 'image')}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                        />
+                        <div className={`border-2 border-dashed border-white/10 p-8 text-center transition-colors h-48 flex flex-col justify-center items-center ${formData.image ? 'bg-white/5' : 'hover:border-white/20'}`}>
+                          {formData.image ? (
+                            <div className="flex flex-col items-center gap-2">
+                              <img src={formData.image} alt="Preview" className="w-24 h-24 object-contain border border-white/10" />
+                              <p className="text-[8px] uppercase tracking-widest text-gray-500 italic">Click to replace image</p>
+                            </div>
+                          ) : (
+                            <>
+                              <ImageIcon className="w-8 h-8 text-gray-500 mx-auto mb-4 group-hover:text-white transition-colors" />
+                              <p className="text-xs text-gray-500 uppercase tracking-widest">Product Picture</p>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Catalogue PDF Area */}
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Catalogue PDF</label>
+                      <div className="relative group">
+                        <input 
+                          type="file" 
+                          accept=".pdf"
+                          onChange={(e) => handleFileChange(e, 'catalogueUrl')}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                        />
+                        <div className={`border-2 border-dashed border-white/10 p-8 text-center transition-colors h-48 flex flex-col justify-center items-center ${formData.catalogueUrl ? 'bg-blue-500/5 border-blue-500/20' : 'hover:border-white/20'}`}>
+                          {formData.catalogueUrl ? (
+                            <div className="flex flex-col items-center gap-2 text-blue-400">
+                              <FileText className="w-8 h-8 mx-auto mb-2" />
+                              <p className="text-[10px] font-bold uppercase tracking-widest">PDF Ready</p>
+                              <p className="text-[8px] uppercase tracking-widest text-gray-500 italic">Click to replace PDF</p>
+                            </div>
+                          ) : (
+                            <>
+                              <Upload className="w-8 h-8 text-gray-500 mx-auto mb-4 group-hover:text-white transition-colors" />
+                              <p className="text-xs text-gray-500 uppercase tracking-widest">Catalogue PDF</p>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -395,6 +428,9 @@ export default function Admin() {
                           <div className="flex gap-4 mt-1">
                             <p className="text-[10px] text-gray-500 uppercase tracking-widest">{product.modelNumber}</p>
                             <span className="text-[10px] text-zinc-600 uppercase tracking-widest border-l border-white/10 pl-4">{product.brand} - {product.series}</span>
+                            {product.catalogueUrl && (
+                              <span className="text-[8px] text-blue-500 uppercase tracking-widest border-l border-white/10 pl-4">Catalogue Attached</span>
+                            )}
                           </div>
                         </div>
                       </div>

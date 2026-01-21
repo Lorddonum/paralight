@@ -19,6 +19,7 @@ interface Product {
   cct: string;
   beamAngle: string;
   image?: string;
+  catalogueUrl?: string;
 }
 
 const CONTROL_ICONS = [
@@ -116,12 +117,17 @@ export default function Products() {
                     <h2 className="text-3xl font-display font-bold uppercase tracking-widest mb-4">{product.name}</h2>
                     <p className="text-xs text-gray-500 uppercase tracking-widest mb-6">{product.modelNumber}</p>
                     <p className="text-gray-400 leading-relaxed text-sm mb-8">{product.description}</p>
-                    <button className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] group">
+                    <a 
+                      href={product.catalogueUrl} 
+                      download={`${product.name}-Catalogue.pdf`}
+                      className={`flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] group transition-all ${!product.catalogueUrl ? 'opacity-30 cursor-not-allowed' : ''}`}
+                      onClick={(e) => !product.catalogueUrl && e.preventDefault()}
+                    >
                       <span className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
                         <FileText className="w-4 h-4" />
                       </span>
-                      Download Catalogue
-                    </button>
+                      {product.catalogueUrl ? "Download Catalogue" : "Catalogue Not Available"}
+                    </a>
                   </div>
                 </div>
                 <div className="lg:col-span-7 space-y-12">
