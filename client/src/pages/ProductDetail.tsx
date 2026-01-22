@@ -151,30 +151,30 @@ export default function ProductDetail() {
                 <table className="w-full border-collapse" data-testid="specs-table">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Mod</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Wattage</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Material</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Finish</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Dimensions</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Voltage</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Color</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">CRI</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">CCT</th>
-                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Beam Angle</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Mod</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Wattage</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Material</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Finish</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Dimensions</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Voltage</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Color</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">CRI</th>
+                      <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">CCT</th>
+                      <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Beam Angle</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                      <td className="py-6 text-[10px] uppercase font-medium">{product.modelNumber}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.wattage || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.material || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.finish || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.dimensions || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.voltage || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.color || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.cri || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.cct || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.beamAngle || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase font-medium whitespace-nowrap">{product.modelNumber}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.wattage || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.material || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.finish || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.dimensions || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.voltage || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.color || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.cri || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.cct || '-'}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.beamAngle || '-'}</td>
                     </tr>
                   </tbody>
                 </table>
