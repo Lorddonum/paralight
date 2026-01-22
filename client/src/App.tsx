@@ -11,8 +11,16 @@ import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import { useLocation } from "wouter";
+import { useEffect } from "react";
 
 function Router() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <Switch>
       <Route path="/" component={Home} />
