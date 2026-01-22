@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRoute } from "wouter";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Package, FileText, Zap, MoveRight, ArrowLeft } from "lucide-react";
+import { Package, FileText, Zap, MoveRight, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "wouter";
 
 interface Product {
@@ -12,20 +12,20 @@ interface Product {
   modelNumber: string;
   description: string;
   series: string;
-  brand: "Paralight" | "Maglinear";
-  category: "Indoor" | "Outdoor" | "Commercial" | "Decorative";
-  application?: string;
-  finish?: string;
-  material?: string;
-  wattage: string;
-  dimensions: string;
-  voltage: string;
-  color: string;
-  cri: string;
-  cct: string;
-  beamAngle: string;
-  image?: string;
-  catalogueUrl?: string;
+  brand: string;
+  category: string;
+  application?: string | null;
+  finish?: string | null;
+  material?: string | null;
+  wattage: string | null;
+  dimensions: string | null;
+  voltage: string | null;
+  color: string | null;
+  cri: string | null;
+  cct: string | null;
+  beamAngle: string | null;
+  image?: string | null;
+  catalogueUrl?: string | null;
 }
 
 const CONTROL_ICONS = [
@@ -42,17 +42,52 @@ const CONTROL_ICONS = [
 export default function ProductDetail() {
   const [, params] = useRoute("/products/:id");
   const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem("paralight_products");
-    if (stored) {
-      const products: Product[] = JSON.parse(stored);
-      const found = products.find(p => p.id === Number(params?.id));
-      if (found) setProduct(found);
-    }
+    const fetchProduct = async () => {
+      if (!params?.id) return;
+      try {
+        const res = await fetch(`/api/products/${params.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setProduct(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProduct();
   }, [params?.id]);
 
-  if (!product) return null;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-white/50" />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
+        <Navbar />
+        <main className="pt-32 pb-20">
+          <div className="container mx-auto px-6 text-center py-40">
+            <p className="text-gray-500 uppercase tracking-widest">Product not found</p>
+            <Link href="/products">
+              <button className="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:text-gray-400 transition-colors">
+                Back to Catalog
+              </button>
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
@@ -60,7 +95,7 @@ export default function ProductDetail() {
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           <Link href="/products">
-            <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] mb-12 text-gray-500 hover:text-white transition-colors group">
+            <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] mb-12 text-gray-500 hover:text-white transition-colors group" data-testid="button-back">
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Catalog
             </button>
           </Link>
@@ -70,23 +105,24 @@ export default function ProductDetail() {
               <div className="aspect-[4/5] bg-zinc-950 border border-white/10 relative overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center">
                   {product.image ? (
-                    <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
+                    <img src={product.image} alt={product.name} className="w-full h-full object-contain" data-testid="product-image" />
                   ) : (
                     <Package className="w-20 h-20 text-white/5" />
                   )}
                 </div>
                 <div className="absolute top-6 left-6 z-20 flex gap-2">
-                  <span className="bg-white text-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest">{product.brand}</span>
-                  <span className="bg-zinc-800 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest">{product.series}</span>
+                  <span className="bg-white text-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest" data-testid="text-brand">{product.brand}</span>
+                  <span className="bg-zinc-800 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest" data-testid="text-series">{product.series}</span>
                 </div>
               </div>
               <div>
-                <h2 className="text-4xl font-display font-bold uppercase tracking-widest mb-4">{product.name}</h2>
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-6">{product.modelNumber}</p>
-                <p className="text-gray-400 leading-relaxed text-sm mb-8">{product.description}</p>
+                <h2 className="text-4xl font-display font-bold uppercase tracking-widest mb-4" data-testid="text-name">{product.name}</h2>
+                <p className="text-xs text-gray-500 uppercase tracking-widest mb-6" data-testid="text-model">{product.modelNumber}</p>
+                <p className="text-gray-400 leading-relaxed text-sm mb-8" data-testid="text-description">{product.description}</p>
                 <a 
-                  href={product.catalogueUrl} 
+                  href={product.catalogueUrl || undefined} 
                   download={`${product.name}-Catalogue.pdf`}
+                  data-testid="link-catalogue"
                   className={`flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] group transition-all ${!product.catalogueUrl ? 'opacity-30 cursor-not-allowed' : ''}`}
                   onClick={(e) => !product.catalogueUrl && e.preventDefault()}
                 >
@@ -112,7 +148,7 @@ export default function ProductDetail() {
                 </div>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
+                <table className="w-full border-collapse" data-testid="specs-table">
                   <thead>
                     <tr className="border-b border-white/10">
                       <th className="py-4 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold">Mod</th>
@@ -130,15 +166,15 @@ export default function ProductDetail() {
                   <tbody>
                     <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
                       <td className="py-6 text-[10px] uppercase font-medium">{product.modelNumber}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.wattage}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.wattage || '-'}</td>
                       <td className="py-6 text-[10px] uppercase text-gray-400">{product.material || '-'}</td>
                       <td className="py-6 text-[10px] uppercase text-gray-400">{product.finish || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.dimensions}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.voltage}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.color}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.cri}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.cct}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.beamAngle}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.dimensions || '-'}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.voltage || '-'}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.color || '-'}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.cri || '-'}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.cct || '-'}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-400">{product.beamAngle || '-'}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -148,7 +184,7 @@ export default function ProductDetail() {
                   <Zap className="w-5 h-5 text-white" />
                   <p className="text-xs text-gray-400 uppercase tracking-widest">Custom solutions available for this system</p>
                 </div>
-                <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] hover:text-gray-400 transition-colors group">
+                <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] hover:text-gray-400 transition-colors group" data-testid="button-inquire">
                   Inquire System <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>

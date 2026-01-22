@@ -11,47 +11,21 @@ interface Product {
   modelNumber: string;
   description: string;
   series: string;
-  brand: "Paralight" | "Maglinear";
-  category: "Indoor" | "Outdoor" | "Commercial" | "Decorative";
-  application?: string;
-  finish?: string;
-  material?: string;
-  wattage: string;
-  dimensions: string;
-  voltage: string;
-  color: string;
-  cri: string;
-  cct: string;
-  beamAngle: string;
-  image?: string;
-  catalogueUrl?: string;
+  brand: string;
+  category: string;
+  application?: string | null;
+  finish?: string | null;
+  material?: string | null;
+  wattage: string | null;
+  dimensions: string | null;
+  voltage: string | null;
+  color: string | null;
+  cri: string | null;
+  cct: string | null;
+  beamAngle: string | null;
+  image?: string | null;
+  catalogueUrl?: string | null;
 }
-
-const STORAGE_KEY = "paralight_products";
-
-const getProducts = (): Product[] => {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
-};
-
-const saveProduct = (product: Product | Omit<Product, 'id'>): Product[] => {
-  const products = getProducts();
-  let updated;
-  if ('id' in product) {
-    updated = products.map(p => p.id === product.id ? product as Product : p);
-  } else {
-    updated = [...products, { ...product, id: Date.now() }];
-  }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-  return updated;
-};
-
-const deleteProduct = (id: number): Product[] => {
-  const products = getProducts();
-  const updated = products.filter(p => p.id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-  return updated;
-};
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -59,6 +33,7 @@ export default function Admin() {
   const [password, setPassword] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
 
   const [formData, setFormData] = useState({
@@ -66,8 +41,8 @@ export default function Admin() {
     modelNumber: "",
     description: "",
     series: "",
-    brand: "Paralight" as const,
-    category: "Indoor" as const,
+    brand: "Paralight",
+    category: "Indoor",
     application: "",
     finish: "",
     material: "",
@@ -82,11 +57,23 @@ export default function Admin() {
     catalogueUrl: ""
   });
 
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("/api/products");
+      if (res.ok) {
+        const data = await res.json();
+        setProducts(data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
+
   useEffect(() => {
     const authStatus = sessionStorage.getItem("admin_auth");
     if (authStatus === "true") {
       setIsAuthenticated(true);
-      setProducts(getProducts());
+      fetchProducts();
     }
   }, []);
 
@@ -95,7 +82,7 @@ export default function Admin() {
     if (username === "admin_t" && password === "pass321") {
       setIsAuthenticated(true);
       sessionStorage.setItem("admin_auth", "true");
-      setProducts(getProducts());
+      fetchProducts();
     } else {
       alert("Invalid credentials");
     }
@@ -118,13 +105,39 @@ export default function Admin() {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const productData = editingId ? { ...formData, id: editingId } : formData;
-    const updated = saveProduct(productData);
-    setProducts(updated);
-    resetForm();
-    alert(editingId ? "Product updated successfully!" : "Product added successfully!");
+    setIsLoading(true);
+    try {
+      if (editingId) {
+        const res = await fetch(`/api/products/${editingId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+        });
+        if (res.ok) {
+          await fetchProducts();
+          resetForm();
+          alert("Product updated successfully!");
+        }
+      } else {
+        const res = await fetch("/api/products", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+        });
+        if (res.ok) {
+          await fetchProducts();
+          resetForm();
+          alert("Product added successfully!");
+        }
+      }
+    } catch (error) {
+      console.error("Failed to save product:", error);
+      alert("Failed to save product");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const resetForm = () => {
@@ -134,8 +147,8 @@ export default function Admin() {
       modelNumber: "",
       description: "",
       series: "",
-      brand: "Paralight" as "Paralight" | "Maglinear",
-      category: "Indoor" as "Indoor" | "Outdoor" | "Commercial" | "Decorative",
+      brand: "Paralight",
+      category: "Indoor",
       application: "",
       finish: "",
       material: "",
@@ -158,29 +171,36 @@ export default function Admin() {
       modelNumber: product.modelNumber,
       description: product.description,
       series: product.series,
-      brand: product.brand as "Paralight" | "Maglinear",
-      category: product.category as "Indoor" | "Outdoor" | "Commercial" | "Decorative" || "Indoor",
+      brand: product.brand,
+      category: product.category || "Indoor",
       application: product.application || "",
       finish: product.finish || "",
       material: product.material || "",
-      wattage: product.wattage,
-      dimensions: product.dimensions,
-      voltage: product.voltage,
-      color: product.color,
-      cri: product.cri,
-      cct: product.cct,
-      beamAngle: product.beamAngle,
+      wattage: product.wattage || "",
+      dimensions: product.dimensions || "",
+      voltage: product.voltage || "",
+      color: product.color || "",
+      cri: product.cri || "",
+      cct: product.cct || "",
+      beamAngle: product.beamAngle || "",
       image: product.image || "",
       catalogueUrl: product.catalogueUrl || ""
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this product?")) {
-      const updated = deleteProduct(id);
-      setProducts(updated);
-      if (editingId === id) resetForm();
+      try {
+        const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+        if (res.ok) {
+          await fetchProducts();
+          if (editingId === id) resetForm();
+        }
+      } catch (error) {
+        console.error("Failed to delete product:", error);
+        alert("Failed to delete product");
+      }
     }
   };
 
@@ -198,6 +218,7 @@ export default function Admin() {
               <label className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Username</label>
               <input 
                 type="text" 
+                data-testid="input-username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
@@ -208,6 +229,7 @@ export default function Admin() {
               <label className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Password</label>
               <input 
                 type="password" 
+                data-testid="input-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
@@ -216,6 +238,7 @@ export default function Admin() {
             </div>
             <button 
               type="submit"
+              data-testid="button-login"
               className="w-full py-4 bg-white text-black font-bold uppercase tracking-[0.3em] text-[10px] hover:bg-gray-200 transition-colors"
             >
               Enter Dashboard
@@ -240,6 +263,7 @@ export default function Admin() {
               <div className="space-y-2">
                 <button 
                   onClick={resetForm}
+                  data-testid="button-add-product"
                   className={`w-full flex items-center justify-between p-4 text-[10px] font-bold uppercase tracking-widest transition-all ${!editingId ? 'bg-white text-black' : 'bg-white/5 border border-white/10 hover:bg-white/10'}`}
                 >
                   Add Product <Plus className="w-4 h-4" />
@@ -249,6 +273,7 @@ export default function Admin() {
                 </button>
                 <button 
                   onClick={handleLogout}
+                  data-testid="button-logout"
                   className="w-full flex items-center justify-between p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-bold uppercase tracking-widest hover:bg-red-500/20 transition-colors"
                 >
                   Logout <LogOut className="w-4 h-4" />
@@ -276,6 +301,7 @@ export default function Admin() {
                       <input 
                         type="text" 
                         required
+                        data-testid="input-name"
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                         className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
@@ -286,6 +312,7 @@ export default function Admin() {
                       <input 
                         type="text" 
                         required
+                        data-testid="input-model"
                         value={formData.modelNumber}
                         onChange={(e) => setFormData({...formData, modelNumber: e.target.value})}
                         className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
@@ -299,6 +326,7 @@ export default function Admin() {
                       <input 
                         type="text" 
                         required
+                        data-testid="input-series"
                         value={formData.series}
                         onChange={(e) => setFormData({...formData, series: e.target.value})}
                         className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
@@ -308,8 +336,9 @@ export default function Admin() {
                       <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Category *</label>
                       <select 
                         required
+                        data-testid="select-category"
                         value={formData.category}
-                        onChange={(e) => setFormData({...formData, category: e.target.value as any})}
+                        onChange={(e) => setFormData({...formData, category: e.target.value})}
                         className="w-full bg-zinc-900 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
                       >
                         <option value="Indoor">Indoor</option>
@@ -325,8 +354,9 @@ export default function Admin() {
                       <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Brand *</label>
                       <select 
                         required
+                        data-testid="select-brand"
                         value={formData.brand}
-                        onChange={(e) => setFormData({...formData, brand: e.target.value as "Paralight" | "Maglinear"})}
+                        onChange={(e) => setFormData({...formData, brand: e.target.value})}
                         className="w-full bg-zinc-900 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
                       >
                         <option value="Paralight">Paralight</option>
@@ -336,7 +366,6 @@ export default function Admin() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-white/10">
-                    {/* Image Upload Area */}
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Product Image</label>
                       <div className="relative group">
@@ -362,7 +391,6 @@ export default function Admin() {
                       </div>
                     </div>
 
-                    {/* Catalogue PDF Area */}
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Catalogue PDF</label>
                       <div className="relative group">
@@ -395,6 +423,7 @@ export default function Admin() {
                     <textarea 
                       required
                       rows={4}
+                      data-testid="input-description"
                       value={formData.description}
                       onChange={(e) => setFormData({...formData, description: e.target.value})}
                       className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors resize-none"
@@ -447,9 +476,11 @@ export default function Admin() {
                   </div>
                   <button 
                     type="submit"
-                    className="w-full py-5 bg-white text-black font-bold uppercase tracking-[0.4em] text-[10px] hover:bg-gray-200 transition-colors shadow-2xl"
+                    disabled={isLoading}
+                    data-testid="button-submit"
+                    className="w-full py-5 bg-white text-black font-bold uppercase tracking-[0.4em] text-[10px] hover:bg-gray-200 transition-colors shadow-2xl disabled:opacity-50"
                   >
-                    {editingId ? "Update Product" : "Publish Product"}
+                    {isLoading ? "Saving..." : (editingId ? "Update Product" : "Publish Product")}
                   </button>
                 </form>
               </section>
@@ -459,42 +490,48 @@ export default function Admin() {
                 </div>
                 <div className="grid grid-cols-1 gap-4">
                   {products.map((product) => (
-                    <div key={product.id} className="bg-zinc-950 border border-white/10 p-6 flex justify-between items-center group hover:border-white/30 transition-all">
+                    <div key={product.id} data-testid={`product-item-${product.id}`} className="bg-zinc-950 border border-white/10 p-6 flex justify-between items-center group hover:border-white/30 transition-all">
                       <div className="flex items-center gap-6">
-                        <div className="w-12 h-12 bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
+                        <div className="w-16 h-16 bg-zinc-900 border border-white/10 flex items-center justify-center">
                           {product.image ? (
-                            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                            <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
                           ) : (
-                            <Package className="w-5 h-5 text-gray-500" />
+                            <Package className="w-6 h-6 text-white/20" />
                           )}
                         </div>
                         <div>
-                          <h4 className="text-sm font-bold uppercase tracking-widest">{product.name}</h4>
-                          <div className="flex gap-4 mt-1">
-                            <p className="text-[10px] text-gray-500 uppercase tracking-widest">{product.modelNumber}</p>
-                            <span className="text-[10px] text-zinc-600 uppercase tracking-widest border-l border-white/10 pl-4">{product.brand} - {product.series}</span>
-                            {product.catalogueUrl && (
-                              <span className="text-[8px] text-blue-500 uppercase tracking-widest border-l border-white/10 pl-4">Catalogue Attached</span>
-                            )}
+                          <h4 className="font-bold uppercase tracking-widest mb-1">{product.name}</h4>
+                          <p className="text-[10px] text-gray-500 uppercase tracking-widest">{product.modelNumber}</p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-[8px] bg-white/5 px-2 py-1 uppercase tracking-widest">{product.brand}</span>
+                            <span className="text-[8px] bg-white/5 px-2 py-1 uppercase tracking-widest">{product.category}</span>
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex gap-2">
                         <button 
                           onClick={() => handleEdit(product)}
-                          className="p-3 text-gray-500 hover:text-white hover:bg-white/10 transition-all border border-transparent hover:border-white/10"
+                          data-testid={`button-edit-${product.id}`}
+                          className="p-3 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button 
                           onClick={() => handleDelete(product.id)}
-                          className="p-3 text-gray-500 hover:text-red-500 hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
+                          data-testid={`button-delete-${product.id}`}
+                          className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
                   ))}
+                  {products.length === 0 && (
+                    <div className="text-center py-20 border border-white/5 bg-white/[0.02]">
+                      <Package className="w-12 h-12 text-white/10 mx-auto mb-4" />
+                      <p className="text-sm text-gray-500 uppercase tracking-[0.3em]">No products yet</p>
+                    </div>
+                  )}
                 </div>
               </section>
             </div>
