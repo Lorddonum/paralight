@@ -11,6 +11,7 @@ import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Downloads from "./pages/Downloads";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
 
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/admin" component={Admin} />
       <Route path="/products" component={Products} />
       <Route path="/products/:id" component={ProductDetail} />
+      <Route path="/downloads" component={Downloads} />
       <Route component={NotFound} />
     </Switch>
   );
