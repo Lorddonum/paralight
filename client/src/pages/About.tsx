@@ -39,7 +39,7 @@ export default function About() {
             className="text-5xl md:text-7xl font-display font-bold mb-8"
           >
             PARALIGHT GROUP <br />
-            <span className="text-gray-500 italic">A Global Ecosystem</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A8E8] to-[#ECAA00] italic">A Global Ecosystem</span>
           </motion.h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

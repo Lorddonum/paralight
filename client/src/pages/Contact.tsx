@@ -48,7 +48,7 @@ export default function Contact() {
               className="text-5xl md:text-7xl font-display font-bold mb-8"
             >
               LET'S LIGHT UP <br />
-              <span className="text-gray-500 italic">The Future Together</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A8E8] to-[#ECAA00] italic">The Future Together</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -73,7 +73,7 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8">
                 {contactInfo.map((item, i) => (
                   <div key={i} className="flex gap-6 group">
-                    <div className="w-12 h-12 bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-black transition-colors">
+                    <div className="w-12 h-12 bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#00A8E8] group-hover:text-black transition-colors">
                       <item.icon className="w-5 h-5" />
                     </div>
                     <div>
@@ -99,7 +99,7 @@ export default function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all"
+                      className="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-[#00A8E8] hover:text-black hover:border-[#00A8E8] transition-all"
                     >
                       <social.icon className="w-4 h-4" />
                     </a>
@@ -187,7 +187,7 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-white text-black font-bold uppercase tracking-[0.3em] text-xs hover:bg-gray-200 transition-colors"
+                  className="w-full py-4 bg-[#00A8E8] text-black font-bold uppercase tracking-[0.3em] text-xs hover:bg-[#00C4E8] transition-colors"
                 >
                   Submit Inquiry
                 </button>

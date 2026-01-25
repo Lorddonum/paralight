@@ -21,7 +21,7 @@ export default function Hero() {
           viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h2 className="text-accent-foreground/80 font-mono text-sm tracking-[0.3em] uppercase mb-6">
+          <h2 className="text-[#00A8E8] font-mono text-sm tracking-[0.3em] uppercase mb-6">
             Architectural Lighting Solutions
           </h2>
         </motion.div>
@@ -34,7 +34,7 @@ export default function Hero() {
           className="text-5xl md:text-8xl font-display font-bold text-white tracking-tight mb-8"
         >
           PRECISION IN <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A8E8] via-[#00C4E8] to-[#ECAA00]">
             EVERY PROFILE
           </span>
         </motion.h1>
@@ -58,10 +58,10 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.8 }}
           className="flex flex-col md:flex-row gap-6 justify-center"
         >
-          <button className="px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs hover:bg-gray-200 transition-colors">
+          <button className="px-8 py-4 bg-[#00A8E8] text-black font-bold uppercase tracking-widest text-xs hover:bg-[#00C4E8] transition-colors">
             Explore Profiles
           </button>
-          <button className="px-8 py-4 border border-white/30 text-white font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-colors">
+          <button className="px-8 py-4 border border-[#ECAA00]/50 text-[#ECAA00] font-bold uppercase tracking-widest text-xs hover:bg-[#ECAA00]/10 transition-colors">
             View Lighting
           </button>
         </motion.div>

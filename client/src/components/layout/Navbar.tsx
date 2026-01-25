@@ -59,8 +59,8 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <button className="px-5 py-2 text-xs font-bold tracking-widest uppercase border border-white/20 hover:bg-white hover:text-black transition-all duration-300 rounded-none cursor-pointer">
-            TMP
+          <button className="px-5 py-2 text-xs font-bold tracking-widest uppercase border border-[#00A8E8]/50 text-[#00A8E8] hover:bg-[#00A8E8] hover:text-black transition-all duration-300 rounded-none cursor-pointer">
+            Contact
           </button>
         </div>
 

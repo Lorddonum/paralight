@@ -32,7 +32,7 @@ export default function Footer() {
                   href={social.href} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-8 h-8 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-white hover:text-black transition-all"
+                  className="w-8 h-8 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#00A8E8] hover:text-black hover:border-[#00A8E8] transition-all"
                 >
                   <social.icon className="w-4 h-4" />
                 </a>
@@ -69,7 +69,7 @@ export default function Footer() {
                 placeholder="Email address" 
                 className="bg-white/5 border border-white/10 px-4 py-2 text-sm text-white focus:outline-none focus:border-white/30 w-full"
               />
-              <button className="bg-white text-black px-4 py-2 text-xs font-bold uppercase hover:bg-gray-200 transition-colors">
+              <button className="bg-[#00A8E8] text-black px-4 py-2 text-xs font-bold uppercase hover:bg-[#00C4E8] transition-colors">
                 →
               </button>
             </div>

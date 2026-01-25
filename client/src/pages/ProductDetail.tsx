@@ -111,7 +111,7 @@ export default function ProductDetail() {
                   )}
                 </div>
                 <div className="absolute top-6 left-6 z-20 flex gap-2">
-                  <span className="bg-white text-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest" data-testid="text-brand">{product.brand}</span>
+                  <span className={`px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${product.brand === "Paralight" ? "bg-[#00A8E8] text-black" : "bg-[#ECAA00] text-black"}`} data-testid="text-brand">{product.brand}</span>
                   <span className="bg-zinc-800 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest" data-testid="text-series">{product.series}</span>
                 </div>
               </div>
@@ -126,7 +126,7 @@ export default function ProductDetail() {
                   className={`flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] group transition-all ${!product.catalogueUrl ? 'opacity-30 cursor-not-allowed' : ''}`}
                   onClick={(e) => !product.catalogueUrl && e.preventDefault()}
                 >
-                  <span className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                  <span className="w-12 h-12 rounded-full border border-[#00A8E8]/30 flex items-center justify-center group-hover:bg-[#00A8E8] group-hover:text-black transition-all">
                     <FileText className="w-4 h-4" />
                   </span>
                   {product.catalogueUrl ? "Download Catalogue" : "Catalogue Not Available"}
@@ -181,10 +181,10 @@ export default function ProductDetail() {
               </div>
               <div className="pt-12 flex items-center justify-between border-t border-white/10">
                 <div className="flex items-center gap-4">
-                  <Zap className="w-5 h-5 text-white" />
+                  <Zap className="w-5 h-5 text-[#ECAA00]" />
                   <p className="text-xs text-gray-400 uppercase tracking-widest">Custom solutions available for this system</p>
                 </div>
-                <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] hover:text-gray-400 transition-colors group" data-testid="button-inquire">
+                <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#00A8E8] hover:text-[#00C4E8] transition-colors group" data-testid="button-inquire">
                   Inquire System <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>

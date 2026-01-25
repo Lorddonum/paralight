@@ -20,7 +20,7 @@ export default function GlobalNetwork() {
               className="text-4xl md:text-5xl font-display font-bold text-white mb-8"
             >
               GLOBAL EXPORT <br />
-              <span className="text-gray-500">NETWORK</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A8E8] to-[#ECAA00]">NETWORK</span>
             </motion.h2>
             
             <p className="text-gray-400 text-lg mb-8 leading-relaxed">
@@ -29,7 +29,7 @@ export default function GlobalNetwork() {
               to partners across Asia, Europe, Middle East, Africa, North & South America, and Oceania.
             </p>
 
-            <button className="px-8 py-4 border border-white text-white font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-colors">
+            <button className="px-8 py-4 border border-[#ECAA00] text-[#ECAA00] font-bold uppercase tracking-widest text-xs hover:bg-[#ECAA00] hover:text-black transition-colors">
               Become a Partner
             </button>
           </div>

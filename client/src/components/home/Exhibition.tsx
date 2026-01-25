@@ -27,10 +27,10 @@ export default function Exhibition() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ delay: index * 0.2 }}
-              className="bg-black border border-white/10 p-8 hover:border-white/30 transition-colors group cursor-pointer"
+              className="bg-black border border-white/10 p-8 hover:border-[#00A8E8]/50 transition-colors group cursor-pointer"
             >
               <div className="flex items-start justify-between mb-8">
-                <div className="p-3 bg-white/5 rounded-none group-hover:bg-white group-hover:text-black transition-colors">
+                <div className="p-3 bg-white/5 rounded-none group-hover:bg-[#00A8E8] group-hover:text-black transition-colors">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-mono text-gray-500 uppercase">{event.date}</span>

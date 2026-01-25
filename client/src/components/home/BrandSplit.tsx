@@ -9,7 +9,7 @@ export default function BrandSplit() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">OUR BRANDS</h2>
-          <div className="w-24 h-1 bg-white mx-auto" />
+          <div className="w-24 h-1 bg-gradient-to-r from-[#00A8E8] to-[#ECAA00] mx-auto" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -36,7 +36,7 @@ export default function BrandSplit() {
                 Specializing in high-quality aluminum profiles offering over 300 customizable models. 
                 Premium finishes including matte black, sandy white, grey, gold, and anti-oxidation coatings.
               </p>
-              <span className="text-white border-b border-white pb-1 text-sm uppercase tracking-widest">
+              <span className="text-[#00A8E8] border-b border-[#00A8E8] pb-1 text-sm uppercase tracking-widest">
                 View Collection
               </span>
             </div>
@@ -65,7 +65,7 @@ export default function BrandSplit() {
                 Focuses on magnetic track lighting and advanced commercial lighting solutions. 
                 Panels, downlights, and pendant linear systems designed for modern architectural spaces.
               </p>
-              <span className="text-white border-b border-white pb-1 text-sm uppercase tracking-widest">
+              <span className="text-[#ECAA00] border-b border-[#ECAA00] pb-1 text-sm uppercase tracking-widest">
                 View Collection
               </span>
             </div>

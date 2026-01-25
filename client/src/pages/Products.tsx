@@ -63,7 +63,7 @@ export default function Products() {
               className="text-6xl md:text-8xl font-display font-bold mb-8 uppercase tracking-tighter"
             >
               Lighting <br />
-              <span className="text-gray-500 italic">Systems</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A8E8] to-[#ECAA00] italic">Systems</span>
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, x: -20 }}
@@ -84,7 +84,9 @@ export default function Products() {
                   onClick={() => setActiveBrand(brand)}
                   data-testid={`filter-brand-${brand.toLowerCase()}`}
                   className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${
-                    activeBrand === brand ? "text-white" : "text-gray-500 hover:text-white"
+                    activeBrand === brand 
+                      ? brand === "Paralight" ? "text-[#00A8E8]" : "text-[#ECAA00]"
+                      : "text-gray-500 hover:text-white"
                   }`}
                 >
                   {brand}
@@ -106,7 +108,7 @@ export default function Products() {
                   {activeCategory === category && (
                     <motion.div 
                       layoutId="category-indicator"
-                      className="absolute -bottom-2 left-0 right-0 h-px bg-white"
+                      className={`absolute -bottom-2 left-0 right-0 h-px ${activeBrand === "Paralight" ? "bg-[#00A8E8]" : "bg-[#ECAA00]"}`}
                     />
                   )}
                 </button>
@@ -134,7 +136,7 @@ export default function Products() {
                     <div className="space-y-6 cursor-pointer">
                       <div className="aspect-[4/5] bg-zinc-950 border border-white/10 relative overflow-hidden">
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center">
-                          <span className="bg-white text-black px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                          <span className="bg-[#00A8E8] text-black px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] transform translate-y-4 group-hover:translate-y-0 transition-transform">
                             View Details
                           </span>
                         </div>
