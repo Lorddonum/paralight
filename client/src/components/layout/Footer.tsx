@@ -14,7 +14,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-900 border-t border-gray-800 py-20">
+    <footer className="bg-[#ECAA00] border-t border-[#d49900] py-20">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
@@ -26,7 +26,7 @@ export default function Footer() {
                 <img src={maglinearLogo} alt="Maglinear Lighting" className="h-32 max-w-[280px] object-cover object-center" />
               </div>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed mb-8">
+            <p className="text-gray-800 text-sm leading-relaxed mb-8">
               Precision engineered aluminum profiles and advanced magnetic lighting systems for modern architectural spaces.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -36,7 +36,7 @@ export default function Footer() {
                   href={social.href} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-8 h-8 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#00A8E8] hover:text-black hover:border-[#00A8E8] transition-all"
+                  className="w-8 h-8 border border-gray-800 flex items-center justify-center text-gray-800 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all"
                 >
                   <social.icon className="w-4 h-4" />
                 </a>
@@ -45,46 +45,46 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">Products</h4>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">Aluminum Profiles</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Magnetic Track Light</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Linear Systems</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">LED Strips</a></li>
+            <h4 className="text-gray-900 font-bold uppercase tracking-widest text-xs mb-6">Products</h4>
+            <ul className="space-y-4 text-sm text-gray-800">
+              <li><a href="#" className="hover:text-gray-900 transition-colors">Aluminum Profiles</a></li>
+              <li><a href="#" className="hover:text-gray-900 transition-colors">Magnetic Track Light</a></li>
+              <li><a href="#" className="hover:text-gray-900 transition-colors">Linear Systems</a></li>
+              <li><a href="#" className="hover:text-gray-900 transition-colors">LED Strips</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">Company</h4>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="/#global" className="hover:text-white transition-colors">Global Network</a></li>
-              <li><a href="/#exhibitions" className="hover:text-white transition-colors">Exhibitions</a></li>
-              <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
+            <h4 className="text-gray-900 font-bold uppercase tracking-widest text-xs mb-6">Company</h4>
+            <ul className="space-y-4 text-sm text-gray-800">
+              <li><a href="/about" className="hover:text-gray-900 transition-colors">About Us</a></li>
+              <li><a href="/#global" className="hover:text-gray-900 transition-colors">Global Network</a></li>
+              <li><a href="/#exhibitions" className="hover:text-gray-900 transition-colors">Exhibitions</a></li>
+              <li><a href="/contact" className="hover:text-gray-900 transition-colors">Contact</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">Connect</h4>
-            <p className="text-gray-400 text-sm mb-4">Subscribe to our newsletter for new product launches.</p>
+            <h4 className="text-gray-900 font-bold uppercase tracking-widest text-xs mb-6">Connect</h4>
+            <p className="text-gray-800 text-sm mb-4">Subscribe to our newsletter for new product launches.</p>
             <div className="flex">
               <input 
                 type="email" 
                 placeholder="Email address" 
-                className="bg-white/5 border border-white/10 px-4 py-2 text-sm text-white focus:outline-none focus:border-white/30 w-full"
+                className="bg-white border border-gray-800 px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-900 w-full"
               />
-              <button className="bg-[#00A8E8] text-black px-4 py-2 text-xs font-bold uppercase hover:bg-[#00C4E8] transition-colors">
+              <button className="bg-gray-900 text-white px-4 py-2 text-xs font-bold uppercase hover:bg-gray-800 transition-colors">
                 →
               </button>
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+        <div className="pt-8 border-t border-gray-800/20 flex flex-col md:flex-row justify-between items-center text-xs text-gray-800">
           <p>© 2026 Paralight. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white">Privacy Policy</a>
-            <a href="#" className="hover:text-white">Terms of Service</a>
+            <a href="#" className="hover:text-gray-900">Privacy Policy</a>
+            <a href="#" className="hover:text-gray-900">Terms of Service</a>
           </div>
         </div>
       </div>
