@@ -19,7 +19,7 @@ export default function BrandSplit() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
-            className="group relative h-[600px] overflow-hidden border border-white/10"
+            className="group relative h-[600px] overflow-hidden border border-gray-200 rounded-lg shadow-lg"
           >
             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500 z-10" />
             <img 
@@ -48,7 +48,7 @@ export default function BrandSplit() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
-            className="group relative h-[600px] overflow-hidden border border-white/10"
+            className="group relative h-[600px] overflow-hidden border border-gray-200 rounded-lg shadow-lg"
           >
             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500 z-10" />
             <img 

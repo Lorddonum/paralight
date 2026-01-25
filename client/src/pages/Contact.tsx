@@ -54,7 +54,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-xl text-gray-400 font-light leading-relaxed"
+              className="text-xl text-gray-600 font-light leading-relaxed"
             >
               Whether you're a wholesaler, distributor, or working on a lighting
               project — our team is here to support you with custom solutions
@@ -73,14 +73,14 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8">
                 {contactInfo.map((item, i) => (
                   <div key={i} className="flex gap-6 group">
-                    <div className="w-12 h-12 bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#00A8E8] group-hover:text-black transition-colors">
+                    <div className="w-12 h-12 bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-[#00A8E8] group-hover:text-white transition-colors">
                       <item.icon className="w-5 h-5" />
                     </div>
                     <div>
                       <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-bold">
                         {item.title}
                       </h3>
-                      <p className="text-lg text-white group-hover:text-gray-300 transition-colors leading-relaxed">
+                      <p className="text-lg text-gray-900 group-hover:text-gray-600 transition-colors leading-relaxed">
                         {item.details}
                       </p>
                     </div>
@@ -88,7 +88,7 @@ export default function Contact() {
                 ))}
               </div>
 
-              <div className="pt-12 border-t border-white/10">
+              <div className="pt-12 border-t border-gray-200">
                 <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-6 font-bold">
                   Follow Our Journey
                 </h3>
@@ -99,7 +99,7 @@ export default function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-[#00A8E8] hover:text-black hover:border-[#00A8E8] transition-all"
+                      className="w-10 h-10 border border-gray-200 flex items-center justify-center hover:bg-[#00A8E8] hover:text-white hover:border-[#00A8E8] transition-all"
                     >
                       <social.icon className="w-4 h-4" />
                     </a>
@@ -113,10 +113,10 @@ export default function Contact() {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-zinc-950 border border-white/10 p-8 md:p-12 relative"
+              className="bg-gray-50 border border-gray-200 p-8 md:p-12 relative rounded-lg shadow-sm"
             >
-              <div className="absolute top-0 right-0 w-24 h-24 border-t border-r border-white/20 -mt-2 -mr-2 pointer-events-none" />
-              <h2 className="text-3xl font-display font-bold mb-8 uppercase tracking-tighter">
+              <div className="absolute top-0 right-0 w-24 h-24 border-t border-r border-gray-300 -mt-2 -mr-2 pointer-events-none rounded-tr-lg" />
+              <h2 className="text-3xl font-display font-bold mb-8 uppercase tracking-tighter text-gray-900">
                 Visit Us
               </h2>
 
@@ -128,7 +128,7 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
-                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
+                      className="w-full bg-white border border-gray-200 px-4 py-3 text-gray-900 focus:outline-none focus:border-[#00A8E8] transition-colors"
                       required
                     />
                   </div>
@@ -138,7 +138,7 @@ export default function Contact() {
                     </label>
                     <input
                       type="email"
-                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
+                      className="w-full bg-white border border-gray-200 px-4 py-3 text-gray-900 focus:outline-none focus:border-[#00A8E8] transition-colors"
                       required
                     />
                   </div>
@@ -151,7 +151,7 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
-                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
+                      className="w-full bg-white border border-gray-200 px-4 py-3 text-gray-900 focus:outline-none focus:border-[#00A8E8] transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
@@ -160,7 +160,7 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
-                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
+                      className="w-full bg-white border border-gray-200 px-4 py-3 text-gray-900 focus:outline-none focus:border-[#00A8E8] transition-colors"
                     />
                   </div>
                 </div>
@@ -171,7 +171,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="text"
-                    className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white/40 transition-colors"
+                    className="w-full bg-white border border-gray-200 px-4 py-3 text-gray-900 focus:outline-none focus:border-[#00A8E8] transition-colors"
                   />
                 </div>
 
@@ -198,7 +198,7 @@ export default function Contact() {
       </main>
 
       {/* maps embed*/}
-      <section className="h-[500px] w-full border-y border-white/10 grayscale">
+      <section className="h-[500px] w-full border-y border-gray-200">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3681.3320625624775!2d113.123456!3d22.56789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzA0LjQiTiAxMTPCsDA3JzI0LjQiRQ!5e0!3m2!1sen!2s!4v1612345678901!5m2!1sen!2s"
           width="100%"

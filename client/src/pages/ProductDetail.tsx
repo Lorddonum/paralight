@@ -65,7 +65,7 @@ export default function ProductDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-white/50" />
+        <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
       </div>
     );
   }
@@ -78,7 +78,7 @@ export default function ProductDetail() {
           <div className="container mx-auto px-6 text-center py-40">
             <p className="text-gray-500 uppercase tracking-widest">Product not found</p>
             <Link href="/products">
-              <button className="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:text-gray-400 transition-colors">
+              <button className="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-[#00A8E8] hover:text-gray-600 transition-colors">
                 Back to Catalog
               </button>
             </Link>
@@ -102,23 +102,23 @@ export default function ProductDetail() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-8">
-              <div className="aspect-[4/5] bg-zinc-950 border border-white/10 relative overflow-hidden">
+              <div className="aspect-[4/5] bg-gray-100 border border-gray-200 relative overflow-hidden">
                 <div className="w-full h-full flex items-center justify-center">
                   {product.image ? (
                     <img src={product.image} alt={product.name} className="w-full h-full object-contain" data-testid="product-image" />
                   ) : (
-                    <Package className="w-20 h-20 text-white/5" />
+                    <Package className="w-20 h-20 text-gray-300" />
                   )}
                 </div>
                 <div className="absolute top-6 left-6 z-20 flex gap-2">
                   <span className={`px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${product.brand === "Paralight" ? "bg-[#00A8E8] text-black" : "bg-[#ECAA00] text-black"}`} data-testid="text-brand">{product.brand}</span>
-                  <span className="bg-zinc-800 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest" data-testid="text-series">{product.series}</span>
+                  <span className="bg-gray-700 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest" data-testid="text-series">{product.series}</span>
                 </div>
               </div>
               <div>
-                <h2 className="text-4xl font-display font-bold uppercase tracking-widest mb-4" data-testid="text-name">{product.name}</h2>
+                <h2 className="text-4xl font-display font-bold uppercase tracking-widest mb-4 text-gray-900" data-testid="text-name">{product.name}</h2>
                 <p className="text-xs text-gray-500 uppercase tracking-widest mb-6" data-testid="text-model">{product.modelNumber}</p>
-                <p className="text-gray-400 leading-relaxed text-sm mb-8" data-testid="text-description">{product.description}</p>
+                <p className="text-gray-600 leading-relaxed text-sm mb-8" data-testid="text-description">{product.description}</p>
                 <a 
                   href={product.catalogueUrl || undefined} 
                   download={`${product.name}-Catalogue.pdf`}
@@ -134,7 +134,7 @@ export default function ProductDetail() {
               </div>
             </div>
             <div className="lg:col-span-7 space-y-12">
-              <div className="bg-zinc-950/50 border border-white/5 p-8">
+              <div className="bg-gray-50 border border-gray-200 p-8">
                 <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-8">Control Integration</h3>
                 <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
                   {CONTROL_ICONS.map((icon, i) => (
@@ -150,7 +150,7 @@ export default function ProductDetail() {
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse" data-testid="specs-table">
                   <thead>
-                    <tr className="border-b border-white/10">
+                    <tr className="border-b border-gray-200">
                       <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Mod</th>
                       <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Wattage</th>
                       <th className="py-4 pr-6 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold whitespace-nowrap">Material</th>
@@ -164,25 +164,25 @@ export default function ProductDetail() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                      <td className="py-6 pr-6 text-[10px] uppercase font-medium whitespace-nowrap">{product.modelNumber}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.wattage || '-'}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.material || '-'}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.finish || '-'}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.dimensions || '-'}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.voltage || '-'}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.color || '-'}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.cri || '-'}</td>
-                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.cct || '-'}</td>
-                      <td className="py-6 text-[10px] uppercase text-gray-400 whitespace-nowrap">{product.beamAngle || '-'}</td>
+                    <tr className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                      <td className="py-6 pr-6 text-[10px] uppercase font-medium text-gray-900 whitespace-nowrap">{product.modelNumber}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.wattage || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.material || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.finish || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.dimensions || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.voltage || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.color || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.cri || '-'}</td>
+                      <td className="py-6 pr-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.cct || '-'}</td>
+                      <td className="py-6 text-[10px] uppercase text-gray-600 whitespace-nowrap">{product.beamAngle || '-'}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="pt-12 flex items-center justify-between border-t border-white/10">
+              <div className="pt-12 flex items-center justify-between border-t border-gray-200">
                 <div className="flex items-center gap-4">
                   <Zap className="w-5 h-5 text-[#ECAA00]" />
-                  <p className="text-xs text-gray-400 uppercase tracking-widest">Custom solutions available for this system</p>
+                  <p className="text-xs text-gray-600 uppercase tracking-widest">Custom solutions available for this system</p>
                 </div>
                 <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#00A8E8] hover:text-[#00C4E8] transition-colors group" data-testid="button-inquire">
                   Inquire System <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

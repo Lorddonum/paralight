@@ -47,7 +47,7 @@ export default function About() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl text-gray-400 leading-relaxed font-light"
+              className="text-xl text-gray-600 leading-relaxed font-light"
             >
               With nearly a decade of experience, Paralight Group has become a trusted name 
               in the global lighting industry, specializing in LED aluminum profiles, 
@@ -55,7 +55,7 @@ export default function About() {
             </motion.p>
             <div className="grid grid-cols-2 gap-4">
               {stats.map((stat, i) => (
-                <div key={i} className="border border-white/10 p-6 bg-white/5">
+                <div key={i} className="border border-gray-200 p-6 bg-gray-50">
                   <div className="text-2xl font-display font-bold">{stat.value}</div>
                   <div className="text-xs uppercase tracking-widest text-gray-500 mt-1">{stat.label}</div>
                 </div>
@@ -66,13 +66,13 @@ export default function About() {
       </section>
 
       {/* Video Section */}
-      <section className="py-20 bg-zinc-950">
+      <section className="py-20 bg-gray-100">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold mb-4 uppercase tracking-tighter">Inside Our Factory</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">A deep dive into precision lighting manufacturing. Craftsmanship meets high-tech automation.</p>
+            <p className="text-gray-600 max-w-2xl mx-auto">A deep dive into precision lighting manufacturing. Craftsmanship meets high-tech automation.</p>
           </div>
-          <div className="aspect-video relative overflow-hidden border border-white/10 group">
+          <div className="aspect-video relative overflow-hidden border border-gray-200 rounded-lg shadow-lg group">
              <video 
                src={aboutVideo} 
                autoPlay 
@@ -97,7 +97,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 initial={{ opacity: 0, y: 20 }}
                 viewport={{ once: false }}
-                className="group border border-white/10 p-8 hover:bg-white hover:text-black transition-all duration-500"
+                className="group border border-gray-200 p-8 bg-white hover:bg-gray-50 transition-all duration-500 shadow-sm"
               >
                 <div className="w-12 h-[1px] bg-current mb-6" />
                 <h3 className="text-xl font-display font-bold mb-2">{member.name}</h3>
@@ -132,13 +132,13 @@ export default function About() {
       </section>
 
       {/* Logistics */}
-      <section className="py-20 border-t border-white/10">
+      <section className="py-20 border-t border-gray-200 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
             <div>
               <Truck className="w-12 h-12 mb-8 opacity-50" />
               <h2 className="text-4xl font-display font-bold mb-8">Fast & Efficient Global Delivery</h2>
-              <p className="text-gray-400 text-lg leading-relaxed mb-8">
+              <p className="text-gray-600 text-lg leading-relaxed mb-8">
                 We load an average of 2 containers per day, and 50-60 containers a month. 
                 Our reinforced 5-layer packaging system ensures product safety across moisture, 
                 pressure, and impact during international transit.
@@ -148,7 +148,7 @@ export default function About() {
                   <div className="text-3xl font-bold">2 / day</div>
                   <div className="text-xs uppercase tracking-widest text-gray-500">Avg Loading</div>
                 </div>
-                <div className="w-[1px] h-10 bg-white/10" />
+                <div className="w-[1px] h-10 bg-gray-300" />
                 <div>
                   <div className="text-3xl font-bold">5-Layer</div>
                   <div className="text-xs uppercase tracking-widest text-gray-500">Packaging</div>
@@ -156,8 +156,8 @@ export default function About() {
               </div>
             </div>
             <div className="relative">
-              <div className="absolute -inset-4 border border-white/5 -z-10" />
-              <div className="aspect-video bg-white/5 border border-white/10 flex items-center justify-center italic text-gray-500">
+              <div className="absolute -inset-4 border border-gray-200 -z-10 rounded-lg" />
+              <div className="aspect-video bg-gray-100 border border-gray-200 flex items-center justify-center italic text-gray-500 rounded-lg">
                 Logistics & Packaging Showcase
               </div>
             </div>

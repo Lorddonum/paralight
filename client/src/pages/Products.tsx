@@ -86,7 +86,7 @@ export default function Products() {
                   className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${
                     activeBrand === brand 
                       ? brand === "Paralight" ? "text-[#00A8E8]" : "text-[#ECAA00]"
-                      : "text-gray-500 hover:text-white"
+                      : "text-gray-500 hover:text-gray-900"
                   }`}
                 >
                   {brand}
@@ -101,7 +101,7 @@ export default function Products() {
                   onClick={() => setActiveCategory(category)}
                   data-testid={`filter-category-${category.toLowerCase()}`}
                   className={`text-[9px] font-medium uppercase tracking-[0.2em] transition-all relative py-2 ${
-                    activeCategory === category ? "text-white" : "text-gray-600 hover:text-white"
+                    activeCategory === category ? "text-gray-900" : "text-gray-500 hover:text-gray-900"
                   }`}
                 >
                   {category}
@@ -118,7 +118,7 @@ export default function Products() {
 
           {isLoading ? (
             <div className="flex justify-center py-40">
-              <Loader2 className="w-8 h-8 animate-spin text-white/50" />
+              <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -144,7 +144,7 @@ export default function Products() {
                           {product.image ? (
                             <img src={product.image} alt={product.name} className="w-full h-full object-contain p-8" />
                           ) : (
-                            <Package className="w-16 h-16 text-white/5" />
+                            <Package className="w-16 h-16 text-gray-300" />
                           )}
                         </div>
                         <div className="absolute top-4 left-4 z-20 flex gap-2">

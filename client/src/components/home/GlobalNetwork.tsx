@@ -23,7 +23,7 @@ export default function GlobalNetwork() {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A8E8] to-[#ECAA00]">NETWORK</span>
             </motion.h2>
             
-            <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
               We proudly export our lighting solutions to over 100 countries worldwide, 
               delivering high-quality Aluminum Profiles and Commercial Lighting Systems 
               to partners across Asia, Europe, Middle East, Africa, North & South America, and Oceania.
@@ -46,11 +46,11 @@ export default function GlobalNetwork() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: false, amount: 0.3 }}
                 transition={{ delay: index * 0.1 }}
-                className={`bg-white/5 backdrop-blur-sm border border-white/10 p-8 ${index === 2 ? 'md:col-span-2' : ''}`}
+                className={`bg-gray-50 border border-gray-200 p-8 ${index === 2 ? 'md:col-span-2' : ''}`}
               >
-                <stat.icon className="w-8 h-8 text-white mb-4 opacity-70" />
-                <h3 className="text-4xl font-display font-bold text-white mb-2">{stat.value}</h3>
-                <p className="text-gray-400 uppercase tracking-widest text-xs">{stat.label}</p>
+                <stat.icon className="w-8 h-8 text-[#00A8E8] mb-4" />
+                <h3 className="text-4xl font-display font-bold text-gray-900 mb-2">{stat.value}</h3>
+                <p className="text-gray-500 uppercase tracking-widest text-xs">{stat.label}</p>
               </motion.div>
             ))}
           </div>
