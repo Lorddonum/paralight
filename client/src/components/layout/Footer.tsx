@@ -18,7 +18,7 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
-            <div className="mb-6 flex items-center -space-x-6">
+            <div className="mb-6 flex items-center -space-x-6 -ml-4">
               <div className="h-12 overflow-hidden flex items-center">
                 <img src={paralightLogo} alt="Paralight" className="h-32 max-w-[280px] object-cover object-center" />
               </div>
