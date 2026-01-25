@@ -39,8 +39,8 @@ export default function Navbar() {
           href="/"
           className="flex items-center gap-4 hover:opacity-80 transition-opacity"
         >
-          <img src={paralightLogo} alt="Paralight" className="h-12 object-contain" />
-          <img src={maglinearLogo} alt="Maglinear Lighting" className="h-12 object-contain" />
+          <img src={paralightLogo} alt="Paralight" className="h-16 object-contain" />
+          <img src={maglinearLogo} alt="Maglinear Lighting" className="h-16 object-contain" />
         </Link>
 
         {/* Desktop Nav */}
