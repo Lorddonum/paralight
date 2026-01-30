@@ -24,12 +24,10 @@ interface Product {
   catalogueUrl?: string | null;
 }
 
-const CATEGORIES = ["All", "Indoor", "Outdoor", "Commercial", "Decorative"];
-
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [activeBrand, setActiveBrand] = useState<string>("Paralight");
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [activeSeries, setActiveSeries] = useState<string>("All");
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -50,9 +48,13 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter(p => p.brand === activeBrand && (activeCategory === "All" || p.category === activeCategory));
-
   const seriesList = [...new Set(products.filter(p => p.brand === activeBrand).map(p => p.series))];
+
+  const filteredProducts = products.filter(p => p.brand === activeBrand && (activeSeries === "All" || p.series === activeSeries));
+
+  useEffect(() => {
+    setActiveSeries("All");
+  }, [activeBrand]);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
@@ -96,32 +98,32 @@ export default function Products() {
                   </div>
 
                   <div>
-                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Category</h3>
+                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Series</h3>
                     <div className="space-y-1">
-                      {CATEGORIES.map(category => (
+                      <button
+                        onClick={() => setActiveSeries("All")}
+                        data-testid="filter-series-all"
+                        className={`block w-full text-left px-3 py-2 text-sm transition-all rounded ${
+                          activeSeries === "All" 
+                            ? "bg-gray-900 text-white font-medium"
+                            : "text-gray-600 hover:bg-gray-50"
+                        }`}
+                      >
+                        All Series
+                      </button>
+                      {seriesList.map(series => (
                         <button
-                          key={category}
-                          onClick={() => setActiveCategory(category)}
-                          data-testid={`filter-category-${category.toLowerCase()}`}
+                          key={series}
+                          onClick={() => setActiveSeries(series)}
+                          data-testid={`filter-series-${series.toLowerCase().replace(/\s+/g, '-')}`}
                           className={`block w-full text-left px-3 py-2 text-sm transition-all rounded ${
-                            activeCategory === category 
+                            activeSeries === series 
                               ? "bg-gray-900 text-white font-medium"
                               : "text-gray-600 hover:bg-gray-50"
                           }`}
                         >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Series</h3>
-                    <div className="space-y-1 max-h-48 overflow-y-auto">
-                      {seriesList.map(series => (
-                        <div key={series} className="text-sm text-gray-500 px-3 py-1">
                           {series}
-                        </div>
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -144,14 +146,14 @@ export default function Products() {
                 </div>
               </div>
 
-              {activeCategory !== "All" && (
+              {activeSeries !== "All" && (
                 <div className="flex items-center gap-2 mb-6">
                   <span className="text-xs text-gray-500">Active filters:</span>
                   <button 
-                    onClick={() => setActiveCategory("All")}
+                    onClick={() => setActiveSeries("All")}
                     className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded hover:bg-gray-200 transition-colors"
                   >
-                    {activeCategory}
+                    {activeSeries}
                     <X className="w-3 h-3" />
                   </button>
                 </div>
