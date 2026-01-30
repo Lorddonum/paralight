@@ -6,6 +6,7 @@ import chairmanImg from "@/assets/chairman-situ.png";
 import ceoImg from "@/assets/ceo-michelle.png";
 import salesTeamImg from "@/assets/sales-team.png";
 import logisticsTeamImg from "@/assets/logistics-team.png";
+import rdTeamImg from "@/assets/rd-team.png";
 import { Award, ShieldCheck, Factory, Truck, Users, Star, Quote } from "lucide-react";
 
 export default function About() {
@@ -241,6 +242,37 @@ export default function About() {
             <img 
               src={logisticsTeamImg} 
               alt="Paralight Logistics Team" 
+              className="w-full h-auto object-cover"
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* R&D Team */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl font-display font-bold mb-4">R&D Team</h2>
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Our R&D team brings together industry engineers and embedded marketing experts who work side by side throughout every development cycle. Each project begins with a deep understanding of customer pain points, ensuring the delivery of precise, application-specific, and customized solutions. By integrating product development with market insight, the team also provides agile support for go-to-market initiatives, including the creation of tailored promotional materials. This integrated approach allows us not only to solve technical challenges, but also to help clients strengthen market positioning and expand their impact.
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative overflow-hidden rounded-xl shadow-lg"
+          >
+            <img 
+              src={rdTeamImg} 
+              alt="Paralight R&D Team" 
               className="w-full h-auto object-cover"
             />
           </motion.div>
