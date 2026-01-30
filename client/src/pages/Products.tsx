@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Package, Loader2, X, SlidersHorizontal } from "lucide-react";
+import { Package, Loader2, X, SlidersHorizontal, Search } from "lucide-react";
 import { Link } from "wouter";
 
 interface Product {
@@ -26,8 +26,9 @@ interface Product {
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [activeBrand, setActiveBrand] = useState<string>("Paralight");
+  const [activeBrand, setActiveBrand] = useState<string>("All");
   const [activeSeries, setActiveSeries] = useState<string>("All");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -48,13 +49,38 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  const seriesList = [...new Set(products.filter(p => p.brand === activeBrand).map(p => p.series))];
+  const brandFilteredProducts = activeBrand === "All" 
+    ? products 
+    : products.filter(p => p.brand === activeBrand);
 
-  const filteredProducts = products.filter(p => p.brand === activeBrand && (activeSeries === "All" || p.series === activeSeries));
+  const seriesList = Array.from(new Set(brandFilteredProducts.map(p => p.series)));
+
+  const filteredProducts = brandFilteredProducts
+    .filter(p => activeSeries === "All" || p.series === activeSeries)
+    .filter(p => {
+      if (!searchQuery.trim()) return true;
+      const query = searchQuery.toLowerCase();
+      return (
+        p.name.toLowerCase().includes(query) ||
+        p.modelNumber.toLowerCase().includes(query) ||
+        p.series.toLowerCase().includes(query)
+      );
+    });
 
   useEffect(() => {
     setActiveSeries("All");
   }, [activeBrand]);
+
+  const getPageTitle = () => {
+    if (activeBrand === "All") return "All Products";
+    return `${activeBrand} Products`;
+  };
+
+  const getPageSubtitle = () => {
+    if (activeBrand === "All") return "LED Aluminum Profiles & Magnetic Track Lighting";
+    if (activeBrand === "Paralight") return "LED Aluminum Profiles";
+    return "Magnetic Track Lighting";
+  };
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
@@ -74,10 +100,33 @@ export default function Products() {
                   </button>
                 </div>
 
-                <div className={`space-y-8 ${showFilters ? 'block' : 'hidden lg:block'}`}>
+                <div className={`space-y-6 ${showFilters ? 'block' : 'hidden lg:block'}`}>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Search products..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      data-testid="search-input"
+                      className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 transition-colors"
+                    />
+                  </div>
+
                   <div>
                     <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Brand</h3>
-                    <div className="space-y-2">
+                    <div className="space-y-1">
+                      <button
+                        onClick={() => setActiveBrand("All")}
+                        data-testid="filter-brand-all"
+                        className={`block w-full text-left px-3 py-2 text-sm transition-all rounded ${
+                          activeBrand === "All" 
+                            ? "bg-gray-900 text-white font-medium"
+                            : "text-gray-600 hover:bg-gray-50"
+                        }`}
+                      >
+                        All Brands
+                      </button>
                       {["Paralight", "Maglinear"].map(brand => (
                         <button
                           key={brand}
@@ -99,7 +148,7 @@ export default function Products() {
 
                   <div>
                     <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Series</h3>
-                    <div className="space-y-1">
+                    <div className="space-y-1 max-h-64 overflow-y-auto">
                       <button
                         onClick={() => setActiveSeries("All")}
                         data-testid="filter-series-all"
@@ -135,10 +184,10 @@ export default function Products() {
               <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
                 <div>
                   <h1 className="text-2xl font-display font-bold text-gray-900">
-                    {activeBrand} Products
+                    {getPageTitle()}
                   </h1>
                   <p className="text-sm text-gray-500 mt-1">
-                    {activeBrand === "Paralight" ? "LED Aluminum Profiles" : "Magnetic Track Lighting"}
+                    {getPageSubtitle()}
                   </p>
                 </div>
                 <div className="text-sm text-gray-400">
@@ -146,16 +195,27 @@ export default function Products() {
                 </div>
               </div>
 
-              {activeSeries !== "All" && (
-                <div className="flex items-center gap-2 mb-6">
+              {(activeSeries !== "All" || searchQuery) && (
+                <div className="flex items-center gap-2 mb-6 flex-wrap">
                   <span className="text-xs text-gray-500">Active filters:</span>
-                  <button 
-                    onClick={() => setActiveSeries("All")}
-                    className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded hover:bg-gray-200 transition-colors"
-                  >
-                    {activeSeries}
-                    <X className="w-3 h-3" />
-                  </button>
+                  {activeSeries !== "All" && (
+                    <button 
+                      onClick={() => setActiveSeries("All")}
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded hover:bg-gray-200 transition-colors"
+                    >
+                      {activeSeries}
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                  {searchQuery && (
+                    <button 
+                      onClick={() => setSearchQuery("")}
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded hover:bg-gray-200 transition-colors"
+                    >
+                      "{searchQuery}"
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
                 </div>
               )}
 
@@ -208,7 +268,7 @@ export default function Products() {
                   {filteredProducts.length === 0 && !isLoading && (
                     <div className="col-span-full text-center py-20">
                       <Package className="w-12 h-12 text-gray-200 mx-auto mb-4" />
-                      <p className="text-sm text-gray-400">No products found in this category</p>
+                      <p className="text-sm text-gray-400">No products found</p>
                     </div>
                   )}
                 </div>
