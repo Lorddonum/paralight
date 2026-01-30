@@ -184,6 +184,7 @@ export default function ProductDetail() {
   const specs = [
     { label: "Model", value: product.modelNumber },
     { label: "Wattage", value: product.wattage },
+    { label: "Application", value: product.application },
     { label: "Material", value: product.material },
     { label: "Finish", value: product.finish },
     { label: "Dimensions", value: product.dimensions },
@@ -192,7 +193,7 @@ export default function ProductDetail() {
     { label: "CRI", value: product.cri },
     { label: "CCT", value: product.cct },
     { label: "Beam Angle", value: product.beamAngle },
-  ].filter((spec) => spec.value);
+  ].filter((spec) => spec.value && spec.value.trim() !== "");
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-[#00A8E8] selection:text-white font-sans">
