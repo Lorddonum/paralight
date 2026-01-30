@@ -242,7 +242,7 @@ export default function ProductDetail() {
                   <>
                     <div
                       ref={imageContainerRef}
-                      className="aspect-square max-w-md bg-gray-50 border border-gray-100 relative overflow-hidden rounded-lg cursor-zoom-in"
+                      className="aspect-square max-w-md mx-auto bg-gray-50 border border-gray-100 relative overflow-hidden rounded-lg cursor-zoom-in"
                       onMouseEnter={() => setIsZooming(true)}
                       onMouseLeave={() => setIsZooming(false)}
                       onMouseMove={handleMouseMove}
