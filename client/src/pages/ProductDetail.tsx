@@ -117,6 +117,7 @@ export default function ProductDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [isZooming, setIsZooming] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+  const [showDrawingLightbox, setShowDrawingLightbox] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -359,7 +360,9 @@ export default function ProductDetail() {
                         <img
                           src={product.technicalDrawingUrl}
                           alt="Technical Drawing"
-                          className="max-w-full max-h-full object-contain"
+                          className="max-w-full max-h-full object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                          onClick={() => setShowDrawingLightbox(true)}
+                          title="Click to view full size"
                         />
                       ) : (
                         <div className="text-center">
@@ -421,6 +424,29 @@ export default function ProductDetail() {
           </div>
         </div>
       </main>
+
+      {showDrawingLightbox && product?.technicalDrawingUrl && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-8 cursor-pointer"
+          onClick={() => setShowDrawingLightbox(false)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors"
+            onClick={() => setShowDrawingLightbox(false)}
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <img
+            src={product.technicalDrawingUrl}
+            alt="Technical Drawing - Full Size"
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
       <Footer />
     </div>
   );
