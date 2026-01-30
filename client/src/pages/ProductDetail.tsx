@@ -216,7 +216,21 @@ export default function ProductDetail() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-6">
+            <div className="space-y-4">
+              <div>
+                <h1
+                  className="text-2xl font-display font-bold text-gray-900 mb-1"
+                  data-testid="text-name"
+                >
+                  {product.name}
+                </h1>
+                <p
+                  className="text-xs text-gray-400 uppercase tracking-widest"
+                  data-testid="text-model"
+                >
+                  {product.modelNumber}
+                </p>
+              </div>
               {(() => {
                 const allImages = [
                   product.image,
@@ -228,7 +242,7 @@ export default function ProductDetail() {
                   <>
                     <div
                       ref={imageContainerRef}
-                      className="aspect-[4/3] bg-gray-50 border border-gray-100 relative overflow-hidden rounded-lg cursor-zoom-in"
+                      className="aspect-square max-w-sm bg-gray-50 border border-gray-100 relative overflow-hidden rounded-lg cursor-zoom-in"
                       onMouseEnter={() => setIsZooming(true)}
                       onMouseLeave={() => setIsZooming(false)}
                       onMouseMove={handleMouseMove}
@@ -307,18 +321,6 @@ export default function ProductDetail() {
               </div>
 
               <div className="pt-2">
-                <h1
-                  className="text-3xl font-display font-bold text-gray-900 mb-2"
-                  data-testid="text-name"
-                >
-                  {product.name}
-                </h1>
-                <p
-                  className="text-xs text-gray-400 uppercase tracking-widest mb-4"
-                  data-testid="text-model"
-                >
-                  {product.modelNumber}
-                </p>
                 <p
                   className="text-gray-600 leading-relaxed text-sm mb-6"
                   data-testid="text-description"
