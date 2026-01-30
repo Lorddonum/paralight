@@ -24,7 +24,7 @@ export default function Footer() {
                 <img src={paralightLogo} alt="Paralight" className="h-36 max-w-[300px] object-cover object-center" />
               </div>
               <div className="h-14 overflow-hidden flex items-center">
-                <img src={maglinearLogo} alt="Maglinear Lighting" className="h-36 max-w-[300px] object-cover object-center" />
+                <img src={maglinearLogo} alt="Maglinear Lighting" className="h-24 max-w-[220px] object-cover object-center" />
               </div>
             </div>
             <p className="text-gray-900 font-medium text-center md:text-right max-w-md">
