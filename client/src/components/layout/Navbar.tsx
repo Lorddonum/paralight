@@ -36,39 +36,26 @@ export default function Navbar() {
       )}
     >
       <div className={cn(
-        "flex items-stretch transition-all duration-500",
-        scrolled ? "opacity-100" : "opacity-100"
+        "flex items-center justify-between px-6 transition-all duration-500",
+        scrolled 
+          ? "bg-gradient-to-r from-white via-gray-300 via-20% to-gray-900 to-40% py-2" 
+          : "bg-transparent py-3"
       )}>
-        {/* Logo section with white background extending to left edge */}
-        <div className={cn(
-          "flex-shrink-0 transition-all duration-500",
-          scrolled ? "bg-white" : "bg-transparent"
-        )}>
-          <div className={cn(
-            "pl-6 pr-8 flex items-center transition-all duration-300",
-            scrolled ? "py-2" : "py-3"
-          )}>
-            <Link
-              href="/"
-              className="flex items-center -space-x-8 hover:opacity-80 transition-opacity"
-            >
-              <div className="h-16 overflow-hidden flex items-center">
-                <img src={paralightLogo} alt="Paralight" className="h-40 max-w-[360px] object-cover object-center" />
-              </div>
-              <div className="h-16 overflow-hidden flex items-center">
-                <img src={maglinearLogo} alt="Maglinear Lighting" className="h-28 max-w-[280px] object-cover object-center" />
-              </div>
-            </Link>
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center -space-x-8 hover:opacity-80 transition-opacity"
+        >
+          <div className="h-16 overflow-hidden flex items-center">
+            <img src={paralightLogo} alt="Paralight" className="h-40 max-w-[360px] object-cover object-center" />
           </div>
-        </div>
+          <div className="h-16 overflow-hidden flex items-center">
+            <img src={maglinearLogo} alt="Maglinear Lighting" className="h-28 max-w-[280px] object-cover object-center" />
+          </div>
+        </Link>
         
-        {/* Nav section with dark background and gradient transition from white */}
-        <div className={cn(
-          "flex-grow flex items-center justify-end px-6 transition-all duration-500",
-          scrolled 
-            ? "bg-gradient-to-r from-white via-gray-400 via-5% to-gray-900 to-15% py-2" 
-            : "bg-transparent py-3"
-        )}>
+        {/* Nav Links */}
+        <div className="flex items-center">
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
