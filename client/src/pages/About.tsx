@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import aboutVideo from "@assets/abutus_1768691137923.mp4";
 import chairmanImg from "@/assets/chairman-situ.png";
 import ceoImg from "@/assets/ceo-michelle.png";
+import salesTeamImg from "@/assets/sales-team.png";
 import { Award, ShieldCheck, Factory, Truck, Users, Star, Quote } from "lucide-react";
 
 export default function About() {
@@ -183,28 +184,34 @@ export default function About() {
         </section>
       ))}
 
-      {/* Team Members */}
+      {/* Sales Team */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-display font-bold mb-12 text-center">Our Team</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            {team.map((member, i) => (
-              <motion.div 
-                key={i}
-                whileInView={{ opacity: 1, y: 0 }}
-                initial={{ opacity: 0, y: 20 }}
-                viewport={{ once: true }}
-                className="group border border-gray-200 p-8 bg-white hover:shadow-lg transition-all duration-300 rounded-lg"
-              >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#00A8E8] to-[#ECAA00] flex items-center justify-center text-white font-bold text-lg mb-4">
-                  {member.name[0]}
-                </div>
-                <h3 className="text-xl font-display font-bold mb-1">{member.name}</h3>
-                <p className="text-sm uppercase tracking-widest text-gray-500 mb-3">{member.role}</p>
-                {member.desc && <p className="text-sm text-gray-600">{member.desc}</p>}
-              </motion.div>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl font-display font-bold mb-4">Sales Team</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Serving as the vital link between clients and our enterprise, our team utilizes multilingual expertise to transcend regional boundaries and connect precisely with a global customer base. Starting from the initial order discussions, we thoroughly explore individualized requirements and maintain attentive after-sales follow-up — guaranteeing that "every client need receives immediate and effective implementation."
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative overflow-hidden rounded-xl shadow-lg"
+          >
+            <img 
+              src={salesTeamImg} 
+              alt="Paralight Sales Team" 
+              className="w-full h-auto object-cover"
+            />
+          </motion.div>
         </div>
       </section>
 
