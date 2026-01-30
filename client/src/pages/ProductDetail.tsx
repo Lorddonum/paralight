@@ -1,10 +1,34 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRoute } from "wouter";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Package, FileText, Zap, MoveRight, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "wouter";
+
+const COLOR_MAP: Record<string, string> = {
+  "white": "#FFFFFF",
+  "black": "#000000",
+  "gold": "#FFD700",
+  "silver": "#C0C0C0",
+  "grey": "#808080",
+  "gray": "#808080",
+  "red": "#FF0000",
+  "blue": "#0000FF",
+  "green": "#008000",
+  "yellow": "#FFFF00",
+  "orange": "#FFA500",
+  "brown": "#8B4513",
+  "bronze": "#CD7F32",
+  "champagne": "#F7E7CE",
+  "rose gold": "#B76E79",
+  "matte black": "#1C1C1C",
+  "sandy white": "#F5F5DC",
+  "sand white": "#F5F5DC",
+  "sand black": "#2B2B2B",
+  "sandy black": "#2B2B2B",
+  "anodized": "#A8A9AD",
+};
 
 interface Product {
   id: number;
@@ -39,10 +63,37 @@ const CONTROL_ICONS = [
   { label: "CCT control", img: "https://paralight1.ybbis.com/wp-content/uploads/2023/06/cct.png" },
 ];
 
+const ZOOM_LEVEL = 2; // Adjustable zoom percentage (2 = 200%)
+
+const getColorFromText = (colorText: string | null): string[] => {
+  if (!colorText) return [];
+  const lowerText = colorText.toLowerCase();
+  const colors: string[] = [];
+  
+  for (const [name, hex] of Object.entries(COLOR_MAP)) {
+    if (lowerText.includes(name)) {
+      colors.push(hex);
+    }
+  }
+  
+  return colors.length > 0 ? colors : [];
+};
+
 export default function ProductDetail() {
   const [, params] = useRoute("/products/:id");
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isZooming, setIsZooming] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageContainerRef.current) return;
+    const rect = imageContainerRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPosition({ x, y });
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -124,14 +175,38 @@ export default function ProductDetail() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-6">
-              <div className="aspect-[4/3] bg-gray-50 border border-gray-100 relative overflow-hidden rounded-lg">
-                <div className="w-full h-full flex items-center justify-center p-8">
+              <div 
+                ref={imageContainerRef}
+                className="aspect-[4/3] bg-gray-50 border border-gray-100 relative overflow-hidden rounded-lg cursor-zoom-in"
+                onMouseEnter={() => setIsZooming(true)}
+                onMouseLeave={() => setIsZooming(false)}
+                onMouseMove={handleMouseMove}
+              >
+                <div 
+                  className="w-full h-full flex items-center justify-center p-8 transition-transform duration-100"
+                  style={isZooming && product.image ? {
+                    transform: `scale(${ZOOM_LEVEL})`,
+                    transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
+                  } : undefined}
+                >
                   {product.image ? (
                     <img src={product.image} alt={product.name} className="max-w-full max-h-full object-contain" data-testid="product-image" />
                   ) : (
                     <Package className="w-24 h-24 text-gray-200" />
                   )}
                 </div>
+                {getColorFromText(product.color).length > 0 && (
+                  <div className="absolute bottom-4 right-4 flex gap-2 z-10">
+                    {getColorFromText(product.color).map((color, i) => (
+                      <div
+                        key={i}
+                        className="w-6 h-6 rounded-full border-2 border-white shadow-md"
+                        style={{ backgroundColor: color }}
+                        title={product.color || ''}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center justify-center gap-6 py-4 border-t border-b border-gray-100">
