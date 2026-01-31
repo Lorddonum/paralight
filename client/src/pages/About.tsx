@@ -254,17 +254,13 @@ export default function About() {
             viewport={{ once: true }}
             className="aspect-video relative overflow-hidden rounded-2xl shadow-2xl group"
           >
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              preload="auto"
-              className="w-full h-full object-cover"
-            >
-              <source src="/videos/about-video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <iframe
+              src="https://www.youtube.com/embed/Jt2rWta5RRw?autoplay=1&mute=1&loop=1&playlist=Jt2rWta5RRw"
+              title="About Paralight"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
           </motion.div>
         </div>
