@@ -3,9 +3,9 @@ import { Calendar, ArrowUpRight } from "lucide-react";
 
 export default function Exhibition() {
   const events = [
-    { name: "Canton Fair", location: "Guangzhou, China", date: "Autumn 2025" },
-    { name: "Light + Building", location: "Frankfurt, Germany", date: "Spring 2026" },
-    { name: "Hong Kong Lighting Fair", location: "Hong Kong", date: "Winter 2025" },
+    { name: "Canton Fair", location: "Guangzhou, China", date: "2024" },
+    { name: "Light + Building", location: "Frankfurt, Germany", date: "2023" },
+    { name: "Hong Kong Lighting Fair", location: "Hong Kong", date: "2022" },
   ];
 
   return (
@@ -29,7 +29,7 @@ export default function Exhibition() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="font-display text-4xl md:text-5xl lg:text-6xl text-white font-medium mb-6"
           >
-            Upcoming <span className="italic font-normal">Exhibitions</span>
+            <span className="italic font-normal">Exhibitions</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
