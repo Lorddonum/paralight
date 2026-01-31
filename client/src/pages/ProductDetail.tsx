@@ -203,10 +203,9 @@ export default function ProductDetail() {
     }
   }, [product?.technicalSpecs]);
 
-  // Convert additional rows to displayable specs
+  // Convert additional rows to displayable specs - Model always shows first
   const getAdditionalRowSpecs = useCallback((row: typeof additionalSpecRows[0]) => {
-    const rowSpecs = [
-      { label: "Model", value: row.model },
+    const otherSpecs = [
       { label: "Wattage", value: row.wattage },
       { label: "Application", value: row.application },
       { label: "Finish", value: row.finish },
@@ -222,8 +221,13 @@ export default function ProductDetail() {
       { label: "Accessories", value: row.accessories },
       { label: "LED Strip Size", value: row.ledStripSize },
       { label: "Installation Method", value: row.installationMethod },
+    ].filter((spec) => spec.value && spec.value.trim() !== "");
+    
+    // Always include Model as the first column
+    return [
+      { label: "Model", value: row.model?.trim() || "—" },
+      ...otherSpecs
     ];
-    return rowSpecs.filter((spec) => spec.value && spec.value.trim() !== "");
   }, []);
 
   // Early returns after all hooks
