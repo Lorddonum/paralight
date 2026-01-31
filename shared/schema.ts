@@ -48,6 +48,8 @@ export const products = pgTable("products", {
   accessoriesSpec: text("accessories_spec"),
   // Maglinear-specific fields
   mountingTrack: text("mounting_track"),
+  // Technical Specifications (JSON string for table data)
+  technicalSpecs: text("technical_specs"),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({

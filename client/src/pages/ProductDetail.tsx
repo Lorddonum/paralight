@@ -76,6 +76,8 @@ interface Product {
   accessoriesSpec?: string | null;
   // Maglinear-specific fields
   mountingTrack?: string | null;
+  // Technical Specifications (JSON string for table data)
+  technicalSpecs?: string | null;
 }
 
 const ZOOM_LEVEL = 2; // Adjustable zoom percentage (2 = 200%)
@@ -214,7 +216,19 @@ export default function ProductDetail() {
     // Maglinear-specific specs
     ...(product.brand === "Maglinear" ? [
       { label: "Mounting Track", value: product.mountingTrack },
-    ] : [])
+    ] : []),
+    // Custom technical specs from JSON
+    ...(product.technicalSpecs ? (() => {
+      try {
+        const customSpecs = JSON.parse(product.technicalSpecs);
+        return customSpecs.map((spec: { label: string; value: string }) => ({
+          label: spec.label,
+          value: spec.value
+        }));
+      } catch {
+        return [];
+      }
+    })() : [])
   ].filter((spec) => spec.value && spec.value.trim() !== "");
 
   return (

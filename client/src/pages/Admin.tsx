@@ -44,6 +44,8 @@ interface Product {
   diffuserMaterial?: string | null;
   // Maglinear-specific fields
   mountingTrack?: string | null;
+  // Technical Specifications (JSON string for table data)
+  technicalSpecs?: string | null;
 }
 
 export default function Admin() {
@@ -92,7 +94,8 @@ export default function Admin() {
     packagingMethodBSpec: "",
     accessoriesSpec: "",
     diffuserMaterial: "",
-    mountingTrack: ""
+    mountingTrack: "",
+    technicalSpecs: ""
   });
 
   const existingSeries = Array.from(new Set(products.map(p => p.series).filter(Boolean))).sort();
@@ -241,7 +244,8 @@ export default function Admin() {
       packagingMethodBDesc: "",
       packagingMethodBSpec: "",
       accessoriesSpec: "",
-      mountingTrack: ""
+      mountingTrack: "",
+      technicalSpecs: ""
     });
   };
 
@@ -280,7 +284,8 @@ export default function Admin() {
       packagingMethodBDesc: product.packagingMethodBDesc || "",
       packagingMethodBSpec: product.packagingMethodBSpec || "",
       accessoriesSpec: product.accessoriesSpec || "",
-      mountingTrack: product.mountingTrack || ""
+      mountingTrack: product.mountingTrack || "",
+      technicalSpecs: product.technicalSpecs || ""
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -694,6 +699,71 @@ export default function Admin() {
                         <div className="space-y-2">
                           <label className="text-[10px] uppercase tracking-widest text-gray-500">Mounting Track</label>
                           <input type="text" value={formData.mountingTrack} onChange={e => setFormData({...formData, mountingTrack: e.target.value})} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. Standard Track, Recessed Track" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Custom Technical Specifications Table */}
+                    <div className="mt-6 pt-4 border-t border-gray-100">
+                      <div className="flex items-center justify-between mb-4">
+                        <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Additional Specifications</label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const currentSpec = formData.technicalSpecs ? JSON.parse(formData.technicalSpecs) : [];
+                            const newSpec = [...currentSpec, { label: '', value: '' }];
+                            setFormData({...formData, technicalSpecs: JSON.stringify(newSpec)});
+                          }}
+                          className="flex items-center gap-1 px-3 py-1.5 text-[10px] uppercase tracking-widest text-white bg-[#00A8E8] hover:bg-[#0090c8] rounded transition-colors"
+                        >
+                          <Plus className="w-3 h-3" /> Add Spec
+                        </button>
+                      </div>
+                      
+                      {(!formData.technicalSpecs || JSON.parse(formData.technicalSpecs || '[]').length === 0) ? (
+                        <div className="p-6 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                          <p className="text-[10px] uppercase tracking-widest text-gray-400">No additional specifications</p>
+                          <p className="text-[10px] text-gray-400 mt-1">Click "Add Spec" to add custom specifications</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {JSON.parse(formData.technicalSpecs || '[]').map((spec: { label: string; value: string }, index: number) => (
+                            <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                              <input
+                                type="text"
+                                value={spec.label}
+                                onChange={(e) => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[index].label = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }}
+                                className="flex-1 bg-white border border-gray-200 px-3 py-2 text-sm text-gray-900 rounded focus:outline-none focus:border-[#00A8E8]"
+                                placeholder="Label (e.g. IP Rating)"
+                              />
+                              <input
+                                type="text"
+                                value={spec.value}
+                                onChange={(e) => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[index].value = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }}
+                                className="flex-1 bg-white border border-gray-200 px-3 py-2 text-sm text-gray-900 rounded focus:outline-none focus:border-[#00A8E8]"
+                                placeholder="Value (e.g. IP65)"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs.splice(index, 1);
+                                  setFormData({...formData, technicalSpecs: specs.length > 0 ? JSON.stringify(specs) : ''});
+                                }}
+                                className="w-8 h-8 flex items-center justify-center text-red-500 hover:bg-red-50 rounded transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
