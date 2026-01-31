@@ -473,7 +473,7 @@ export default function ProductDetail() {
                 <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                   <div className="p-6">
                     <img 
-                      src="/attached_assets/image_1769845890077.png" 
+                      src="/packaging-method.png" 
                       alt="Packaging Method"
                       className="w-full max-w-2xl mx-auto"
                     />
