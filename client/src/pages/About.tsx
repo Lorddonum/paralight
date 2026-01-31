@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import aboutVideo from "@assets/abutus_1768691137923.mp4";
+import aboutVideo from "@/assets/about-video.mp4";
 import chairmanImg from "@/assets/chairman-situ.png";
 import ceoImg from "@/assets/ceo-michelle.png";
 import salesTeamImg from "@/assets/sales-team.png";
