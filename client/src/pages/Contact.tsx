@@ -146,7 +146,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative z-20 pb-16"
+              className="relative z-20 pt-32 pb-16"
             >
               <div className="container mx-auto px-8 lg:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
