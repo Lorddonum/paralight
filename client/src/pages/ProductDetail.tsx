@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useRoute } from "wouter";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -191,7 +191,7 @@ export default function ProductDetail() {
 
   const brandColor = product.brand === "Paralight" ? "#00A8E8" : "#ECAA00";
 
-  const specs = [
+  const specs = useMemo(() => [
     { label: "Model", value: product.modelNumber },
     { label: "Wattage", value: product.wattage },
     { label: "Application", value: product.application },
@@ -217,19 +217,20 @@ export default function ProductDetail() {
     ...(product.brand === "Maglinear" ? [
       { label: "Mounting Track", value: product.mountingTrack },
     ] : [])
-  ].filter((spec) => spec.value && spec.value.trim() !== "");
+  ].filter((spec) => spec.value && spec.value.trim() !== ""), [product]);
 
   // Parse additional specification rows
-  const additionalSpecRows: Array<{ model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string }> = product.technicalSpecs ? (() => {
+  const additionalSpecRows = useMemo(() => {
+    if (!product.technicalSpecs) return [];
     try {
-      return JSON.parse(product.technicalSpecs);
+      return JSON.parse(product.technicalSpecs) as Array<{ model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string }>;
     } catch {
       return [];
     }
-  })() : [];
+  }, [product.technicalSpecs]);
 
   // Convert additional rows to displayable specs
-  const getAdditionalRowSpecs = (row: typeof additionalSpecRows[0]) => {
+  const getAdditionalRowSpecs = useCallback((row: typeof additionalSpecRows[0]) => {
     const rowSpecs = [
       { label: "Model", value: row.model },
       { label: "Wattage", value: row.wattage },
@@ -249,7 +250,7 @@ export default function ProductDetail() {
       { label: "Installation Method", value: row.installationMethod },
     ];
     return rowSpecs.filter((spec) => spec.value && spec.value.trim() !== "");
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
