@@ -277,6 +277,7 @@ export default function ProductDetail() {
                           <img
                             src={currentImage}
                             alt={product.name}
+                            loading="eager"
                             className="max-w-full max-h-full object-contain"
                             data-testid="product-image"
                           />
@@ -313,6 +314,7 @@ export default function ProductDetail() {
                             <img 
                               src={img} 
                               alt={`${product.name} ${index + 1}`}
+                              loading="lazy"
                               className="w-full h-full object-cover"
                             />
                           </button>
@@ -370,6 +372,7 @@ export default function ProductDetail() {
                   <img 
                     src={controlIntegrationImg} 
                     alt="Control Integration - ON-OFF, Bluetooth, Tuya Smart, 2.4GHz Wi-Fi, Zigbee, DALI Dimm, CCT Control" 
+                    loading="lazy"
                     className="w-full max-w-xl mx-auto object-contain"
                   />
                 </div>
@@ -452,6 +455,7 @@ export default function ProductDetail() {
                             <img
                               src={drawing}
                               alt={`Technical Drawing ${index + 1}`}
+                              loading="lazy"
                               className="max-w-full max-h-full object-contain hover:opacity-80 transition-opacity"
                             />
                           </div>
@@ -677,6 +681,7 @@ export default function ProductDetail() {
                         <img
                           src={relatedProduct.image}
                           alt={relatedProduct.name}
+                          loading="lazy"
                           className="w-full h-full object-contain transform group-hover:scale-110 group-hover:rotate-1 transition-all duration-500 ease-out"
                         />
                       ) : (

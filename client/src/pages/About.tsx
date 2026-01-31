@@ -321,6 +321,7 @@ export default function About() {
                       <img 
                         src={milestones[currentMilestone].images[currentImageIndex]} 
                         alt={milestones[currentMilestone].title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-opacity duration-500"
                       />
                     ) : (
@@ -430,6 +431,7 @@ export default function About() {
                     <img 
                       src={exec.image} 
                       alt={exec.name}
+                      loading="lazy"
                       className="w-full h-full object-contain object-center"
                     />
                   </motion.div>
@@ -510,6 +512,7 @@ export default function About() {
                 <img 
                   src={coreTeamImg} 
                   alt="Paralight Core Team"
+                  loading="lazy"
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent" />
@@ -577,6 +580,7 @@ export default function About() {
                 <img 
                   src={team.image} 
                   alt={team.name}
+                  loading="lazy"
                   className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
                 />
                 <div 

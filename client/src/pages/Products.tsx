@@ -364,6 +364,7 @@ export default function Products() {
                                 <img 
                                   src={product.image} 
                                   alt={product.name} 
+                                  loading="lazy"
                                   className="w-full h-full object-contain transform group-hover:scale-110 group-hover:rotate-1 transition-all duration-500 ease-out" 
                                 />
                               ) : (
