@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import chairmanImg from "@/assets/chairman-situ.png";
@@ -22,8 +22,126 @@ import milestone2021sep_2 from "@/assets/milestone-2021sep-2.png";
 import milestone2022dec_1 from "@/assets/milestone-2022dec-1.png";
 import milestone2022dec_2 from "@/assets/milestone-2022dec-2.png";
 import milestone2022dec_3 from "@/assets/milestone-2022dec-3.png";
+import honor1 from "@/assets/honor-1.png";
+import honor2 from "@/assets/honor-2.png";
+import honor3 from "@/assets/honor-3.png";
+import honor4 from "@/assets/honor-4.png";
+import honor5 from "@/assets/honor-5.png";
 import { Truck, Users, Lightbulb, Package, Quote, Award, CheckCircle, Globe, Heart, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import { useState, useEffect } from "react";
+
+function HonorsSlideshow() {
+  const honors = [
+    { image: honor1, title: "High-Tech Enterprise Certificate", year: "2023" },
+    { image: honor2, title: "Work Registration Certificate", year: "2021" },
+    { image: honor3, title: "Trademark Registration - Paralight", year: "2022" },
+    { image: honor4, title: "Trademark Registration - Class 35", year: "2024" },
+    { image: honor5, title: "Trademark Registration - PXG", year: "2024" },
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % honors.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [honors.length]);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % honors.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + honors.length) % honors.length);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+    >
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-brand-gold/20 text-brand-gold">
+            <Award className="w-5 h-5" />
+          </div>
+          <h3 className="font-display text-xl lg:text-2xl text-white font-medium">
+            Official Certificates
+          </h3>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <button
+            onClick={prevSlide}
+            className="p-3 bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition-all duration-300"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="p-3 bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition-all duration-300"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative overflow-hidden bg-white/5 border border-white/10 p-8 md:p-12">
+        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+          <div className="relative w-full md:w-2/3 aspect-[4/3] bg-white rounded-lg overflow-hidden shadow-2xl">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentSlide}
+                src={honors[currentSlide].image}
+                alt={honors[currentSlide].title}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="w-full h-full object-contain p-4"
+              />
+            </AnimatePresence>
+          </div>
+
+          <div className="flex-1 text-center md:text-left">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                <span className="text-brand-gold text-sm font-medium tracking-wide">
+                  {honors[currentSlide].year}
+                </span>
+                <h4 className="font-display text-xl md:text-2xl text-white font-medium mt-2 mb-4">
+                  {honors[currentSlide].title}
+                </h4>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Official certification recognizing Paralight Group's commitment to quality, 
+                  innovation, and industry excellence.
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="flex items-center justify-center md:justify-start gap-2 mt-8">
+              {honors.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-1 transition-all duration-300 ${
+                    index === currentSlide 
+                      ? 'w-8 bg-brand-gold' 
+                      : 'w-4 bg-gray-600 hover:bg-gray-500'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function About() {
   const stats = [
@@ -592,18 +710,19 @@ export default function About() {
       ))}
 
       {/* Certifications */}
-      <section className="py-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-        <div className="container mx-auto px-6">
+      <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div className="container mx-auto px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-10"
+            className="text-center mb-12"
           >
-            <span className="text-[#ECAA00] text-xs font-semibold uppercase tracking-widest">Quality Assurance</span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mt-2">Honors & Certifications</h2>
+            <span className="text-brand-gold text-[11px] font-medium uppercase tracking-[0.3em]">Quality Assurance</span>
+            <h2 className="font-display text-3xl md:text-5xl font-medium mt-4">Honors & Certifications</h2>
           </motion.div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-16">
             {certifications.map((cert, i) => (
               <motion.div
                 key={i}
@@ -611,17 +730,17 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="relative group"
+                className="bg-white/5 border border-white/10 p-6 text-center hover:bg-white/10 transition-all"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#00A8E8]/20 to-[#ECAA00]/20 rounded-lg blur-sm group-hover:blur-md transition-all" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 text-center hover:bg-white/10 transition-all h-full">
-                  <CheckCircle className="w-7 h-7 mx-auto mb-2 text-[#00A8E8]" />
-                  <h4 className="font-bold text-sm mb-1">{cert.name}</h4>
-                  <p className="text-xs text-gray-400">{cert.desc}</p>
-                </div>
+                <CheckCircle className="w-6 h-6 mx-auto mb-3 text-brand-cyan" />
+                <h4 className="font-medium text-sm mb-1">{cert.name}</h4>
+                <p className="text-xs text-gray-400">{cert.desc}</p>
               </motion.div>
             ))}
           </div>
+
+          {/* Honors Slideshow */}
+          <HonorsSlideshow />
         </div>
       </section>
 
