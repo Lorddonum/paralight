@@ -691,15 +691,145 @@ export default function Admin() {
 
                   {formData.brand === "Paralight" && (
                     <div className="space-y-6 pt-6 border-t border-gray-200">
-                      <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#00A8E8] font-bold">Accessories Specification</h4>
-                      <p className="text-[10px] text-gray-500">Enter JSON format: [{"{"}"no":"A","specification":"Profile","qty":"1","remarks":"2M/3M"{"}"}, ...]</p>
-                      <textarea 
-                        rows={4} 
-                        value={formData.accessoriesSpec} 
-                        onChange={e => setFormData({...formData, accessoriesSpec: e.target.value})} 
-                        className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] font-mono resize-none" 
-                        placeholder='[{"no":"A","specification":"Profile","qty":"1","remarks":"2M/3M"},{"no":"B","specification":"PC cover","qty":"1","remarks":"2M/3M"}]'
-                      />
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#00A8E8] font-bold">Accessories Specification</h4>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const currentSpec = formData.accessoriesSpec ? JSON.parse(formData.accessoriesSpec) : [];
+                            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                            const regularItems = currentSpec.filter((item: {no?: string}) => item.no?.toLowerCase() !== 'application');
+                            const nextLetter = letters[regularItems.length] || (regularItems.length + 1).toString();
+                            const newSpec = [...currentSpec.filter((item: {no?: string}) => item.no?.toLowerCase() !== 'application'), { no: nextLetter, specification: '', qty: '', remarks: '' }];
+                            const appItem = currentSpec.find((item: {no?: string}) => item.no?.toLowerCase() === 'application');
+                            if (appItem) newSpec.push(appItem);
+                            setFormData({...formData, accessoriesSpec: JSON.stringify(newSpec)});
+                          }}
+                          className="flex items-center gap-1 px-3 py-1.5 text-[10px] uppercase tracking-widest text-white bg-[#00A8E8] hover:bg-[#0090c8] rounded transition-colors"
+                        >
+                          <Plus className="w-3 h-3" /> Add Row
+                        </button>
+                      </div>
+                      
+                      {(!formData.accessoriesSpec || JSON.parse(formData.accessoriesSpec || '[]').filter((item: {no?: string}) => item.no?.toLowerCase() !== 'application').length === 0) ? (
+                        <div className="p-8 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                          <p className="text-[10px] uppercase tracking-widest text-gray-400">No accessories added yet</p>
+                          <p className="text-[10px] text-gray-400 mt-1">Click "Add Row" to start adding accessories</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <div className="grid grid-cols-[60px_1fr_80px_1fr_40px] gap-2 px-2">
+                            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">NO.</span>
+                            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Specification</span>
+                            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">QTY</span>
+                            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Remarks</span>
+                            <span></span>
+                          </div>
+                          {JSON.parse(formData.accessoriesSpec || '[]')
+                            .filter((item: {no?: string}) => item.no?.toLowerCase() !== 'application')
+                            .map((item: {no?: string; specification?: string; qty?: string; remarks?: string}, index: number) => (
+                            <div key={index} className="grid grid-cols-[60px_1fr_80px_1fr_40px] gap-2 items-center">
+                              <input
+                                type="text"
+                                value={item.no || ''}
+                                onChange={(e) => {
+                                  const spec = JSON.parse(formData.accessoriesSpec || '[]');
+                                  const regularItems = spec.filter((i: {no?: string}) => i.no?.toLowerCase() !== 'application');
+                                  const appItem = spec.find((i: {no?: string}) => i.no?.toLowerCase() === 'application');
+                                  regularItems[index] = {...regularItems[index], no: e.target.value};
+                                  const newSpec = appItem ? [...regularItems, appItem] : regularItems;
+                                  setFormData({...formData, accessoriesSpec: JSON.stringify(newSpec)});
+                                }}
+                                className="bg-gray-50 border border-gray-200 px-2 py-2 text-sm text-gray-900 rounded focus:outline-none focus:border-[#00A8E8] text-center font-medium"
+                                placeholder="A"
+                              />
+                              <input
+                                type="text"
+                                value={item.specification || ''}
+                                onChange={(e) => {
+                                  const spec = JSON.parse(formData.accessoriesSpec || '[]');
+                                  const regularItems = spec.filter((i: {no?: string}) => i.no?.toLowerCase() !== 'application');
+                                  const appItem = spec.find((i: {no?: string}) => i.no?.toLowerCase() === 'application');
+                                  regularItems[index] = {...regularItems[index], specification: e.target.value};
+                                  const newSpec = appItem ? [...regularItems, appItem] : regularItems;
+                                  setFormData({...formData, accessoriesSpec: JSON.stringify(newSpec)});
+                                }}
+                                className="bg-gray-50 border border-gray-200 px-3 py-2 text-sm text-gray-900 rounded focus:outline-none focus:border-[#00A8E8]"
+                                placeholder="e.g. Profile"
+                              />
+                              <input
+                                type="text"
+                                value={item.qty || ''}
+                                onChange={(e) => {
+                                  const spec = JSON.parse(formData.accessoriesSpec || '[]');
+                                  const regularItems = spec.filter((i: {no?: string}) => i.no?.toLowerCase() !== 'application');
+                                  const appItem = spec.find((i: {no?: string}) => i.no?.toLowerCase() === 'application');
+                                  regularItems[index] = {...regularItems[index], qty: e.target.value};
+                                  const newSpec = appItem ? [...regularItems, appItem] : regularItems;
+                                  setFormData({...formData, accessoriesSpec: JSON.stringify(newSpec)});
+                                }}
+                                className="bg-gray-50 border border-gray-200 px-2 py-2 text-sm text-gray-900 rounded focus:outline-none focus:border-[#00A8E8] text-center"
+                                placeholder="1"
+                              />
+                              <input
+                                type="text"
+                                value={item.remarks || ''}
+                                onChange={(e) => {
+                                  const spec = JSON.parse(formData.accessoriesSpec || '[]');
+                                  const regularItems = spec.filter((i: {no?: string}) => i.no?.toLowerCase() !== 'application');
+                                  const appItem = spec.find((i: {no?: string}) => i.no?.toLowerCase() === 'application');
+                                  regularItems[index] = {...regularItems[index], remarks: e.target.value};
+                                  const newSpec = appItem ? [...regularItems, appItem] : regularItems;
+                                  setFormData({...formData, accessoriesSpec: JSON.stringify(newSpec)});
+                                }}
+                                className="bg-gray-50 border border-gray-200 px-3 py-2 text-sm text-gray-900 rounded focus:outline-none focus:border-[#00A8E8]"
+                                placeholder="e.g. 2M/3M"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const spec = JSON.parse(formData.accessoriesSpec || '[]');
+                                  const regularItems = spec.filter((i: {no?: string}) => i.no?.toLowerCase() !== 'application');
+                                  const appItem = spec.find((i: {no?: string}) => i.no?.toLowerCase() === 'application');
+                                  regularItems.splice(index, 1);
+                                  const newSpec = appItem ? [...regularItems, appItem] : regularItems;
+                                  setFormData({...formData, accessoriesSpec: newSpec.length > 0 ? JSON.stringify(newSpec) : ''});
+                                }}
+                                className="w-8 h-8 flex items-center justify-center text-red-500 hover:bg-red-50 rounded transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <div className="pt-4 border-t border-gray-100">
+                        <div className="space-y-2">
+                          <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Application</label>
+                          <input
+                            type="text"
+                            value={(() => {
+                              try {
+                                const spec = JSON.parse(formData.accessoriesSpec || '[]');
+                                const appItem = spec.find((i: {no?: string}) => i.no?.toLowerCase() === 'application');
+                                return appItem?.specification || '';
+                              } catch { return ''; }
+                            })()}
+                            onChange={(e) => {
+                              let spec = [];
+                              try { spec = JSON.parse(formData.accessoriesSpec || '[]'); } catch { spec = []; }
+                              const regularItems = spec.filter((i: {no?: string}) => i.no?.toLowerCase() !== 'application');
+                              if (e.target.value) {
+                                regularItems.push({ no: 'Application', specification: e.target.value, qty: '', remarks: '' });
+                              }
+                              setFormData({...formData, accessoriesSpec: regularItems.length > 0 ? JSON.stringify(regularItems) : ''});
+                            }}
+                            className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8]"
+                            placeholder="e.g. Commercial lighting/Office lighting/Home lighting"
+                          />
+                        </div>
+                      </div>
                     </div>
                   )}
 
