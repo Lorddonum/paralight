@@ -9,8 +9,11 @@ import logisticsTeamImg from "@/assets/logistics-team.png";
 import rdTeamImg from "@/assets/rd-team.png";
 import productionTeamImg from "@/assets/production-team.png";
 import coreTeamImg from "@/assets/core-team.png";
-import { Truck, Users, Lightbulb, Package, Quote, Award, CheckCircle, Globe, Heart, ChevronLeft, ChevronRight, Calendar, MapPin } from "lucide-react";
-import { useState } from "react";
+import milestone2016_1 from "@/assets/milestone-2016-1.png";
+import milestone2016_2 from "@/assets/milestone-2016-2.png";
+import milestone2016_3 from "@/assets/milestone-2016-3.png";
+import { Truck, Users, Lightbulb, Package, Quote, Award, CheckCircle, Globe, Heart, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function About() {
   const stats = [
@@ -80,14 +83,14 @@ export default function About() {
       month: "October",
       title: "Establishment of Paralight Aluminum Accessories Sales Department",
       description: "Focusing on the core business of LED linear lighting aluminum profiles and kits — This marked our formal entry into the linear lighting sector. Through precise positioning, we built our initial client base and industry expertise, laying a solid foundation for deep manufacturing integration and future supply chain expansion.",
-      image: null
+      images: [milestone2016_1, milestone2016_2, milestone2016_3]
     },
     {
       year: "2019",
       month: "December",
       title: "Establishment of Zhongshan Paralight Lighting Technology Co., Ltd.",
       description: "Transitioning from \"component sales\" to a dual-track \"manufacturing + sales\" model, we deepened our R&D and production capabilities for core products, further solidifying our manufacturing edge in the linear lighting sector.",
-      image: null
+      images: []
     },
     {
       year: "2021",
@@ -95,7 +98,7 @@ export default function About() {
       title: "Establishment of Jiangmen Dingsu Plastic Co., Ltd.",
       location: "Jiangmen",
       description: "Achieving in-house production and sales of PC covers for linear lighting, we have completely integrated the entire chain: from raw materials to aluminum profiles and PC covers, through to finished products.",
-      image: null
+      images: []
     },
     {
       year: "2021",
@@ -103,47 +106,60 @@ export default function About() {
       title: "Establishment of Guangdong Changqi Lighting Technology Co., Ltd.",
       location: "Zhongshan",
       description: "We focused on the R&D and scaled production of linear luminaires and LED linear aluminum profiles. By expanding production capacity and driving technological iteration, we significantly enhanced the manufacturing strength of our core products, meeting the demands of global market expansion.",
-      image: null
+      images: []
     },
     {
       year: "2022",
       month: "December",
       title: "Establishment of Jiangmen Tianmai Trading Co., Ltd.",
       description: "Professional integration of the Polycarbonate (PC) resin raw material supply chain — Establishing an industrial centralized procurement system to ensure stable supply and quality control of premium PC resin. This secures product consistency from the very start of the raw material stage and solidifies our core advantage: a fully controllable supply chain.",
-      image: null
+      images: []
     },
     {
       year: "2023",
       month: "January",
       title: "Establishment of Jiangmen Paralight Lighting Technology Co., Ltd.",
       description: "Relocation of the office team from Zhongshan to Jiangmen — Establishing the group's core operational hub to deeply integrate Jiangmen's industrial resources. This move drives the integrated development of production, R&D, and management, providing the organizational backbone for large-scale and global operations.",
-      image: null
+      images: []
     },
     {
       year: "2024",
       month: "July",
       title: "Establishment of overseas company C & B in Brazil",
       description: "Positioned as a distribution center in South America, we have built a regional warehousing and distribution network, significantly shortening delivery cycles in the South American market and enhancing the responsiveness and localized service capabilities of our global supply chain.",
-      image: null
+      images: []
     },
     {
       year: "2025",
       month: "March",
       title: "Establishment of Maglinear Lighting Technology Co., Ltd.",
       description: "By incorporating commercial lighting and magnetic track series into the product portfolio, we have expanded from a singular focus on linear lighting to a full-scenario linear lighting range encompassing \"linear + commercial + magnetic\" solutions, officially advancing toward becoming a \"full-scenario linear lighting solution provider.\"",
-      image: null
+      images: []
     }
   ];
 
   const [currentMilestone, setCurrentMilestone] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextMilestone = () => {
     setCurrentMilestone((prev) => (prev + 1) % milestones.length);
+    setCurrentImageIndex(0);
   };
 
   const prevMilestone = () => {
     setCurrentMilestone((prev) => (prev - 1 + milestones.length) % milestones.length);
+    setCurrentImageIndex(0);
   };
+
+  useEffect(() => {
+    const currentImages = milestones[currentMilestone].images;
+    if (currentImages.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % currentImages.length);
+      }, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [currentMilestone]);
 
   const certifications = [
     { name: "High-tech Enterprise", desc: "Recognized innovation leader" },
@@ -292,11 +308,11 @@ export default function About() {
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Image Placeholder */}
                   <div className="h-64 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
-                    {milestones[currentMilestone].image ? (
+                    {milestones[currentMilestone].images.length > 0 ? (
                       <img 
-                        src={milestones[currentMilestone].image} 
+                        src={milestones[currentMilestone].images[currentImageIndex]} 
                         alt={milestones[currentMilestone].title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-opacity duration-500"
                       />
                     ) : (
                       <div className="text-center p-8">
@@ -308,6 +324,18 @@ export default function About() {
                       <span className="text-[#00A8E8] font-bold text-sm">{milestones[currentMilestone].month}</span>
                       <span className="text-3xl font-display font-bold text-gray-900 ml-2">{milestones[currentMilestone].year}</span>
                     </div>
+                    {milestones[currentMilestone].images.length > 1 && (
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        {milestones[currentMilestone].images.map((_, idx) => (
+                          <div
+                            key={idx}
+                            className={`w-2 h-2 rounded-full transition-all ${
+                              idx === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Content */}
