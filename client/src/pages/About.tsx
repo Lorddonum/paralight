@@ -199,18 +199,18 @@ export default function About() {
                 </div>
                 
                 {/* Image */}
-                <div className={`relative max-h-[360px] ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <div className={`relative h-[340px] overflow-hidden ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="h-full"
+                    className="h-full w-full"
                   >
                     <img 
                       src={exec.image} 
                       alt={exec.name}
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-contain object-center"
                     />
                   </motion.div>
                 </div>
