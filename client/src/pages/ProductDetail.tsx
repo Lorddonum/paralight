@@ -220,7 +220,7 @@ export default function ProductDetail() {
   ].filter((spec) => spec.value && spec.value.trim() !== "");
 
   // Parse additional specification rows
-  const additionalSpecRows: Array<{ wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string }> = product.technicalSpecs ? (() => {
+  const additionalSpecRows: Array<{ wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string }> = product.technicalSpecs ? (() => {
     try {
       return JSON.parse(product.technicalSpecs);
     } catch {
@@ -242,6 +242,10 @@ export default function ProductDetail() {
       { label: "CCT", value: row.cct },
       { label: "Beam Angle", value: row.beamAngle },
       { label: "Mounting Track", value: row.mountingTrack },
+      { label: "Diffuser Material", value: row.diffuserMaterial },
+      { label: "Accessories", value: row.accessories },
+      { label: "LED Strip Size", value: row.ledStripSize },
+      { label: "Installation Method", value: row.installationMethod },
     ];
     return rowSpecs.filter((spec) => spec.value && spec.value.trim() !== "");
   };

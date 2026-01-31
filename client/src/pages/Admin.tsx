@@ -707,7 +707,7 @@ export default function Admin() {
 
                   {/* Additional Specification Rows */}
                   {formData.technicalSpecs && JSON.parse(formData.technicalSpecs || '[]').length > 0 && (
-                    JSON.parse(formData.technicalSpecs || '[]').map((specRow: { wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string }, rowIndex: number) => (
+                    JSON.parse(formData.technicalSpecs || '[]').map((specRow: { wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string }, rowIndex: number) => (
                       <div key={rowIndex} className="space-y-6 pt-6 border-t border-gray-200">
                         <div className="flex items-center justify-between">
                           <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#00A8E8] font-bold">Technical Specifications Row {rowIndex + 2}</h4>
@@ -821,6 +821,43 @@ export default function Admin() {
                                 setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
                               }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. Standard Track" />
                             </div>
+                          )}
+                          {/* Paralight-specific fields in additional rows */}
+                          {formData.brand === "Paralight" && (
+                            <>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Diffuser Material</label>
+                                <input type="text" value={specRow.diffuserMaterial || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].diffuserMaterial = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8]" placeholder="e.g. Frosted PC" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Accessories</label>
+                                <input type="text" value={specRow.accessories || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].accessories = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8]" placeholder="e.g. End Caps, Mounting Clips" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">LED Strip Size</label>
+                                <input type="text" value={specRow.ledStripSize || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].ledStripSize = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8]" placeholder="e.g. 10mm, 12mm" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Installation Method</label>
+                                <input type="text" value={specRow.installationMethod || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].installationMethod = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8]" placeholder="e.g. Recessed/Surface" />
+                              </div>
+                            </>
                           )}
                         </div>
                       </div>
