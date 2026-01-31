@@ -528,7 +528,7 @@ export default function About() {
               <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
                 <Quote className="w-10 h-10 text-[#00A8E8] opacity-20 absolute top-4 left-4" />
                 <div className="relative z-10">
-                  <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4 font-light">
+                  <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4 font-light indent-8">
                     At Paralight Group, our culture is defined by a <span className="font-semibold text-[#00A8E8]">"Client-Centric"</span> philosophy, brought to life through a seamless integration of manufacturing and trade. Led by visionary leadership, our teams leverage specialized expertise and intuitive collaboration to ensure that <span className="font-semibold text-[#ECAA00]">"Client Satisfaction"</span> is the heartbeat of every stage in our partnership.
                   </p>
                   <p className="text-sm md:text-base text-gray-600 leading-relaxed">
