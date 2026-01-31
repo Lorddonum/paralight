@@ -9,7 +9,8 @@ import logisticsTeamImg from "@/assets/logistics-team.png";
 import rdTeamImg from "@/assets/rd-team.png";
 import productionTeamImg from "@/assets/production-team.png";
 import coreTeamImg from "@/assets/core-team.png";
-import { Truck, Users, Lightbulb, Package, Quote, Award, CheckCircle, Globe, Heart } from "lucide-react";
+import { Truck, Users, Lightbulb, Package, Quote, Award, CheckCircle, Globe, Heart, ChevronLeft, ChevronRight, Calendar, MapPin } from "lucide-react";
+import { useState } from "react";
 
 export default function About() {
   const stats = [
@@ -72,6 +73,77 @@ export default function About() {
       description: "Our entire production workflow is managed by experienced technical experts. We adapt flexibly to client specifications, conducting thorough inspections from raw materials to final products, complemented by professional brand packaging—all to guarantee flawless delivery and ensure every item fulfills customer expectations."
     }
   ];
+
+  const milestones = [
+    {
+      year: "2016",
+      month: "October",
+      title: "Establishment of Paralight Aluminum Accessories Sales Department",
+      description: "Focusing on the core business of LED linear lighting aluminum profiles and kits — This marked our formal entry into the linear lighting sector. Through precise positioning, we built our initial client base and industry expertise, laying a solid foundation for deep manufacturing integration and future supply chain expansion.",
+      image: null
+    },
+    {
+      year: "2019",
+      month: "December",
+      title: "Establishment of Zhongshan Paralight Lighting Technology Co., Ltd.",
+      description: "Transitioning from \"component sales\" to a dual-track \"manufacturing + sales\" model, we deepened our R&D and production capabilities for core products, further solidifying our manufacturing edge in the linear lighting sector.",
+      image: null
+    },
+    {
+      year: "2021",
+      month: "January",
+      title: "Establishment of Jiangmen Dingsu Plastic Co., Ltd.",
+      location: "Jiangmen",
+      description: "Achieving in-house production and sales of PC covers for linear lighting, we have completely integrated the entire chain: from raw materials to aluminum profiles and PC covers, through to finished products.",
+      image: null
+    },
+    {
+      year: "2021",
+      month: "September",
+      title: "Establishment of Guangdong Changqi Lighting Technology Co., Ltd.",
+      location: "Zhongshan",
+      description: "We focused on the R&D and scaled production of linear luminaires and LED linear aluminum profiles. By expanding production capacity and driving technological iteration, we significantly enhanced the manufacturing strength of our core products, meeting the demands of global market expansion.",
+      image: null
+    },
+    {
+      year: "2022",
+      month: "December",
+      title: "Establishment of Jiangmen Tianmai Trading Co., Ltd.",
+      description: "Professional integration of the Polycarbonate (PC) resin raw material supply chain — Establishing an industrial centralized procurement system to ensure stable supply and quality control of premium PC resin. This secures product consistency from the very start of the raw material stage and solidifies our core advantage: a fully controllable supply chain.",
+      image: null
+    },
+    {
+      year: "2023",
+      month: "January",
+      title: "Establishment of Jiangmen Paralight Lighting Technology Co., Ltd.",
+      description: "Relocation of the office team from Zhongshan to Jiangmen — Establishing the group's core operational hub to deeply integrate Jiangmen's industrial resources. This move drives the integrated development of production, R&D, and management, providing the organizational backbone for large-scale and global operations.",
+      image: null
+    },
+    {
+      year: "2024",
+      month: "July",
+      title: "Establishment of overseas company C & B in Brazil",
+      description: "Positioned as a distribution center in South America, we have built a regional warehousing and distribution network, significantly shortening delivery cycles in the South American market and enhancing the responsiveness and localized service capabilities of our global supply chain.",
+      image: null
+    },
+    {
+      year: "2025",
+      month: "March",
+      title: "Establishment of Maglinear Lighting Technology Co., Ltd.",
+      description: "By incorporating commercial lighting and magnetic track series into the product portfolio, we have expanded from a singular focus on linear lighting to a full-scenario linear lighting range encompassing \"linear + commercial + magnetic\" solutions, officially advancing toward becoming a \"full-scenario linear lighting solution provider.\"",
+      image: null
+    }
+  ];
+
+  const [currentMilestone, setCurrentMilestone] = useState(0);
+
+  const nextMilestone = () => {
+    setCurrentMilestone((prev) => (prev + 1) % milestones.length);
+  };
+
+  const prevMilestone = () => {
+    setCurrentMilestone((prev) => (prev - 1 + milestones.length) % milestones.length);
+  };
 
   const certifications = [
     { name: "High-tech Enterprise", desc: "Recognized innovation leader" },
@@ -166,6 +238,116 @@ export default function About() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
           </motion.div>
+        </div>
+      </section>
+
+      {/* Development Journey */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-[#00A8E8] rounded-full blur-[100px]" />
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-[#ECAA00] rounded-full blur-[120px]" />
+        </div>
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <span className="text-[#00A8E8] text-xs font-semibold uppercase tracking-widest">Advancing with Strategic Vision</span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold mt-2 mb-4">Development Journey</h2>
+            <p className="text-gray-600 max-w-3xl mx-auto text-base">
+              Guided by a clear strategic roadmap, Paralight Group has steadily advanced from a focused expert in linear lighting to a complete solutions partner for all lighting scenarios. Each phase of our growth reinforces our commitment to two key pillars: end-to-end supply chain mastery and worldwide strategic presence.
+            </p>
+          </motion.div>
+
+          {/* Slideshow */}
+          <div className="max-w-5xl mx-auto">
+            <div className="relative">
+              {/* Navigation Buttons */}
+              <button
+                onClick={prevMilestone}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-20 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
+                data-testid="button-prev-milestone"
+              >
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
+              </button>
+              <button
+                onClick={nextMilestone}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-20 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
+                data-testid="button-next-milestone"
+              >
+                <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
+              </button>
+
+              {/* Milestone Card */}
+              <motion.div
+                key={currentMilestone}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white rounded-2xl shadow-xl overflow-hidden"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                  {/* Image Placeholder */}
+                  <div className="h-64 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
+                    {milestones[currentMilestone].image ? (
+                      <img 
+                        src={milestones[currentMilestone].image} 
+                        alt={milestones[currentMilestone].title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-center p-8">
+                        <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <p className="text-gray-400 text-sm">Image coming soon</p>
+                      </div>
+                    )}
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-md">
+                      <span className="text-[#00A8E8] font-bold text-sm">{milestones[currentMilestone].month}</span>
+                      <span className="text-3xl font-display font-bold text-gray-900 ml-2">{milestones[currentMilestone].year}</span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 lg:p-8 flex flex-col justify-center">
+                    <h3 className="text-xl lg:text-2xl font-display font-bold text-gray-900 mb-4">
+                      {milestones[currentMilestone].title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed text-sm lg:text-base">
+                      {milestones[currentMilestone].description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Timeline Dots */}
+            <div className="flex justify-center items-center gap-2 mt-8">
+              {milestones.map((milestone, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentMilestone(index)}
+                  className={`transition-all duration-300 ${
+                    index === currentMilestone 
+                      ? 'w-8 h-3 bg-gradient-to-r from-[#00A8E8] to-[#ECAA00] rounded-full' 
+                      : 'w-3 h-3 bg-gray-300 rounded-full hover:bg-gray-400'
+                  }`}
+                  data-testid={`button-milestone-${index}`}
+                >
+                  <span className="sr-only">{milestone.year}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Year Labels */}
+            <div className="flex justify-between items-center mt-4 px-4">
+              <span className="text-sm font-semibold text-[#00A8E8]">2016</span>
+              <span className="text-xs text-gray-400">Timeline</span>
+              <span className="text-sm font-semibold text-[#ECAA00]">2025</span>
+            </div>
+          </div>
         </div>
       </section>
 
