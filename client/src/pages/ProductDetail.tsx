@@ -160,6 +160,74 @@ export default function ProductDetail() {
     fetchProduct();
   }, [params?.id]);
 
+  // All hooks must be called before any early returns
+  const brandColor = product?.brand === "Paralight" ? "#00A8E8" : "#ECAA00";
+
+  const specs = useMemo(() => {
+    if (!product) return [];
+    return [
+      { label: "Model", value: product.modelNumber },
+      { label: "Wattage", value: product.wattage },
+      { label: "Application", value: product.application },
+      { label: "Material", value: product.material },
+      { label: "Finish", value: product.finish },
+      { label: "Dimensions", value: product.dimensions },
+      { label: "Voltage", value: product.voltage },
+      { label: "Color", value: product.color },
+      { label: "CRI", value: product.cri },
+      { label: "CCT", value: product.cct },
+      { label: "Beam Angle", value: product.beamAngle },
+      // Paralight-specific specs
+      ...(product.brand === "Paralight" ? [
+        { label: "Sub Series", value: product.subSeries },
+        { label: "Standard Length", value: product.standardLength },
+        { label: "Diffuser Finish", value: product.diffuserFinish },
+        { label: "Diffuser Material", value: product.diffuserMaterial },
+        { label: "Accessories", value: product.accessories },
+        { label: "LED Strip Size", value: product.ledStripSize },
+        { label: "Installation Method", value: product.installationMethod },
+      ] : []),
+      // Maglinear-specific specs
+      ...(product.brand === "Maglinear" ? [
+        { label: "Mounting Track", value: product.mountingTrack },
+      ] : [])
+    ].filter((spec) => spec.value && spec.value.trim() !== "");
+  }, [product]);
+
+  // Parse additional specification rows
+  const additionalSpecRows = useMemo(() => {
+    if (!product?.technicalSpecs) return [];
+    try {
+      return JSON.parse(product.technicalSpecs) as Array<{ model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string }>;
+    } catch {
+      return [];
+    }
+  }, [product?.technicalSpecs]);
+
+  // Convert additional rows to displayable specs
+  const getAdditionalRowSpecs = useCallback((row: typeof additionalSpecRows[0]) => {
+    const rowSpecs = [
+      { label: "Model", value: row.model },
+      { label: "Wattage", value: row.wattage },
+      { label: "Application", value: row.application },
+      { label: "Finish", value: row.finish },
+      { label: "Material", value: row.material },
+      { label: "Dimensions", value: row.dimensions },
+      { label: "Voltage", value: row.voltage },
+      { label: "Color", value: row.color },
+      { label: "CRI", value: row.cri },
+      { label: "CCT", value: row.cct },
+      { label: "Beam Angle", value: row.beamAngle },
+      { label: "Mounting Track", value: row.mountingTrack },
+      { label: "Diffuser Material", value: row.diffuserMaterial },
+      { label: "Accessories", value: row.accessories },
+      { label: "LED Strip Size", value: row.ledStripSize },
+      { label: "Installation Method", value: row.installationMethod },
+    ];
+    return rowSpecs.filter((spec) => spec.value && spec.value.trim() !== "");
+  }, []);
+
+  // Early returns after all hooks
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center">
@@ -188,69 +256,6 @@ export default function ProductDetail() {
       </div>
     );
   }
-
-  const brandColor = product.brand === "Paralight" ? "#00A8E8" : "#ECAA00";
-
-  const specs = useMemo(() => [
-    { label: "Model", value: product.modelNumber },
-    { label: "Wattage", value: product.wattage },
-    { label: "Application", value: product.application },
-    { label: "Material", value: product.material },
-    { label: "Finish", value: product.finish },
-    { label: "Dimensions", value: product.dimensions },
-    { label: "Voltage", value: product.voltage },
-    { label: "Color", value: product.color },
-    { label: "CRI", value: product.cri },
-    { label: "CCT", value: product.cct },
-    { label: "Beam Angle", value: product.beamAngle },
-    // Paralight-specific specs
-    ...(product.brand === "Paralight" ? [
-      { label: "Sub Series", value: product.subSeries },
-      { label: "Standard Length", value: product.standardLength },
-      { label: "Diffuser Finish", value: product.diffuserFinish },
-      { label: "Diffuser Material", value: product.diffuserMaterial },
-      { label: "Accessories", value: product.accessories },
-      { label: "LED Strip Size", value: product.ledStripSize },
-      { label: "Installation Method", value: product.installationMethod },
-    ] : []),
-    // Maglinear-specific specs
-    ...(product.brand === "Maglinear" ? [
-      { label: "Mounting Track", value: product.mountingTrack },
-    ] : [])
-  ].filter((spec) => spec.value && spec.value.trim() !== ""), [product]);
-
-  // Parse additional specification rows
-  const additionalSpecRows = useMemo(() => {
-    if (!product.technicalSpecs) return [];
-    try {
-      return JSON.parse(product.technicalSpecs) as Array<{ model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string }>;
-    } catch {
-      return [];
-    }
-  }, [product.technicalSpecs]);
-
-  // Convert additional rows to displayable specs
-  const getAdditionalRowSpecs = useCallback((row: typeof additionalSpecRows[0]) => {
-    const rowSpecs = [
-      { label: "Model", value: row.model },
-      { label: "Wattage", value: row.wattage },
-      { label: "Application", value: row.application },
-      { label: "Finish", value: row.finish },
-      { label: "Material", value: row.material },
-      { label: "Dimensions", value: row.dimensions },
-      { label: "Voltage", value: row.voltage },
-      { label: "Color", value: row.color },
-      { label: "CRI", value: row.cri },
-      { label: "CCT", value: row.cct },
-      { label: "Beam Angle", value: row.beamAngle },
-      { label: "Mounting Track", value: row.mountingTrack },
-      { label: "Diffuser Material", value: row.diffuserMaterial },
-      { label: "Accessories", value: row.accessories },
-      { label: "LED Strip Size", value: row.ledStripSize },
-      { label: "Installation Method", value: row.installationMethod },
-    ];
-    return rowSpecs.filter((spec) => spec.value && spec.value.trim() !== "");
-  }, []);
 
   return (
     <div className="min-h-screen bg-white">
