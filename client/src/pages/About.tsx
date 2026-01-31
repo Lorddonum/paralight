@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import aboutVideo from "@/assets/about-video.mp4";
 import chairmanImg from "@/assets/chairman-situ.png";
 import ceoImg from "@/assets/ceo-michelle.png";
 import salesTeamImg from "@/assets/sales-team.png";
@@ -256,7 +255,7 @@ export default function About() {
             className="aspect-video relative overflow-hidden rounded-2xl shadow-2xl group"
           >
             <video 
-              src={aboutVideo} 
+              src="/videos/about-video.mp4" 
               autoPlay 
               loop 
               muted 
