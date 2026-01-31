@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import paralightImg from "@assets/generated_images/stack_of_premium_aluminum_profiles.png";
+import paralightImg from "@/assets/paralight-brand.png";
 import maglinearImg from "@assets/generated_images/modern_magnetic_track_lighting_system_interior.png";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
