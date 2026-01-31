@@ -65,7 +65,7 @@ export default function BrandSplit() {
                   <img 
                     src={brand.image} 
                     alt={brand.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-cover object-[center_35%] transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                   />
                   
