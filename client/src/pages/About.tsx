@@ -639,94 +639,96 @@ export default function About() {
       </section>
 
       {/* Showcase Animation Section */}
-      <section className="py-0 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 overflow-hidden">
-        <div className="relative min-h-[600px] lg:min-h-[550px]">
-          {/* Image 3 - Top Left - Sketching */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="absolute top-0 left-0 w-[32%] lg:w-[28%] z-10"
-          >
-            <img 
-              src="/images/showcase-3.png" 
-              alt="Design sketching"
-              className="w-full h-auto grayscale"
-              loading="eager"
-            />
-          </motion.div>
+      <section className="py-24 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 overflow-hidden">
+        <div className="container mx-auto px-8 lg:px-12">
+          <div className="relative h-[700px] lg:h-[800px]">
+            {/* Image 3 - Top Left - Sketching */}
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="absolute top-0 left-0 w-[45%] lg:w-[40%] z-30"
+            >
+              <img 
+                src="/images/showcase-3.png" 
+                alt="Design sketching"
+                className="w-full h-auto rounded-lg shadow-2xl grayscale"
+                loading="eager"
+              />
+            </motion.div>
 
-          {/* Image 2 - Bottom Left - Living Room */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="absolute bottom-0 left-0 w-[28%] lg:w-[24%] z-20"
-          >
-            <img 
-              src="/images/showcase-2.png" 
-              alt="Modern living room lighting"
-              className="w-full h-auto"
-              loading="eager"
-            />
-          </motion.div>
+            {/* Image 2 - Bottom Left - Living Room */}
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="absolute bottom-0 left-0 w-[35%] lg:w-[30%] z-20"
+            >
+              <img 
+                src="/images/showcase-2.png" 
+                alt="Modern living room lighting"
+                className="w-full h-auto rounded-lg shadow-2xl"
+                loading="eager"
+              />
+            </motion.div>
 
-          {/* Image 1 - Top Right - Showroom */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-            className="absolute top-0 right-0 w-[38%] lg:w-[34%] z-10"
-          >
-            <img 
-              src="/images/showcase-1.png" 
-              alt="Modern showroom"
-              className="w-full h-auto"
-              loading="eager"
-            />
-          </motion.div>
+            {/* Image 1 - Top Right - Showroom */}
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+              className="absolute top-[2%] right-[-3%] w-[45%] lg:w-[40%] z-10"
+            >
+              <img 
+                src="/images/showcase-1.png" 
+                alt="Modern showroom"
+                className="w-full h-auto rounded-lg shadow-2xl"
+                loading="eager"
+              />
+            </motion.div>
 
-          {/* Image 4 - Bottom Center Right - Measuring */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
-            className="absolute bottom-[5%] right-[18%] w-[32%] lg:w-[28%] z-30"
-          >
-            <img 
-              src="/images/showcase-4.png" 
-              alt="Precision measurement"
-              className="w-full h-auto grayscale"
-              loading="eager"
-            />
-          </motion.div>
+            {/* Image 4 - Bottom Right - Measuring */}
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              className="absolute bottom-[-5%] right-[15%] w-[50%] lg:w-[45%] z-20"
+            >
+              <img 
+                src="/images/showcase-4.png" 
+                alt="Precision measurement"
+                className="w-full h-auto rounded-lg shadow-2xl grayscale"
+                loading="eager"
+              />
+            </motion.div>
 
-          {/* Center Text Block */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[36%] bg-amber-800 p-8 lg:p-12 z-40"
-          >
-            <h2 className="font-display text-2xl lg:text-4xl font-medium text-white mb-4 leading-tight">
-              <span className="italic">In-House Design.</span><br />
-              World-Class Quality
-            </h2>
-            <p className="text-amber-100/90 text-sm lg:text-base leading-relaxed">
-              At Paralight Group, we bridge the gap between technical innovation and manufacturing excellence. By designing and producing our own products in-house, we deliver high-performance lighting solutions built with meticulous precision.
-            </p>
-          </motion.div>
+            {/* Center Text Block */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50%] lg:w-[40%] bg-amber-800 p-10 lg:p-14 z-40 shadow-2xl"
+            >
+              <h2 className="font-display text-3xl lg:text-5xl font-medium text-white mb-5 leading-tight">
+                <span className="italic">In-House Design.</span><br />
+                World-Class Quality
+              </h2>
+              <p className="text-amber-100/90 text-base lg:text-lg leading-relaxed">
+                At Paralight Group, we bridge the gap between technical innovation and manufacturing excellence. By designing and producing our own products in-house, we deliver high-performance lighting solutions built with meticulous precision.
+              </p>
+            </motion.div>
 
-          {/* Decorative star */}
-          <div className="absolute bottom-4 right-4 text-amber-600/60">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" />
-            </svg>
+            {/* Decorative star */}
+            <div className="absolute bottom-6 right-6 text-amber-500/70">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" />
+              </svg>
+            </div>
           </div>
         </div>
       </section>
