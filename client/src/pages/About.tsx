@@ -712,7 +712,7 @@ export default function About() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-amber-800 p-6 lg:p-10 z-40 shadow-2xl"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-amber-800/80 backdrop-blur-sm p-6 lg:p-10 z-40 shadow-2xl"
             >
               <h2 className="font-display text-2xl lg:text-3xl font-medium text-white mb-3 leading-tight">
                 <span className="italic">In-House Design.</span><br />
