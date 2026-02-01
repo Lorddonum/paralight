@@ -204,7 +204,7 @@ export default function ProductDetail() {
   }, [product?.technicalSpecs]);
 
   // Convert additional rows to displayable specs - Model always shows first
-  const getAdditionalRowSpecs = useCallback((row: typeof additionalSpecRows[0]) => {
+  const getAdditionalRowSpecs = useCallback((row: typeof additionalSpecRows[0], mainModelNumber: string) => {
     const otherSpecs = [
       { label: "Wattage", value: row.wattage },
       { label: "Application", value: row.application },
@@ -223,9 +223,9 @@ export default function ProductDetail() {
       { label: "Installation Method", value: row.installationMethod },
     ].filter((spec) => spec.value && spec.value.trim() !== "");
     
-    // Always include Model as the first column
+    // Always include Model as the first column, use main model if not specified
     return [
-      { label: "Model", value: row.model?.trim() || "—" },
+      { label: "Model", value: row.model?.trim() || mainModelNumber },
       ...otherSpecs
     ];
   }, []);
@@ -454,7 +454,7 @@ export default function ProductDetail() {
 
                 {/* Additional Specification Rows */}
                 {additionalSpecRows.map((row, rowIndex) => {
-                  const rowSpecs = getAdditionalRowSpecs(row);
+                  const rowSpecs = getAdditionalRowSpecs(row, product.modelNumber);
                   if (rowSpecs.length === 0) return null;
                   return (
                     <div key={rowIndex} className="border-t border-gray-100">
