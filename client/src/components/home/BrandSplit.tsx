@@ -15,7 +15,7 @@ export default function BrandSplit() {
       link: "/products?brand=Paralight"
     },
     {
-      name: "Maglinear",
+      name: "Maglinear Lighting",
       subtitle: "Magnetic Track Systems",
       description: "Advanced magnetic track lighting and commercial lighting solutions. Panels, downlights, and pendant systems designed for modern architectural spaces.",
       image: maglinearImg,
@@ -60,7 +60,7 @@ export default function BrandSplit() {
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
               <Link href={brand.link}>
-                <div className="group relative h-[550px] lg:h-[650px] overflow-hidden cursor-pointer">
+                <div className="group relative h-[450px] lg:h-[520px] overflow-hidden cursor-pointer">
                   {/* Image */}
                   <img 
                     src={brand.image} 
