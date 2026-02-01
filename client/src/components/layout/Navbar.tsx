@@ -36,17 +36,17 @@ export default function Navbar() {
       )}
     >
       <div className="container mx-auto px-8 lg:px-12">
-        <div className="flex items-center justify-between h-20 lg:h-24">
+        <div className="flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center -space-x-6 hover:opacity-80 transition-opacity duration-300"
           >
-            <div className="h-12 lg:h-14 overflow-hidden flex items-center">
-              <img src={paralightLogo} alt="Paralight" className="h-32 lg:h-36 max-w-[280px] object-cover object-center" />
+            <div className="h-10 lg:h-12 overflow-hidden flex items-center">
+              <img src={paralightLogo} alt="Paralight" className="h-28 lg:h-32 max-w-[240px] object-cover object-center" />
             </div>
-            <div className="h-12 lg:h-14 overflow-hidden flex items-center">
-              <img src={maglinearLogo} alt="Maglinear" className="h-20 lg:h-24 max-w-[200px] object-cover object-center" />
+            <div className="h-10 lg:h-12 overflow-hidden flex items-center">
+              <img src={maglinearLogo} alt="Maglinear" className="h-16 lg:h-20 max-w-[160px] object-cover object-center" />
             </div>
           </Link>
           
