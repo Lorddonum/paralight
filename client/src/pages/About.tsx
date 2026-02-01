@@ -639,7 +639,7 @@ export default function About() {
       </section>
 
       {/* Showcase Animation Section */}
-      <section className="py-24 bg-gray-50 overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-amber-950 via-amber-900 to-amber-950 overflow-hidden">
         <div className="container mx-auto px-8 lg:px-12">
           <div className="relative h-[600px] lg:h-[700px]">
             {/* Image 3 - Top Left - Sketching */}
