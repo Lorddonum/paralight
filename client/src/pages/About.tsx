@@ -4,6 +4,10 @@ import Footer from "@/components/layout/Footer";
 import chairmanImg from "@/assets/chairman-situ.png";
 import ceoImg from "@/assets/ceo-michelle.png";
 import coreTeamImg from "@/assets/core-team.png";
+import showcase1 from "@/assets/showcase-1.png";
+import showcase2 from "@/assets/showcase-2.png";
+import showcase3 from "@/assets/showcase-3.png";
+import showcase4 from "@/assets/showcase-4.png";
 import milestone2016_1 from "@/assets/milestone-2016-1.png";
 import milestone2016_2 from "@/assets/milestone-2016-2.png";
 import milestone2016_3 from "@/assets/milestone-2016-3.png";
@@ -632,6 +636,77 @@ export default function About() {
                 </div>
                 <Quote className="w-10 h-10 text-[#ECAA00] opacity-20 absolute bottom-4 right-4 rotate-180" />
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Showcase Animation Section */}
+      <section className="py-24 bg-gray-50 overflow-hidden">
+        <div className="container mx-auto px-8 lg:px-12">
+          <div className="relative h-[600px] lg:h-[700px]">
+            {/* Image 3 - Top Left - Sketching */}
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="absolute top-0 left-0 w-[45%] lg:w-[40%] z-10"
+            >
+              <img 
+                src={showcase3} 
+                alt="Design sketching"
+                className="w-full h-auto rounded-lg shadow-2xl"
+                loading="lazy"
+              />
+            </motion.div>
+
+            {/* Image 2 - Left Middle - Living Room */}
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="absolute top-[35%] left-0 w-[35%] lg:w-[30%] z-20"
+            >
+              <img 
+                src={showcase2} 
+                alt="Modern living room lighting"
+                className="w-full h-auto rounded-lg shadow-2xl"
+                loading="lazy"
+              />
+            </motion.div>
+
+            {/* Image 1 - Right Top - Showroom */}
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+              className="absolute top-[10%] right-0 w-[45%] lg:w-[40%] z-10"
+            >
+              <img 
+                src={showcase1} 
+                alt="Modern showroom"
+                className="w-full h-auto rounded-lg shadow-2xl"
+                loading="lazy"
+              />
+            </motion.div>
+
+            {/* Image 4 - Bottom Right - Measuring */}
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              className="absolute bottom-0 right-[5%] w-[50%] lg:w-[45%] z-20"
+            >
+              <img 
+                src={showcase4} 
+                alt="Precision measurement"
+                className="w-full h-auto rounded-lg shadow-2xl"
+                loading="lazy"
+              />
             </motion.div>
           </div>
         </div>
