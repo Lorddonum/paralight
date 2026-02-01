@@ -60,7 +60,7 @@ export default function BrandSplit() {
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
               <Link href={brand.link}>
-                <div className="group relative h-[450px] lg:h-[520px] overflow-hidden cursor-pointer">
+                <div className="group relative h-[500px] lg:h-[580px] overflow-hidden cursor-pointer">
                   {/* Image */}
                   <img 
                     src={brand.image} 
