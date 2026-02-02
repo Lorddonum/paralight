@@ -382,68 +382,111 @@ function ExhibitionsSection() {
 
 function ProjectGallery() {
   const projects = [
-    { image: project1, title: "Luxury Living Space" },
-    { image: project2, title: "Modern Residential Interior" },
-    { image: project3, title: "Contemporary Family Room" },
-    { image: project4, title: "Designer Living Area" },
-    { image: project5, title: "Elegant Home Design" },
-    { image: project6, title: "Sophisticated Interior" },
+    { image: project1 },
+    { image: project2 },
+    { image: project3 },
+    { image: project4 },
+    { image: project5 },
+    { image: project6 },
   ];
 
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const clipPaths = [
+    "polygon(0 15%, 100% 0, 100% 85%, 0 100%)",
+    "polygon(0 0, 100% 10%, 100% 100%, 0 90%)",
+    "polygon(5% 0, 100% 0, 95% 100%, 0 100%)",
+    "polygon(0 0, 95% 5%, 100% 100%, 5% 95%)",
+    "polygon(0 5%, 100% 0, 100% 95%, 0 100%)",
+    "polygon(0 0, 100% 8%, 100% 92%, 0 100%)",
+  ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <span className="text-[#00A8E8] text-xs font-semibold uppercase tracking-widest">
-            Lighting in Action
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mt-2 mb-4">
-            Project Showcase
-          </h2>
-          <p className="text-gray-600 max-w-xl mx-auto text-lg">
-            See how our lighting solutions transform residential and commercial spaces 
-            into stunning environments.
-          </p>
-        </motion.div>
+    <section className="py-16 bg-gray-900 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="relative h-[600px] md:h-[700px]">
+          {projects.map((project, index) => {
+            const positions = [
+              { top: "0%", left: "0%", width: "45%", height: "55%", rotate: -2, z: 10 },
+              { top: "5%", left: "40%", width: "35%", height: "45%", rotate: 3, z: 20 },
+              { top: "0%", left: "68%", width: "32%", height: "50%", rotate: -1, z: 15 },
+              { top: "48%", left: "5%", width: "38%", height: "52%", rotate: 2, z: 25 },
+              { top: "45%", left: "38%", width: "32%", height: "48%", rotate: -3, z: 30 },
+              { top: "42%", left: "65%", width: "35%", height: "55%", rotate: 1, z: 22 },
+            ];
+            const pos = positions[index];
+            const isHovered = hoveredIndex === index;
+            const isOtherHovered = hoveredIndex !== null && hoveredIndex !== index;
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`relative overflow-hidden cursor-pointer group ${
-                index === 0 ? "col-span-2 row-span-2" : ""
-              }`}
-              onClick={() => setSelectedImage(index)}
-              data-testid={`button-project-${index}`}
-            >
-              <div className={`${index === 0 ? "aspect-square" : "aspect-[4/3]"} overflow-hidden`}>
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="text-white font-display text-lg font-medium">
-                    {project.title}
-                  </h3>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50, rotate: pos.rotate * 2 }}
+                whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15, duration: 0.6, type: "spring" }}
+                className="absolute cursor-pointer"
+                style={{
+                  top: pos.top,
+                  left: pos.left,
+                  width: pos.width,
+                  height: pos.height,
+                  zIndex: isHovered ? 50 : pos.z,
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => setSelectedImage(index)}
+                data-testid={`button-project-${index}`}
+              >
+                <motion.div
+                  className="w-full h-full relative"
+                  animate={{
+                    scale: isHovered ? 1.15 : isOtherHovered ? 0.95 : 1,
+                    rotate: isHovered ? 0 : pos.rotate,
+                    filter: isOtherHovered ? "brightness(0.5) blur(2px)" : "brightness(1) blur(0px)",
+                  }}
+                  transition={{ duration: 0.4, type: "spring", stiffness: 200 }}
+                >
+                  <div
+                    className="w-full h-full overflow-hidden shadow-2xl"
+                    style={{ clipPath: clipPaths[index] }}
+                  >
+                    <motion.img
+                      src={project.image}
+                      alt={`Project ${index + 1}`}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                      animate={{
+                        scale: isHovered ? 1.1 : 1.2,
+                        x: isHovered ? 0 : (index % 2 === 0 ? -20 : 20),
+                        y: isHovered ? 0 : (index % 3 === 0 ? -15 : 15),
+                      }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </div>
+                  <motion.div
+                    className="absolute inset-0 border-2 border-white/20 pointer-events-none"
+                    style={{ clipPath: clipPaths[index] }}
+                    animate={{
+                      borderColor: isHovered ? "rgba(0, 168, 232, 0.6)" : "rgba(255,255,255,0.2)",
+                      boxShadow: isHovered ? "0 0 40px rgba(0, 168, 232, 0.3)" : "none",
+                    }}
+                  />
+                </motion.div>
+              </motion.div>
+            );
+          })}
+
+          <motion.div 
+            className="absolute bottom-4 right-4 text-right"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 1 }}
+          >
+            <span className="text-gray-500 text-xs uppercase tracking-widest">Hover to explore</span>
+          </motion.div>
         </div>
       </div>
 
@@ -478,23 +521,36 @@ function ProjectGallery() {
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
 
-            <div 
+            <motion.div 
               className="max-w-5xl max-h-[90vh] mx-4"
               onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.8, rotate: -5 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0.8, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 200 }}
             >
               <motion.img
                 key={selectedImage}
                 src={projects[selectedImage].image}
-                alt={projects[selectedImage].title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
+                alt={`Project ${selectedImage + 1}`}
                 className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
               />
-              <div className="text-center mt-4">
-                <h4 className="text-white font-display text-xl">{projects[selectedImage].title}</h4>
-              </div>
+            </motion.div>
+
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
+              {projects.map((_, index) => (
+                <motion.button
+                  key={index}
+                  onClick={(e) => { e.stopPropagation(); setSelectedImage(index); }}
+                  className="w-16 h-12 overflow-hidden rounded opacity-50 hover:opacity-100 transition-opacity"
+                  animate={{ 
+                    opacity: index === selectedImage ? 1 : 0.5,
+                    scale: index === selectedImage ? 1.1 : 1,
+                  }}
+                >
+                  <img src={projects[index].image} alt="" className="w-full h-full object-cover" />
+                </motion.button>
+              ))}
             </div>
           </motion.div>
         )}
