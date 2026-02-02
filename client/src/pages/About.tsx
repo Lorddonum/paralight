@@ -28,6 +28,12 @@ import honor7 from "@/assets/honor-7.jpg";
 import honor8 from "@/assets/honor-8.jpg";
 import honor9 from "@/assets/honor-9.jpg";
 import honor10 from "@/assets/honor-10.jpg";
+import project1 from "@/assets/project-1.jpg";
+import project2 from "@/assets/project-2.jpg";
+import project3 from "@/assets/project-3.jpg";
+import project4 from "@/assets/project-4.jpg";
+import project5 from "@/assets/project-5.jpg";
+import project6 from "@/assets/project-6.jpg";
 import {
   Truck,
   Users,
@@ -368,6 +374,129 @@ function ExhibitionsSection() {
       <AnimatePresence>
         {selectedEvent && (
           <ExhibitionLightbox event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
+function ProjectGallery() {
+  const projects = [
+    { image: project1, title: "Luxury Living Space" },
+    { image: project2, title: "Modern Residential Interior" },
+    { image: project3, title: "Contemporary Family Room" },
+    { image: project4, title: "Designer Living Area" },
+    { image: project5, title: "Elegant Home Design" },
+    { image: project6, title: "Sophisticated Interior" },
+  ];
+
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+
+  return (
+    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <span className="text-[#00A8E8] text-xs font-semibold uppercase tracking-widest">
+            Lighting in Action
+          </span>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mt-2 mb-4">
+            Project Showcase
+          </h2>
+          <p className="text-gray-600 max-w-xl mx-auto text-lg">
+            See how our lighting solutions transform residential and commercial spaces 
+            into stunning environments.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+          {projects.map((project, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className={`relative overflow-hidden cursor-pointer group ${
+                index === 0 ? "col-span-2 row-span-2" : ""
+              }`}
+              onClick={() => setSelectedImage(index)}
+              data-testid={`button-project-${index}`}
+            >
+              <div className={`${index === 0 ? "aspect-square" : "aspect-[4/3]"} overflow-hidden`}>
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-display text-lg font-medium">
+                    {project.title}
+                  </h3>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {selectedImage !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10"
+              data-testid="button-close-project-lightbox"
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => prev !== null ? (prev - 1 + projects.length) % projects.length : 0); }}
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            >
+              <ChevronLeft className="w-6 h-6 text-white" />
+            </button>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => prev !== null ? (prev + 1) % projects.length : 0); }}
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            >
+              <ChevronRight className="w-6 h-6 text-white" />
+            </button>
+
+            <div 
+              className="max-w-5xl max-h-[90vh] mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.img
+                key={selectedImage}
+                src={projects[selectedImage].image}
+                alt={projects[selectedImage].title}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+              />
+              <div className="text-center mt-4">
+                <h4 className="text-white font-display text-xl">{projects[selectedImage].title}</h4>
+              </div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>
@@ -1316,6 +1445,9 @@ export default function About() {
 
       {/* Exhibitions Section */}
       <ExhibitionsSection />
+
+      {/* Project Gallery */}
+      <ProjectGallery />
 
       {/* Global Delivery */}
       <section className="py-16 bg-white">
