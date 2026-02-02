@@ -525,19 +525,7 @@ export default function Products() {
                               </div>
                               
                               {/* Brand badge */}
-                              <div 
-                                className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-wider uppercase backdrop-blur-md shadow-lg"
-                                style={{
-                                  backgroundColor: product.brand === "Paralight" 
-                                    ? "rgba(0, 168, 232, 0.5)" 
-                                    : "rgba(236, 170, 0, 0.5)",
-                                  color: "white",
-                                  borderWidth: "1px",
-                                  borderColor: product.brand === "Paralight" 
-                                    ? "rgba(0, 168, 232, 0.3)" 
-                                    : "rgba(236, 170, 0, 0.3)",
-                                }}
-                              >
+                              <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-wider uppercase backdrop-blur-md shadow-lg bg-white/20 text-gray-900 border border-white/30">
                                 {product.brand}
                               </div>
                             </div>
