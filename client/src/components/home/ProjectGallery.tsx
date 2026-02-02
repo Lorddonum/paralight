@@ -170,7 +170,7 @@ export default function ProjectGallery() {
           })}
         </div>
 
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3">
+        <div className="relative mt-6 flex justify-center gap-3">
           {projects.map((_, index) => (
             <motion.div
               key={index}
