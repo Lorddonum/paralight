@@ -438,9 +438,9 @@ function HonorsSlideshow() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden bg-white/5 border border-white/10 p-8 md:p-12">
-        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
-          <div className="relative w-full md:w-2/3 aspect-[4/3] bg-white rounded-lg overflow-hidden shadow-2xl">
+      <div className="relative overflow-hidden bg-white/5 border border-white/10 p-4 md:p-6 max-w-2xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+          <div className="relative w-full md:w-1/2 aspect-[4/3] bg-white rounded-lg overflow-hidden shadow-xl">
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentSlide}
@@ -451,7 +451,7 @@ function HonorsSlideshow() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.5 }}
-                className="w-full h-full object-contain p-4"
+                className="w-full h-full object-contain p-2"
               />
             </AnimatePresence>
           </div>
@@ -465,28 +465,28 @@ function HonorsSlideshow() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4 }}
               >
-                <span className="text-brand-gold text-sm font-medium tracking-wide">
+                <span className="text-brand-gold text-xs font-medium tracking-wide">
                   {honors[currentSlide].year}
                 </span>
-                <h4 className="font-display text-xl md:text-2xl text-white font-medium mt-2 mb-4">
+                <h4 className="font-display text-base md:text-lg text-white font-medium mt-1 mb-2">
                   {honors[currentSlide].title}
                 </h4>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-gray-400 text-xs leading-relaxed">
                   Official certification recognizing Paralight Group's
                   commitment to quality, innovation, and industry excellence.
                 </p>
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex items-center justify-center md:justify-start gap-2 mt-8">
+            <div className="flex items-center justify-center md:justify-start gap-1.5 mt-4">
               {honors.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={`h-1 transition-all duration-300 ${
                     index === currentSlide
-                      ? "w-8 bg-brand-gold"
-                      : "w-4 bg-gray-600 hover:bg-gray-500"
+                      ? "w-6 bg-brand-gold"
+                      : "w-3 bg-gray-600 hover:bg-gray-500"
                   }`}
                 />
               ))}
