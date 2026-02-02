@@ -37,11 +37,11 @@ export default function GlobalNetwork() {
             <div 
               className="absolute inset-0 -z-10"
               style={{
-                background: 'rgba(245, 240, 232, 0.5)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                maskImage: 'radial-gradient(ellipse 80% 80% at center, black 0%, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 70%, transparent 90%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at center, black 0%, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 70%, transparent 90%)',
+                background: 'rgba(245, 240, 232, 0.55)',
+                backdropFilter: 'blur(18px)',
+                WebkitBackdropFilter: 'blur(18px)',
+                maskImage: 'radial-gradient(ellipse 90% 90% at 30% 35%, black 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.15) 70%, transparent 90%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 30% 35%, black 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.15) 70%, transparent 90%)',
               }}
             />
             <span className="inline-block text-[11px] font-medium tracking-[0.3em] uppercase text-gray-500 mb-4">
