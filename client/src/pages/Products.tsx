@@ -404,63 +404,43 @@ export default function Products() {
             {/* Product grid */}
             <div className="flex-1">
               {/* Results header */}
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center justify-between mb-8 bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm border border-gray-100/50"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center">
-                    <Package className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      {filteredProducts.length} Products
-                    </p>
-                    <p className="text-xs text-gray-400">
-                      {activeBrand === "All" ? "All brands" : activeBrand}
-                    </p>
-                  </div>
-                </div>
+              <div className="flex items-center justify-between mb-6">
+                <p className="text-sm text-gray-500">
+                  <span className="font-medium text-gray-900">{filteredProducts.length}</span> products
+                </p>
                 
                 {(activeSeries !== "All" || activeSubSeries !== "All" || searchQuery) && (
                   <div className="flex items-center gap-2 flex-wrap">
                     {activeSeries !== "All" && (
-                      <motion.button 
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
+                      <button 
                         onClick={() => setActiveSeries("All")}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-cyan/10 text-brand-cyan text-xs font-medium rounded-full hover:bg-brand-cyan/20 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium rounded-full hover:bg-gray-200 transition-colors"
                       >
                         {activeSeries}
                         <X className="w-3 h-3" />
-                      </motion.button>
+                      </button>
                     )}
                     {activeSubSeries !== "All" && (
-                      <motion.button 
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
+                      <button 
                         onClick={() => setActiveSubSeries("All")}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-gold/10 text-brand-gold text-xs font-medium rounded-full hover:bg-brand-gold/20 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium rounded-full hover:bg-gray-200 transition-colors"
                       >
                         {activeSubSeries}
                         <X className="w-3 h-3" />
-                      </motion.button>
+                      </button>
                     )}
                     {searchQuery && (
-                      <motion.button 
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
+                      <button 
                         onClick={() => setSearchQuery("")}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-100 text-gray-600 text-xs font-medium rounded-full hover:bg-gray-200 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium rounded-full hover:bg-gray-200 transition-colors"
                       >
                         "{searchQuery}"
                         <X className="w-3 h-3" />
-                      </motion.button>
+                      </button>
                     )}
                   </div>
                 )}
-              </motion.div>
+              </div>
 
               {isLoading ? (
                 <div className="flex justify-center py-40">
