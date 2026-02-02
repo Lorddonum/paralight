@@ -4,6 +4,7 @@ import Hero from "@/components/home/Hero";
 import BrandSplit from "@/components/home/BrandSplit";
 import GlobalNetwork from "@/components/home/GlobalNetwork";
 import Exhibition from "@/components/home/Exhibition";
+import ProjectGallery from "@/components/home/ProjectGallery";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <BrandSplit />
         <GlobalNetwork />
         <Exhibition />
+        <ProjectGallery />
       </main>
       <Footer />
     </div>
