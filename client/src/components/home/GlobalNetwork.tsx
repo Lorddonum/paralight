@@ -60,7 +60,7 @@ export default function GlobalNetwork() {
             </p>
 
             <Link href="/contact">
-              <button className="px-8 py-4 bg-gray-900 text-white text-sm font-medium tracking-wide hover:bg-gray-800 transition-colors duration-300">
+              <button className="px-8 py-4 bg-brand-gold text-gray-900 text-sm font-medium tracking-wide hover:bg-[#d49900] transition-colors duration-300">
                 Become a Partner
               </button>
             </Link>
