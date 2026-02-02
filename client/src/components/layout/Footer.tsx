@@ -34,7 +34,25 @@ export default function Footer() {
       <div className="relative h-1 bg-gradient-to-r from-[#00A8E8] via-[#ECAA00] to-[#00A8E8]" />
       
       <div className="relative container mx-auto px-8 lg:px-12">
-        {/* Contact CTA Section */}
+        {/* Brand Section - Top */}
+        <div className="pt-16 pb-12 border-b border-gray-800/30">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            <div className="flex items-center -space-x-6">
+              <div className="h-12 overflow-hidden flex items-center">
+                <img src={paralightLogo} alt="Paralight" className="h-32 max-w-[260px] object-cover object-center brightness-110" />
+              </div>
+              <div className="h-12 overflow-hidden flex items-center">
+                <img src={maglinearLogo} alt="Maglinear" className="h-20 max-w-[180px] object-cover object-center brightness-110" />
+              </div>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed max-w-md lg:text-right">
+              Premium LED aluminum profiles and magnetic track lighting systems, 
+              crafted for architects and designers who demand excellence.
+            </p>
+          </div>
+        </div>
+
+        {/* Contact & Social Section */}
         <div className="py-16 border-b border-gray-800/50">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Contact info - prominent */}
@@ -99,44 +117,25 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Main footer content */}
-        <div className="py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Brand */}
-          <div className="lg:col-span-5">
-            <div className="flex items-center -space-x-6 mb-4">
-              <div className="h-10 overflow-hidden flex items-center">
-                <img src={paralightLogo} alt="Paralight" className="h-28 max-w-[220px] object-cover object-center brightness-110" />
-              </div>
-              <div className="h-10 overflow-hidden flex items-center">
-                <img src={maglinearLogo} alt="Maglinear" className="h-16 max-w-[140px] object-cover object-center brightness-110" />
-              </div>
-            </div>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-md">
-              Premium LED aluminum profiles and magnetic track lighting systems, 
-              crafted for architects and designers who demand excellence.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div className="lg:col-span-7">
-            <div className="flex flex-wrap gap-x-8 gap-y-3 lg:justify-end">
-              {quickLinks.map((link) => (
-                <Link 
-                  key={link.name}
-                  href={link.href} 
-                  className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <span className="text-gray-700">|</span>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Terms of Service
-              </a>
-            </div>
+        {/* Quick Links */}
+        <div className="py-8">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+            {quickLinks.map((link) => (
+              <Link 
+                key={link.name}
+                href={link.href} 
+                className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <span className="text-gray-700">|</span>
+            <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
+              Terms of Service
+            </a>
           </div>
         </div>
 
