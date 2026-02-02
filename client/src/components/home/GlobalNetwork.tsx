@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import mapImg from "@assets/generated_images/abstract_global_connection_map.png";
+import mapImg from "@/assets/global-map.jpg";
 import { Globe, TrendingUp, Users } from "lucide-react";
 import { Link } from "wouter";
 
@@ -11,16 +11,17 @@ export default function GlobalNetwork() {
   ];
 
   return (
-    <section className="py-32 bg-gray-50 relative overflow-hidden">
-      {/* Subtle background */}
-      <div className="absolute inset-0 opacity-10">
+    <section className="py-32 bg-[#d8e4ec] relative overflow-hidden">
+      {/* Map background centered on China */}
+      <div className="absolute inset-0">
         <img
           src={mapImg}
           alt=""
-          className="w-full h-full object-cover"
+          className="w-[200%] h-full object-cover object-[70%_center]"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-transparent to-gray-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#d8e4ec]/80 via-transparent to-[#d8e4ec]/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#d8e4ec]/90 via-transparent to-[#d8e4ec]/60" />
       </div>
 
       <div className="container mx-auto px-8 lg:px-12 relative z-10">
