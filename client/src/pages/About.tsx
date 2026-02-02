@@ -393,6 +393,7 @@ function HonorsSlideshow() {
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -400,6 +401,18 @@ function HonorsSlideshow() {
     }, 4000);
     return () => clearInterval(timer);
   }, [honors.length]);
+
+  useEffect(() => {
+    if (lightboxOpen) {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setLightboxOpen(false);
+        if (e.key === "ArrowRight") setCurrentSlide((prev) => (prev + 1) % honors.length);
+        if (e.key === "ArrowLeft") setCurrentSlide((prev) => (prev - 1 + honors.length) % honors.length);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [lightboxOpen, honors.length]);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % honors.length);
   const prevSlide = () =>
@@ -440,7 +453,11 @@ function HonorsSlideshow() {
 
       <div className="relative overflow-hidden bg-white/5 border border-white/10 p-5 md:p-8 max-w-3xl mx-auto">
         <div className="flex flex-col md:flex-row items-center gap-5 md:gap-10">
-          <div className="relative w-full md:w-1/2 aspect-[4/3] bg-white rounded-lg overflow-hidden shadow-xl">
+          <div 
+            className="relative w-full md:w-1/2 aspect-[4/3] bg-white rounded-lg overflow-hidden shadow-xl cursor-pointer group"
+            onClick={() => setLightboxOpen(true)}
+            data-testid="button-honor-lightbox"
+          >
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentSlide}
@@ -451,9 +468,14 @@ function HonorsSlideshow() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.5 }}
-                className="w-full h-full object-contain p-3"
+                className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300"
               />
             </AnimatePresence>
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+              <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 px-3 py-1 rounded">
+                Click to view
+              </span>
+            </div>
           </div>
 
           <div className="flex-1 text-center md:text-left">
@@ -494,6 +516,76 @@ function HonorsSlideshow() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+            onClick={() => setLightboxOpen(false)}
+          >
+            <button
+              onClick={() => setLightboxOpen(false)}
+              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10"
+              data-testid="button-close-honor-lightbox"
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+              data-testid="button-prev-honor-lightbox"
+            >
+              <ChevronLeft className="w-6 h-6 text-white" />
+            </button>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+              data-testid="button-next-honor-lightbox"
+            >
+              <ChevronRight className="w-6 h-6 text-white" />
+            </button>
+
+            <div 
+              className="max-w-4xl max-h-[85vh] mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentSlide}
+                  src={honors[currentSlide].image}
+                  alt={honors[currentSlide].title}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="max-w-full max-h-[80vh] object-contain bg-white rounded-lg shadow-2xl"
+                />
+              </AnimatePresence>
+              <div className="text-center mt-4">
+                <h4 className="text-white font-display text-lg">{honors[currentSlide].title}</h4>
+                <span className="text-brand-gold text-sm">{honors[currentSlide].year}</span>
+              </div>
+            </div>
+
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+              {honors.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => { e.stopPropagation(); setCurrentSlide(index); }}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentSlide ? "bg-brand-gold w-6" : "bg-white/40 hover:bg-white/60"
+                  }`}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
