@@ -69,7 +69,7 @@ export default function GlobalNetwork() {
                   transition={{ delay: 0.1 + index * 0.1, duration: 0.6 }}
                   className="flex items-center gap-8 py-12 px-8"
                 >
-                  <stat.icon className="w-10 h-10 text-brand-cyan shrink-0" />
+                  <stat.icon className="w-10 h-10 text-brand-gold shrink-0" />
                   <div>
                     <h3 className="font-display text-4xl lg:text-5xl text-white font-medium">
                       {stat.value}
