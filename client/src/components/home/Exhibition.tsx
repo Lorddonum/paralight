@@ -82,6 +82,19 @@ const events: ExhibitionEvent[] = [
       "/exhibitions/india-2022/img-7.jpg",
     ]
   },
+  { 
+    name: "Expolux Brazil", 
+    location: "São Paulo, Brazil", 
+    date: "2022",
+    images: [
+      "/exhibitions/brazil-2022/img-1.jpg",
+      "/exhibitions/brazil-2022/img-2.jpg",
+      "/exhibitions/brazil-2022/img-3.jpg",
+      "/exhibitions/brazil-2022/img-4.jpg",
+      "/exhibitions/brazil-2022/img-5.jpg",
+      "/exhibitions/brazil-2022/img-6.jpg",
+    ]
+  },
 ];
 
 function ExhibitionCard({ event, onClick }: { event: ExhibitionEvent; onClick: () => void }) {
