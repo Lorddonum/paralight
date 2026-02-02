@@ -321,82 +321,93 @@ export default function Products() {
                     )}
                   </div>
 
-                  {/* Series filter */}
-                  <div className="p-6 border-b border-gray-100">
+                  {/* Series filter with nested sub-series */}
+                  <div className="p-6">
                     <h3 className="text-[11px] font-bold tracking-[0.15em] uppercase text-gray-400 mb-4">Product Series</h3>
-                    <div className="space-y-1.5 max-h-80 overflow-y-auto pr-1 custom-scrollbar">
+                    <div className="space-y-1 max-h-[400px] overflow-y-auto pr-1 custom-scrollbar">
+                      {/* All Series */}
                       <button
-                        onClick={() => setActiveSeries("All")}
+                        onClick={() => { setActiveSeries("All"); setActiveSubSeries("All"); }}
                         data-testid="filter-series-all"
                         className={`block w-full text-left px-4 py-2.5 text-sm rounded-xl transition-all ${
                           activeSeries === "All" 
-                            ? "bg-gray-900 text-white font-medium shadow-md"
+                            ? "bg-gray-900 text-white font-medium"
                             : "text-gray-600 hover:bg-gray-50"
                         }`}
                       >
                         All Series
                       </button>
+                      
+                      {/* Series with nested sub-series */}
                       {seriesList.map(series => {
                         const seriesProducts = brandFilteredProducts.filter(p => p.series === series);
+                        const seriesSubSeries = Array.from(new Set(
+                          seriesProducts.map(p => p.subSeries).filter((s): s is string => !!s)
+                        ));
                         const hasCyan = seriesProducts.some(p => p.brand === "Paralight");
-                        const hasGold = seriesProducts.some(p => p.brand === "Maglinear");
+                        const isSeriesActive = activeSeries === series;
+                        
                         return (
-                          <button
-                            key={series}
-                            onClick={() => setActiveSeries(series)}
-                            data-testid={`filter-series-${series.toLowerCase().replace(/\s+/g, '-')}`}
-                            className={`block w-full text-left px-4 py-2.5 text-sm rounded-xl transition-all flex items-center justify-between ${
-                              activeSeries === series 
-                                ? hasCyan ? "bg-brand-cyan text-white font-medium shadow-md" : "bg-brand-gold text-gray-900 font-medium shadow-md"
-                                : "text-gray-600 hover:bg-gray-50"
-                            }`}
-                          >
-                            <span className="flex items-center gap-2">
-                              <span className={`w-1.5 h-1.5 rounded-full ${hasCyan ? "bg-brand-cyan" : "bg-brand-gold"} ${activeSeries === series ? "bg-white" : ""}`} />
-                              {series}
-                            </span>
-                            <span className={`text-xs ${activeSeries === series ? "text-white/70" : "text-gray-400"}`}>
-                              {seriesProducts.length}
-                            </span>
-                          </button>
+                          <div key={series}>
+                            {/* Series button */}
+                            <button
+                              onClick={() => { setActiveSeries(series); setActiveSubSeries("All"); }}
+                              data-testid={`filter-series-${series.toLowerCase().replace(/\s+/g, '-')}`}
+                              className={`block w-full text-left px-4 py-2.5 text-sm rounded-xl transition-all flex items-center justify-between ${
+                                isSeriesActive && activeSubSeries === "All"
+                                  ? hasCyan ? "bg-brand-cyan text-white font-medium" : "bg-brand-gold text-gray-900 font-medium"
+                                  : isSeriesActive 
+                                    ? hasCyan ? "bg-brand-cyan/10 text-brand-cyan font-medium" : "bg-brand-gold/10 text-brand-gold font-medium"
+                                    : "text-gray-600 hover:bg-gray-50"
+                              }`}
+                            >
+                              <span className="flex items-center gap-2">
+                                <span className={`w-1.5 h-1.5 rounded-full ${
+                                  isSeriesActive && activeSubSeries === "All" 
+                                    ? "bg-white" 
+                                    : hasCyan ? "bg-brand-cyan" : "bg-brand-gold"
+                                }`} />
+                                {series}
+                              </span>
+                              <span className={`text-xs ${
+                                isSeriesActive && activeSubSeries === "All" 
+                                  ? hasCyan ? "text-white/70" : "text-gray-900/50" 
+                                  : "text-gray-400"
+                              }`}>
+                                {seriesProducts.length}
+                              </span>
+                            </button>
+                            
+                            {/* Nested sub-series (show when series is active and has sub-series) */}
+                            {isSeriesActive && seriesSubSeries.length > 0 && (
+                              <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-100 pl-3">
+                                {seriesSubSeries.map(subSeries => {
+                                  const subSeriesCount = seriesProducts.filter(p => p.subSeries === subSeries).length;
+                                  return (
+                                    <button
+                                      key={subSeries}
+                                      onClick={() => setActiveSubSeries(subSeries)}
+                                      data-testid={`filter-subseries-${subSeries.toLowerCase().replace(/\s+/g, '-')}`}
+                                      className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all flex items-center justify-between ${
+                                        activeSubSeries === subSeries 
+                                          ? "bg-gray-900 text-white font-medium"
+                                          : "text-gray-500 hover:bg-gray-50"
+                                      }`}
+                                    >
+                                      <span>{subSeries}</span>
+                                      <span className={`text-xs ${activeSubSeries === subSeries ? "text-white/70" : "text-gray-400"}`}>
+                                        {subSeriesCount}
+                                      </span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
                         );
                       })}
                     </div>
                   </div>
-
-                  {/* Sub Series filter - only show when sub series exist */}
-                  {subSeriesList.length > 0 && (
-                    <div className="p-6">
-                      <h3 className="text-[11px] font-bold tracking-[0.15em] uppercase text-gray-400 mb-4">Sub Series</h3>
-                      <div className="space-y-1.5 max-h-64 overflow-y-auto pr-1">
-                        <button
-                          onClick={() => setActiveSubSeries("All")}
-                          data-testid="filter-subseries-all"
-                          className={`block w-full text-left px-4 py-2.5 text-sm rounded-xl transition-all ${
-                            activeSubSeries === "All" 
-                              ? "bg-gray-900 text-white font-medium shadow-md"
-                              : "text-gray-600 hover:bg-gray-50"
-                          }`}
-                        >
-                          All Sub Series
-                        </button>
-                        {subSeriesList.map(subSeries => (
-                          <button
-                            key={subSeries}
-                            onClick={() => setActiveSubSeries(subSeries)}
-                            data-testid={`filter-subseries-${subSeries.toLowerCase().replace(/\s+/g, '-')}`}
-                            className={`block w-full text-left px-4 py-2.5 text-sm rounded-xl transition-all ${
-                              activeSubSeries === subSeries 
-                                ? "bg-gray-900 text-white font-medium shadow-md"
-                                : "text-gray-600 hover:bg-gray-50"
-                            }`}
-                          >
-                            {subSeries}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
               </motion.div>
             </aside>
