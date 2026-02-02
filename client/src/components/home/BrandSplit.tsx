@@ -50,7 +50,7 @@ export default function BrandSplit() {
       
       <div className="container mx-auto px-8 lg:px-12 relative z-10 pt-8">
         {/* Section header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-20 mt-8" style={{ marginLeft: '-50px' }}>
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
