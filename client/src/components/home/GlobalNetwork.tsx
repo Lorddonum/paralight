@@ -67,14 +67,14 @@ export default function GlobalNetwork() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + index * 0.1, duration: 0.6 }}
-                  className="flex items-center gap-6 py-8 px-6"
+                  className="flex items-center gap-8 py-12 px-8"
                 >
-                  <stat.icon className="w-8 h-8 text-brand-cyan shrink-0" />
+                  <stat.icon className="w-10 h-10 text-brand-cyan shrink-0" />
                   <div>
-                    <h3 className="font-display text-3xl lg:text-4xl text-white font-medium">
+                    <h3 className="font-display text-4xl lg:text-5xl text-white font-medium">
                       {stat.value}
                     </h3>
-                    <p className="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-400">
+                    <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-gray-400">
                       {stat.label}
                     </p>
                   </div>
