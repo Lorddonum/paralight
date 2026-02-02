@@ -84,7 +84,7 @@ export default function ProjectGallery() {
                   className="absolute inset-0"
                   style={{
                     background: isHovered 
-                      ? `linear-gradient(to top, ${isBlue ? 'rgba(0,40,60,0.85)' : 'rgba(60,40,0,0.85)'} 0%, rgba(0,0,0,0.3) 40%, transparent 70%)` 
+                      ? `linear-gradient(to top, ${isBlue ? 'rgba(0,30,45,0.6)' : 'rgba(45,35,0,0.6)'} 0%, rgba(0,0,0,0.2) 35%, transparent 60%)` 
                       : 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.4) 100%)',
                   }}
                   animate={{ opacity: 1 }}
