@@ -178,7 +178,7 @@ function ExhibitionCard({ event, onClick }: { event: ExhibitionEvent; onClick: (
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
       onClick={onClick}
-      className="group relative bg-gray-800/50 border border-gray-700/50 overflow-hidden hover:border-gray-600 transition-all duration-500 cursor-pointer"
+      className="group relative bg-white border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-xl transition-all duration-500 cursor-pointer"
     >
       <div className="relative h-64 overflow-hidden">
         <AnimatePresence mode="wait">
@@ -211,7 +211,7 @@ function ExhibitionCard({ event, onClick }: { event: ExhibitionEvent; onClick: (
       </div>
       
       <div className="p-8">
-        <h3 className="font-display text-2xl lg:text-3xl text-white font-medium mb-3 group-hover:text-brand-cyan transition-colors duration-300">
+        <h3 className="font-display text-2xl lg:text-3xl text-gray-900 font-medium mb-3 group-hover:text-brand-cyan transition-colors duration-300">
           {event.name}
         </h3>
         <p className="text-gray-500 text-sm">{event.location}</p>
@@ -321,7 +321,7 @@ function ExhibitionsSection() {
   const [selectedEvent, setSelectedEvent] = useState<ExhibitionEvent | null>(null);
 
   return (
-    <section className="py-32 bg-gray-900">
+    <section className="py-32 bg-[#F5F0E8]">
       <div className="container mx-auto px-8 lg:px-12">
         <div className="text-center mb-20">
           <motion.span
@@ -338,7 +338,7 @@ function ExhibitionsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display text-4xl md:text-5xl lg:text-6xl text-white font-medium mb-6"
+            className="font-display text-4xl md:text-5xl lg:text-6xl text-gray-900 font-medium mb-6"
           >
             <span className="italic font-normal">Exhibitions</span>
           </motion.h2>
@@ -347,7 +347,7 @@ function ExhibitionsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-gray-400 max-w-xl mx-auto text-lg"
+            className="text-gray-600 max-w-xl mx-auto text-lg"
           >
             We participate in leading lighting exhibitions worldwide, showcasing 
             our latest innovations and strengthening connections with global partners.
