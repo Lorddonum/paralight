@@ -23,7 +23,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8"
         >
-          <span className="inline-block px-4 py-2 text-[11px] font-medium tracking-[0.3em] uppercase text-white/70 border border-white/20">
+          <span className="inline-block px-4 py-2 text-[11px] font-medium tracking-[0.3em] uppercase text-[#00A8E8] border border-[#00A8E8]/40 bg-[#00A8E8]/10">
             Architectural Lighting Excellence
           </span>
         </motion.div>
@@ -35,7 +35,7 @@ export default function Hero() {
           className="font-display text-5xl md:text-7xl lg:text-8xl font-medium text-white tracking-tight mb-8"
         >
           Precision in{" "}
-          <span className="italic font-normal">Every</span>
+          <span className="italic font-normal text-[#ECAA00]">Every</span>
           <br />
           Profile
         </motion.h1>
@@ -57,12 +57,12 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Link href="/products">
-            <button className="px-10 py-4 bg-white text-gray-900 text-sm font-medium tracking-wide hover:bg-gray-100 transition-colors duration-300">
+            <button className="px-10 py-4 bg-[#00A8E8] text-white text-sm font-medium tracking-wide hover:bg-[#0090c8] transition-colors duration-300">
               Explore Collection
             </button>
           </Link>
           <Link href="/about">
-            <button className="px-10 py-4 border border-white/30 text-white text-sm font-medium tracking-wide hover:bg-white/10 transition-colors duration-300">
+            <button className="px-10 py-4 border border-[#ECAA00]/50 text-[#ECAA00] text-sm font-medium tracking-wide hover:bg-[#ECAA00]/10 transition-colors duration-300">
               Our Story
             </button>
           </Link>
