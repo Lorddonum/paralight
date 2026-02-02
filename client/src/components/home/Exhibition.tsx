@@ -23,7 +23,6 @@ const events: ExhibitionEvent[] = [
       "/exhibitions/poland-2024/img-6.jpg",
       "/exhibitions/poland-2024/img-7.jpg",
       "/exhibitions/poland-2024/img-8.jpg",
-      "/exhibitions/poland-2024/img-9.jpg",
     ]
   },
   { 
