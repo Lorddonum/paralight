@@ -24,14 +24,10 @@ export default function ProjectGallery() {
 
   return (
     <section className="py-0 overflow-hidden relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#2a2520] via-[#1f1a16] to-[#2a2520]" />
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-amber-600/20 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-orange-500/15 rounded-full blur-[120px]" />
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950" />
       
       <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,235,205,0.1) 2px, rgba(255,235,205,0.1) 4px)`,
+        backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)`,
         backgroundSize: '100% 4px',
       }} />
 
@@ -40,6 +36,8 @@ export default function ProjectGallery() {
           {projects.map((project, index) => {
             const isHovered = hoveredIndex === index;
             const isAnyHovered = hoveredIndex !== null;
+            const isBlue = index % 2 === 0;
+            const accentColor = isBlue ? '#00A8E8' : '#ECAA00';
             
             return (
               <motion.div
@@ -86,7 +84,7 @@ export default function ProjectGallery() {
                   className="absolute inset-0"
                   style={{
                     background: isHovered 
-                      ? 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 40%, transparent 70%)' 
+                      ? `linear-gradient(to top, ${isBlue ? 'rgba(0,40,60,0.85)' : 'rgba(60,40,0,0.85)'} 0%, rgba(0,0,0,0.3) 40%, transparent 70%)` 
                       : 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.4) 100%)',
                   }}
                   animate={{ opacity: 1 }}
@@ -97,7 +95,7 @@ export default function ProjectGallery() {
                   className="absolute top-4 left-4 font-mono text-xs tracking-wider"
                   animate={{
                     opacity: isHovered ? 1 : 0.4,
-                    color: isHovered ? '#00A8E8' : '#666',
+                    color: isHovered ? accentColor : '#666',
                   }}
                   transition={{ duration: 0.3 }}
                 >
@@ -114,11 +112,12 @@ export default function ProjectGallery() {
                   transition={{ duration: 0.5, delay: isHovered ? 0.15 : 0 }}
                 >
                   <motion.div
-                    className="h-[1px] bg-gradient-to-r from-cyan-400 via-cyan-400 to-transparent mb-4"
+                    className="h-[1px] mb-4"
+                    style={{ background: `linear-gradient(to right, ${accentColor}, ${accentColor}, transparent)` }}
                     animate={{ width: isHovered ? '60%' : '0%' }}
                     transition={{ duration: 0.4, delay: 0.2 }}
                   />
-                  <span className="text-cyan-400 text-[10px] uppercase tracking-[0.3em] font-medium">
+                  <span style={{ color: accentColor }} className="text-[10px] uppercase tracking-[0.3em] font-medium">
                     Interior Design
                   </span>
                   <h3 className="text-white text-lg md:text-xl font-medium mt-1 font-display">
@@ -134,7 +133,7 @@ export default function ProjectGallery() {
                       animate={{ x: isHovered ? [0, 5, 0] : 0 }}
                       transition={{ repeat: Infinity, duration: 1.5 }}
                     >
-                      <ChevronRight className="w-4 h-4 text-cyan-400" />
+                      <ChevronRight className="w-4 h-4" style={{ color: accentColor }} />
                     </motion.div>
                   </motion.div>
                 </motion.div>
@@ -143,14 +142,15 @@ export default function ProjectGallery() {
                   className="absolute inset-0 pointer-events-none"
                   animate={{
                     boxShadow: isHovered 
-                      ? 'inset 0 0 100px rgba(0, 168, 232, 0.15), inset 0 0 0 1px rgba(0, 168, 232, 0.4)' 
+                      ? `inset 0 0 100px ${isBlue ? 'rgba(0, 168, 232, 0.15)' : 'rgba(236, 170, 0, 0.15)'}, inset 0 0 0 1px ${isBlue ? 'rgba(0, 168, 232, 0.4)' : 'rgba(236, 170, 0, 0.4)'}` 
                       : 'inset 0 0 0 0 transparent',
                   }}
                   transition={{ duration: 0.4 }}
                 />
 
                 <motion.div
-                  className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+                  className="absolute top-0 left-0 w-full h-[2px]"
+                  style={{ background: `linear-gradient(to right, transparent, ${accentColor}, transparent)` }}
                   animate={{
                     opacity: isHovered ? 1 : 0,
                     scaleX: isHovered ? 1 : 0,
