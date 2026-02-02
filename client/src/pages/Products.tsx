@@ -205,41 +205,43 @@ export default function Products() {
         </div>
       </section>
 
-      <main className="py-16">
-        <div className="container mx-auto px-8 lg:px-12">
-          <div className="flex flex-col lg:flex-row gap-16">
+      <main className="py-12 bg-gradient-to-b from-gray-50 to-white min-h-screen">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="flex flex-col lg:flex-row gap-12">
             {/* Sidebar */}
-            <aside className="lg:w-64 shrink-0">
-              <div className="sticky top-32">
+            <aside className="lg:w-72 shrink-0">
+              <div className="sticky top-28">
                 {/* Mobile filter toggle */}
                 <button 
                   onClick={() => setShowFilters(!showFilters)}
-                  className="lg:hidden flex items-center gap-2 text-sm font-medium text-gray-700 mb-6"
+                  className="lg:hidden flex items-center gap-2 text-sm font-medium text-gray-700 mb-6 px-4 py-3 bg-white rounded-lg shadow-sm border border-gray-100 w-full justify-center"
                 >
                   <SlidersHorizontal className="w-4 h-4" />
                   {showFilters ? 'Hide Filters' : 'Show Filters'}
                 </button>
 
-                <div className={`space-y-8 ${showFilters ? 'block' : 'hidden lg:block'}`}>
+                <div className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden ${showFilters ? 'block' : 'hidden lg:block'}`}>
                   {/* Search */}
-                  <div className="relative" ref={searchContainerRef}>
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
-                    <input
-                      type="text"
-                      placeholder="Search products..."
-                      value={searchQuery}
-                      onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        setShowSuggestions(true);
-                        setHighlightedIndex(-1);
-                      }}
-                      onFocus={() => setShowSuggestions(true)}
-                      onKeyDown={handleKeyDown}
-                      data-testid="search-input"
-                      className="w-full pl-11 pr-4 py-3 text-sm bg-gray-50 border-0 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
-                    />
+                  <div className="p-5 border-b border-gray-100" ref={searchContainerRef}>
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
+                      <input
+                        type="text"
+                        placeholder="Search products..."
+                        value={searchQuery}
+                        onChange={(e) => {
+                          setSearchQuery(e.target.value);
+                          setShowSuggestions(true);
+                          setHighlightedIndex(-1);
+                        }}
+                        onFocus={() => setShowSuggestions(true)}
+                        onKeyDown={handleKeyDown}
+                        data-testid="search-input"
+                        className="w-full pl-10 pr-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition-all"
+                      />
+                    </div>
                     {showSuggestions && suggestions.length > 0 && (
-                      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 shadow-xl z-50 overflow-hidden">
+                      <div className="absolute left-0 right-0 mt-2 mx-5 bg-white border border-gray-100 shadow-xl z-50 overflow-hidden rounded-lg">
                         {suggestions.map((suggestion, index) => (
                           <button
                             key={`${suggestion.type}-${suggestion.label}-${index}`}
@@ -263,15 +265,15 @@ export default function Products() {
                   </div>
 
                   {/* Brand filter */}
-                  <div>
-                    <h3 className="text-[11px] font-medium tracking-[0.2em] uppercase text-gray-400 mb-4">Brand</h3>
+                  <div className="p-5 border-b border-gray-100">
+                    <h3 className="text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-500 mb-3">Brand</h3>
                     <div className="space-y-1">
                       <button
                         onClick={() => setActiveBrand("All")}
                         data-testid="filter-brand-all"
-                        className={`block w-full text-left px-4 py-2.5 text-sm transition-all ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all ${
                           activeBrand === "All" 
-                            ? "bg-gray-900 text-white"
+                            ? "bg-gray-900 text-white font-medium"
                             : "text-gray-600 hover:bg-gray-50"
                         }`}
                       >
@@ -282,12 +284,13 @@ export default function Products() {
                           key={brand}
                           onClick={() => setActiveBrand(brand)}
                           data-testid={`filter-brand-${brand.toLowerCase()}`}
-                          className={`block w-full text-left px-4 py-2.5 text-sm transition-all ${
+                          className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all flex items-center gap-2 ${
                             activeBrand === brand 
-                              ? "bg-gray-900 text-white"
+                              ? "bg-gray-900 text-white font-medium"
                               : "text-gray-600 hover:bg-gray-50"
                           }`}
                         >
+                          <span className={`w-2 h-2 rounded-full ${brand === "Paralight" ? "bg-brand-cyan" : "bg-brand-gold"}`} />
                           {brand}
                         </button>
                       ))}
@@ -295,15 +298,15 @@ export default function Products() {
                   </div>
 
                   {/* Series filter */}
-                  <div>
-                    <h3 className="text-[11px] font-medium tracking-[0.2em] uppercase text-gray-400 mb-4">Series</h3>
-                    <div className="space-y-1 max-h-72 overflow-y-auto">
+                  <div className="p-5 border-b border-gray-100">
+                    <h3 className="text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-500 mb-3">Series</h3>
+                    <div className="space-y-1 max-h-64 overflow-y-auto pr-1">
                       <button
                         onClick={() => setActiveSeries("All")}
                         data-testid="filter-series-all"
-                        className={`block w-full text-left px-4 py-2.5 text-sm transition-all ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all ${
                           activeSeries === "All" 
-                            ? "bg-gray-900 text-white"
+                            ? "bg-gray-900 text-white font-medium"
                             : "text-gray-600 hover:bg-gray-50"
                         }`}
                       >
@@ -314,9 +317,9 @@ export default function Products() {
                           key={series}
                           onClick={() => setActiveSeries(series)}
                           data-testid={`filter-series-${series.toLowerCase().replace(/\s+/g, '-')}`}
-                          className={`block w-full text-left px-4 py-2.5 text-sm transition-all ${
+                          className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all ${
                             activeSeries === series 
-                              ? "bg-gray-900 text-white"
+                              ? "bg-gray-900 text-white font-medium"
                               : "text-gray-600 hover:bg-gray-50"
                           }`}
                         >
@@ -328,15 +331,15 @@ export default function Products() {
 
                   {/* Sub Series filter - only show when sub series exist */}
                   {subSeriesList.length > 0 && (
-                    <div>
-                      <h3 className="text-[11px] font-medium tracking-[0.2em] uppercase text-gray-400 mb-4">Sub Series</h3>
-                      <div className="space-y-1 max-h-72 overflow-y-auto">
+                    <div className="p-5">
+                      <h3 className="text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-500 mb-3">Sub Series</h3>
+                      <div className="space-y-1 max-h-64 overflow-y-auto pr-1">
                         <button
                           onClick={() => setActiveSubSeries("All")}
                           data-testid="filter-subseries-all"
-                          className={`block w-full text-left px-4 py-2.5 text-sm transition-all ${
+                          className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all ${
                             activeSubSeries === "All" 
-                              ? "bg-gray-900 text-white"
+                              ? "bg-gray-900 text-white font-medium"
                               : "text-gray-600 hover:bg-gray-50"
                           }`}
                         >
@@ -347,9 +350,9 @@ export default function Products() {
                             key={subSeries}
                             onClick={() => setActiveSubSeries(subSeries)}
                             data-testid={`filter-subseries-${subSeries.toLowerCase().replace(/\s+/g, '-')}`}
-                            className={`block w-full text-left px-4 py-2.5 text-sm transition-all ${
+                            className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all ${
                               activeSubSeries === subSeries 
-                                ? "bg-gray-900 text-white"
+                                ? "bg-gray-900 text-white font-medium"
                                 : "text-gray-600 hover:bg-gray-50"
                             }`}
                           >
@@ -366,9 +369,9 @@ export default function Products() {
             {/* Product grid */}
             <div className="flex-1">
               {/* Results header */}
-              <div className="flex items-center justify-between mb-10 pb-6 border-b border-gray-100">
+              <div className="flex items-center justify-between mb-8 bg-white rounded-xl p-5 shadow-sm border border-gray-100">
                 <p className="text-sm text-gray-500">
-                  <span className="font-medium text-gray-900">{filteredProducts.length}</span> products
+                  Showing <span className="font-semibold text-gray-900">{filteredProducts.length}</span> products
                 </p>
                 
                 {(activeSeries !== "All" || activeSubSeries !== "All" || searchQuery) && (
@@ -376,7 +379,7 @@ export default function Products() {
                     {activeSeries !== "All" && (
                       <button 
                         onClick={() => setActiveSeries("All")}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium hover:bg-gray-200 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-cyan/10 text-brand-cyan text-xs font-medium rounded-full hover:bg-brand-cyan/20 transition-colors"
                       >
                         {activeSeries}
                         <X className="w-3 h-3" />
@@ -385,7 +388,7 @@ export default function Products() {
                     {activeSubSeries !== "All" && (
                       <button 
                         onClick={() => setActiveSubSeries("All")}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium hover:bg-gray-200 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-gold/10 text-brand-gold text-xs font-medium rounded-full hover:bg-brand-gold/20 transition-colors"
                       >
                         {activeSubSeries}
                         <X className="w-3 h-3" />
@@ -394,7 +397,7 @@ export default function Products() {
                     {searchQuery && (
                       <button 
                         onClick={() => setSearchQuery("")}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium hover:bg-gray-200 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-full hover:bg-gray-200 transition-colors"
                       >
                         "{searchQuery}"
                         <X className="w-3 h-3" />
@@ -409,20 +412,20 @@ export default function Products() {
                   <Loader2 className="w-6 h-6 animate-spin text-gray-300" />
                 </div>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
                   {filteredProducts.map((product, index) => (
                     <motion.div 
                       key={product.id}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.2 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.03 }}
                       className="group"
                       data-testid={`product-card-${product.id}`}
                     >
                       <Link href={`/products/${product.id}`}>
-                        <div className="cursor-pointer">
+                        <div className="cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300">
                           {/* Image container */}
-                          <div className="aspect-square bg-gray-50 relative overflow-hidden group-hover:bg-gray-100 transition-colors duration-500">
+                          <div className="aspect-square bg-gray-50 relative overflow-hidden">
                             {product.image ? (
                               <img 
                                 src={product.image} 
@@ -436,10 +439,14 @@ export default function Products() {
                                 <Package className="w-12 h-12 text-gray-300" />
                               </div>
                             )}
+                            {/* Brand indicator */}
+                            <div className={`absolute top-3 right-3 w-2 h-2 rounded-full ${
+                              product.brand === "Paralight" ? "bg-brand-cyan" : "bg-brand-gold"
+                            }`} />
                           </div>
                           {/* Product info */}
-                          <div className="pt-4">
-                            <span className={`text-[10px] font-medium tracking-wider uppercase ${
+                          <div className="p-4">
+                            <span className={`text-[10px] font-semibold tracking-wider uppercase ${
                               product.brand === "Paralight" 
                                 ? "text-brand-cyan" 
                                 : "text-brand-gold"
@@ -456,7 +463,7 @@ export default function Products() {
                     </motion.div>
                   ))}
                   {filteredProducts.length === 0 && !isLoading && (
-                    <div className="col-span-full text-center py-24">
+                    <div className="col-span-full text-center py-24 bg-white rounded-xl border border-gray-100">
                       <Package className="w-12 h-12 text-gray-200 mx-auto mb-4" />
                       <p className="text-sm text-gray-400">No products found</p>
                     </div>
