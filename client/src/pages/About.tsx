@@ -394,47 +394,33 @@ function ProjectGallery() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-20 bg-gray-50 overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-12 grid-rows-2 gap-3 h-[500px] md:h-[600px]">
+    <section className="py-16 bg-gray-100 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="flex h-[400px] md:h-[500px] gap-1 md:gap-2">
           {projects.map((project, index) => {
-            const gridStyles = [
-              "col-span-6 md:col-span-5 row-span-2",
-              "col-span-6 md:col-span-4 row-span-1",
-              "col-span-6 md:col-span-3 row-span-1",
-              "col-span-6 md:col-span-3 row-span-1",
-              "col-span-6 md:col-span-4 row-span-1",
-              "col-span-12 md:col-span-5 row-span-1 md:row-span-1",
-            ];
-            
             const isHovered = hoveredIndex === index;
-            const isOtherHovered = hoveredIndex !== null && hoveredIndex !== index;
-
+            const isAnyHovered = hoveredIndex !== null;
+            
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className={`${gridStyles[index]} relative overflow-hidden cursor-pointer`}
+                className="relative overflow-hidden cursor-pointer rounded-lg"
+                initial={{ flex: 1 }}
+                animate={{
+                  flex: isHovered ? 4 : isAnyHovered ? 0.5 : 1,
+                }}
+                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => setSelectedImage(index)}
                 data-testid={`button-project-${index}`}
               >
                 <motion.div
-                  className="w-full h-full relative rounded-lg overflow-hidden"
+                  className="absolute inset-0"
                   animate={{
-                    scale: isHovered ? 1.02 : 1,
-                    filter: isOtherHovered ? "brightness(0.7) saturate(0.5)" : "brightness(1) saturate(1)",
+                    filter: isAnyHovered && !isHovered ? "brightness(0.6) saturate(0.7)" : "brightness(1) saturate(1)",
                   }}
                   transition={{ duration: 0.4 }}
-                  style={{
-                    boxShadow: isHovered 
-                      ? "0 25px 50px -12px rgba(0,0,0,0.35)" 
-                      : "0 10px 25px -10px rgba(0,0,0,0.15)",
-                  }}
                 >
                   <motion.img
                     src={project.image}
@@ -442,42 +428,48 @@ function ProjectGallery() {
                     loading="lazy"
                     className="w-full h-full object-cover"
                     animate={{
-                      scale: isHovered ? 1 : 1.15,
+                      scale: isHovered ? 1 : 1.3,
+                      x: isHovered ? 0 : `${(index - 2.5) * 5}%`,
                     }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                   />
-                  
-                  <motion.div 
-                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
-                    animate={{
-                      opacity: isHovered ? 1 : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 p-4"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{
-                      y: isHovered ? 0 : 20,
-                      opacity: isHovered ? 1 : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-[2px] bg-brand-cyan" />
-                      <span className="text-white/80 text-xs uppercase tracking-widest">View Project</span>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className="absolute inset-0 border-2 border-transparent rounded-lg pointer-events-none"
-                    animate={{
-                      borderColor: isHovered ? "rgba(0, 168, 232, 0.5)" : "transparent",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
                 </motion.div>
+
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+                  animate={{
+                    opacity: isHovered ? 1 : 0.3,
+                  }}
+                  transition={{ duration: 0.4 }}
+                />
+
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 p-6"
+                  animate={{
+                    opacity: isHovered ? 1 : 0,
+                    y: isHovered ? 0 : 30,
+                  }}
+                  transition={{ duration: 0.4, delay: isHovered ? 0.1 : 0 }}
+                >
+                  <div className="flex items-center gap-3">
+                    <motion.div 
+                      className="h-[2px] bg-brand-cyan"
+                      animate={{ width: isHovered ? 40 : 0 }}
+                      transition={{ duration: 0.3, delay: 0.2 }}
+                    />
+                    <span className="text-white text-sm uppercase tracking-widest font-medium">
+                      View Project
+                    </span>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="absolute inset-0 border-2 pointer-events-none rounded-lg"
+                  animate={{
+                    borderColor: isHovered ? "rgba(0, 168, 232, 0.6)" : "rgba(255,255,255,0.1)",
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
               </motion.div>
             );
           })}
