@@ -205,7 +205,7 @@ export default function Products() {
         </div>
       </section>
 
-      <main className="py-12 bg-gradient-to-b from-gray-50 to-white min-h-screen">
+      <main className="py-12 bg-gradient-to-b from-[#e8e0d4] via-[#f0e8dc] to-[#f5f0e8] min-h-screen">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Sidebar */}
