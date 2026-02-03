@@ -1,9 +1,10 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent, useMemo } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Plus, Trash2, LogOut, Package, ChevronRight, Upload, Settings, Edit2, X, Image as ImageIcon, FileText, Ruler, Search, ChevronDown, Check } from "lucide-react";
+import { MAGLINEAR_SERIES, MAGLINEAR_ALL_SERIES, MAGLINEAR_ALL_SUBSERIES } from "@shared/series-config";
 
 const THEME_BG = "bg-[#1a2332]";
 
@@ -63,6 +64,8 @@ export default function Admin() {
   const [, setLocation] = useLocation();
   const [showSeriesDropdown, setShowSeriesDropdown] = useState(false);
   const [seriesFilter, setSeriesFilter] = useState("");
+  const [showSubSeriesDropdown, setShowSubSeriesDropdown] = useState(false);
+  const [subSeriesFilter, setSubSeriesFilter] = useState("");
   const [adminBrandFilter, setAdminBrandFilter] = useState<"All" | "Paralight" | "Maglinear">("All");
   const [adminSeriesFilter, setAdminSeriesFilter] = useState("All");
 
@@ -108,10 +111,30 @@ export default function Admin() {
     technicalSpecs: ""
   });
 
+  const availableSeries = useMemo(() => {
+    if (formData.brand === "Maglinear") {
+      return MAGLINEAR_ALL_SERIES;
+    }
+    return Array.from(new Set(products.filter(p => p.brand === "Paralight").flatMap(p => p.series || []).filter(Boolean))).sort();
+  }, [formData.brand, products]);
+
+  const availableSubSeries = useMemo(() => {
+    if (formData.brand === "Maglinear") {
+      const selectedSeriesSubSeries = formData.series.flatMap(s => 
+        MAGLINEAR_SERIES[s as keyof typeof MAGLINEAR_SERIES] || []
+      );
+      return selectedSeriesSubSeries.length > 0 ? selectedSeriesSubSeries : MAGLINEAR_ALL_SUBSERIES;
+    }
+    return Array.from(new Set(products.filter(p => p.brand === "Paralight").flatMap(p => p.subSeries || []).filter(Boolean))).sort();
+  }, [formData.brand, formData.series, products]);
+
   const existingSeries = Array.from(new Set(products.flatMap(p => p.series || []).filter(Boolean))).sort();
   const existingSubSeries = Array.from(new Set(products.flatMap(p => p.subSeries || []).filter(Boolean))).sort();
-  const filteredSeries = existingSeries.filter(s => 
+  const filteredSeries = availableSeries.filter(s => 
     s.toLowerCase().includes(seriesFilter.toLowerCase())
+  );
+  const filteredSubSeries = availableSubSeries.filter(s => 
+    s.toLowerCase().includes(subSeriesFilter.toLowerCase())
   );
 
   const fetchProducts = async () => {
@@ -593,19 +616,59 @@ export default function Admin() {
                         <input 
                           type="text" 
                           data-testid="input-sub-series"
-                          placeholder={formData.subSeries.length === 0 ? "Type and press Enter to add..." : "Add another sub-series..."}
+                          value={subSeriesFilter}
+                          onChange={(e) => setSubSeriesFilter(e.target.value)}
+                          onFocus={() => setShowSubSeriesDropdown(true)}
+                          onBlur={() => setTimeout(() => setShowSubSeriesDropdown(false), 200)}
+                          placeholder={formData.subSeries.length === 0 ? "Select or type sub-series..." : "Add another sub-series..."}
                           onKeyDown={(e) => {
-                            const input = e.currentTarget;
-                            if (e.key === 'Enter' && input.value.trim()) {
+                            if (e.key === 'Enter' && subSeriesFilter.trim()) {
                               e.preventDefault();
-                              if (!formData.subSeries.includes(input.value.trim())) {
-                                setFormData({...formData, subSeries: [...formData.subSeries, input.value.trim()]});
+                              if (!formData.subSeries.includes(subSeriesFilter.trim())) {
+                                setFormData({...formData, subSeries: [...formData.subSeries, subSeriesFilter.trim()]});
                               }
-                              input.value = "";
+                              setSubSeriesFilter("");
                             }
                           }}
                           className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
                         />
+                        {showSubSeriesDropdown && (filteredSubSeries.length > 0 || subSeriesFilter.trim()) && (
+                          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                            {subSeriesFilter.trim() && !availableSubSeries.includes(subSeriesFilter.trim()) && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (!formData.subSeries.includes(subSeriesFilter.trim())) {
+                                    setFormData({...formData, subSeries: [...formData.subSeries, subSeriesFilter.trim()]});
+                                  }
+                                  setSubSeriesFilter("");
+                                  setShowSubSeriesDropdown(false);
+                                }}
+                                className="w-full px-4 py-2.5 text-left text-sm text-[#ECAA00] hover:bg-[#ECAA00]/10 flex items-center gap-2 transition-colors border-b border-gray-100"
+                              >
+                                <Plus className="w-4 h-4" />
+                                <span>Add "{subSeriesFilter.trim()}"</span>
+                              </button>
+                            )}
+                            {filteredSubSeries.map((subSeries) => (
+                              <button
+                                key={subSeries}
+                                type="button"
+                                onClick={() => {
+                                  if (!formData.subSeries.includes(subSeries)) {
+                                    setFormData({...formData, subSeries: [...formData.subSeries, subSeries]});
+                                  }
+                                  setSubSeriesFilter("");
+                                  setShowSubSeriesDropdown(false);
+                                }}
+                                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-[#ECAA00]/10 hover:text-[#ECAA00] flex items-center justify-between transition-colors"
+                              >
+                                <span>{subSeries}</span>
+                                {formData.subSeries.includes(subSeries) && <Check className="w-4 h-4 text-[#ECAA00]" />}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
