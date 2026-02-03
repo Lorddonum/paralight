@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Plus, Trash2, LogOut, Package, ChevronRight, Upload, Settings, Edit2, X, Image as ImageIcon, FileText, Ruler, Search, ChevronDown, Check } from "lucide-react";
-import { MAGLINEAR_SERIES, MAGLINEAR_ALL_SERIES, MAGLINEAR_ALL_SUBSERIES } from "@shared/series-config";
+import { PARALIGHT_SERIES, MAGLINEAR_SERIES, MAGLINEAR_ALL_SERIES, MAGLINEAR_ALL_SUBSERIES } from "@shared/series-config";
 
 const THEME_BG = "bg-[#1a2332]";
 
@@ -115,8 +115,8 @@ export default function Admin() {
     if (formData.brand === "Maglinear") {
       return MAGLINEAR_ALL_SERIES;
     }
-    return Array.from(new Set(products.filter(p => p.brand === "Paralight").flatMap(p => p.series || []).filter(Boolean))).sort();
-  }, [formData.brand, products]);
+    return [...PARALIGHT_SERIES];
+  }, [formData.brand]);
 
   const availableSubSeries = useMemo(() => {
     if (formData.brand === "Maglinear") {
@@ -602,6 +602,7 @@ export default function Admin() {
                         <option value="Maglinear">Maglinear</option>
                       </select>
                     </div>
+                    {formData.brand === "Maglinear" ? (
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest text-gray-500">Sub Series (Multiple)</label>
                       <div className="relative">
@@ -693,6 +694,7 @@ export default function Admin() {
                         )}
                       </div>
                     </div>
+                    ) : null}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-gray-200">

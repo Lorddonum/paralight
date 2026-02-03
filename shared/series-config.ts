@@ -1,3 +1,24 @@
+export const PARALIGHT_SERIES = [
+  "5mm-25mm Profile Series",
+  "Corner Profile Series",
+  "20mm-200mm Profile Series",
+  "Hanging Profiles Series",
+  "180° Wide-Angle Profile Series",
+  "Trimless Recessed Profile Series",
+  "In-Ground Profile Series",
+  "Skirting & Stairs Profile Series",
+  "Glass Wine Cabinet & Shelf Profile Series",
+  "Ultra-Low Height Profile Series",
+  "Ceiling & Cove Profile Series",
+  "Silicone Stabilizing Profile Series",
+  "LED Strip Stabilizing Profile Series",
+  "Wardrobe & Closet Profile Series",
+  "Waterproof Profile Series",
+  "Flexible Profile Series",
+  "PC Cover Recessed Series",
+  "Profile Accessories & Components"
+] as const;
+
 export const MAGLINEAR_SERIES = {
   "5mm Magnetic Track Series": [
     "5mm Magnetic Tracks",
