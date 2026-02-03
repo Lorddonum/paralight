@@ -857,7 +857,7 @@ export default function Admin() {
                           {formData.brand === "Maglinear" && (
                             <>
                               <div className="space-y-2">
-                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Maglinear Name</label>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Name</label>
                                 <input type="text" value={specRow.maglinearName || ''} onChange={e => {
                                   const specs = JSON.parse(formData.technicalSpecs || '[]');
                                   specs[rowIndex].maglinearName = e.target.value;
