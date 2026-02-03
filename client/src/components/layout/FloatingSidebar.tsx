@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, Mail, ArrowUp, X, MessageCircle } from "lucide-react";
+import { Phone, Mail, ArrowUp, X, MessageCircle, ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FloatingSidebar() {
@@ -125,7 +125,7 @@ export default function FloatingSidebar() {
             className="fixed right-0 top-1/2 -translate-y-1/2 z-50 w-8 h-16 bg-[#00A8E8] text-white rounded-l-lg shadow-lg flex items-center justify-center hover:bg-[#0090c8] transition-colors"
             title="Show contact options"
           >
-            <Phone className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
           </motion.button>
         )}
       </AnimatePresence>
