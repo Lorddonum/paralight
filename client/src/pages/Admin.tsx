@@ -741,7 +741,7 @@ export default function Admin() {
 
                   {/* Additional Specification Rows */}
                   {formData.technicalSpecs && JSON.parse(formData.technicalSpecs || '[]').length > 0 && (
-                    JSON.parse(formData.technicalSpecs || '[]').map((specRow: { model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string }, rowIndex: number) => (
+                    JSON.parse(formData.technicalSpecs || '[]').map((specRow: { model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string; conductionMethod?: string; maglinearName?: string; inputVoltage?: string; outputVoltage?: string }, rowIndex: number) => (
                       <div key={rowIndex} className="space-y-6 pt-6 border-t border-gray-200">
                         <div className="flex items-center justify-between">
                           <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#00A8E8] font-bold">Technical Specifications Row {rowIndex + 2}</h4>
@@ -855,14 +855,48 @@ export default function Admin() {
                             </>
                           )}
                           {formData.brand === "Maglinear" && (
-                            <div className="space-y-2">
-                              <label className="text-[10px] uppercase tracking-widest text-gray-500">Mounting Track</label>
-                              <input type="text" value={specRow.mountingTrack || ''} onChange={e => {
-                                const specs = JSON.parse(formData.technicalSpecs || '[]');
-                                specs[rowIndex].mountingTrack = e.target.value;
-                                setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
-                              }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. Standard Track" />
-                            </div>
+                            <>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Maglinear Name</label>
+                                <input type="text" value={specRow.maglinearName || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].maglinearName = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. Product name" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Mounting Track</label>
+                                <input type="text" value={specRow.mountingTrack || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].mountingTrack = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. Standard Track" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Conduction Method</label>
+                                <input type="text" value={specRow.conductionMethod || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].conductionMethod = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. Magnetic, Direct wire" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Input Voltage</label>
+                                <input type="text" value={specRow.inputVoltage || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].inputVoltage = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. AC 100-240V" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Output Voltage</label>
+                                <input type="text" value={specRow.outputVoltage || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].outputVoltage = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. DC 48V" />
+                              </div>
+                            </>
                           )}
                           {/* Paralight-specific fields in additional rows */}
                           {formData.brand === "Paralight" && (
@@ -912,7 +946,7 @@ export default function Admin() {
                       type="button"
                       onClick={() => {
                         const currentSpecs = formData.technicalSpecs ? JSON.parse(formData.technicalSpecs) : [];
-                        const newRow = { wattage: '', application: '', finish: '', material: '', dimensions: '', voltage: '', color: '', cri: '', cct: '', beamAngle: '', mountingTrack: '' };
+                        const newRow = { wattage: '', application: '', finish: '', material: '', dimensions: '', voltage: '', color: '', cri: '', cct: '', beamAngle: '', mountingTrack: '', conductionMethod: '', maglinearName: '', inputVoltage: '', outputVoltage: '' };
                         setFormData({...formData, technicalSpecs: JSON.stringify([...currentSpecs, newRow])});
                       }}
                       className="flex items-center gap-2 px-4 py-2.5 text-[10px] uppercase tracking-widest text-[#00A8E8] border border-[#00A8E8] hover:bg-[#00A8E8]/5 rounded-lg transition-colors"
