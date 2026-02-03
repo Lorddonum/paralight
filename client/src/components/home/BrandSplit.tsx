@@ -69,7 +69,7 @@ export default function BrandSplit() {
             transition={{ duration: 0.8 }}
             onMouseEnter={() => setHoveredBrand('Paralight')}
             onMouseLeave={() => setHoveredBrand(null)}
-            className="lg:absolute lg:bottom-0 lg:left-0 lg:w-[65%] mb-8 lg:mb-0"
+            className="lg:absolute lg:bottom-0 lg:left-0 lg:w-[48%] mb-8 lg:mb-0"
           >
             <Link href="/products?brand=Paralight">
               <div className="group relative h-[500px] lg:h-[600px] overflow-hidden cursor-pointer">
@@ -145,7 +145,7 @@ export default function BrandSplit() {
             transition={{ duration: 0.8, delay: 0.15 }}
             onMouseEnter={() => setHoveredBrand('Maglinear')}
             onMouseLeave={() => setHoveredBrand(null)}
-            className="lg:absolute lg:top-0 lg:right-0 lg:w-[65%]"
+            className="lg:absolute lg:top-0 lg:right-0 lg:w-[48%]"
           >
             <Link href="/products?brand=Maglinear">
               <div className="group relative h-[500px] lg:h-[600px] overflow-hidden cursor-pointer">
