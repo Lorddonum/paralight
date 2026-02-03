@@ -10,6 +10,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [location] = useLocation();
   const [isLightSection, setIsLightSection] = useState(false);
+  const [isFooterSection, setIsFooterSection] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +23,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
   useEffect(() => {
     if (location !== '/') {
       setIsLightSection(false);
+      setIsFooterSection(false);
       return;
     }
     
@@ -30,14 +32,14 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
 
     const checkSection = () => {
       const sections = scrollContainer.querySelectorAll('section.snap-start');
-      const scrollTop = scrollContainer.scrollTop;
-      const viewportHeight = window.innerHeight;
       
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= 100 && rect.bottom > 100) {
           // Sections with light backgrounds: BrandSplit (1), GlobalNetwork (2), Exhibition (3), ProjectGallery (4)
           setIsLightSection(index === 1 || index === 2 || index === 3 || index === 4);
+          // Footer section (index 5) has dark blue background
+          setIsFooterSection(index === 5);
         }
       });
     };
@@ -48,7 +50,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
     return () => scrollContainer.removeEventListener('scroll', checkSection);
   }, [location]);
 
-  const useDarkText = darkText || isLightSection || scrolled;
+  const useDarkText = (darkText || isLightSection || scrolled) && !isFooterSection;
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -62,9 +64,11 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
     <nav
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-500",
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm"
-          : "bg-transparent",
+        isFooterSection
+          ? "bg-[#0A1628]"
+          : scrolled
+            ? "bg-white/95 backdrop-blur-md shadow-sm"
+            : "bg-transparent",
       )}
     >
       <div className="container mx-auto px-8 lg:px-12">
