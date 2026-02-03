@@ -546,9 +546,9 @@ export default function Admin() {
                         >
                           <ChevronDown className={`w-4 h-4 transition-transform ${showSeriesDropdown ? 'rotate-180' : ''}`} />
                         </button>
-                        {showSeriesDropdown && (filteredSeries.length > 0 || seriesFilter.trim()) && (
+                        {showSeriesDropdown && (
                           <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                            {seriesFilter.trim() && !existingSeries.includes(seriesFilter.trim()) && (
+                            {seriesFilter.trim() && !availableSeries.includes(seriesFilter.trim()) && (
                               <button
                                 type="button"
                                 onClick={() => {
@@ -564,7 +564,7 @@ export default function Admin() {
                                 <span>Add "{seriesFilter.trim()}"</span>
                               </button>
                             )}
-                            {filteredSeries.map((series) => (
+                            {filteredSeries.length > 0 ? filteredSeries.map((series) => (
                               <button
                                 key={series}
                                 type="button"
@@ -580,7 +580,11 @@ export default function Admin() {
                                 <span>{series}</span>
                                 {formData.series.includes(series) && <Check className="w-4 h-4 text-[#00A8E8]" />}
                               </button>
-                            ))}
+                            )) : !seriesFilter.trim() && (
+                              <div className="px-4 py-3 text-sm text-gray-500">
+                                {formData.brand === "Maglinear" ? "Loading series options..." : "Type to add a new series"}
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
@@ -632,7 +636,7 @@ export default function Admin() {
                           }}
                           className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
                         />
-                        {showSubSeriesDropdown && (filteredSubSeries.length > 0 || subSeriesFilter.trim()) && (
+                        {showSubSeriesDropdown && (
                           <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
                             {subSeriesFilter.trim() && !availableSubSeries.includes(subSeriesFilter.trim()) && (
                               <button
