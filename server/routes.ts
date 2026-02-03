@@ -8,10 +8,11 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
-  // Helper function to strip base64 data from images
+  // Helper function to strip base64 data but keep valid URLs
   const stripBase64 = (value: string | null | undefined): string => {
     if (!value) return '';
-    if (value.startsWith('data:image') || value.startsWith('data:application')) {
+    // Only strip if it's base64 data, keep http/https URLs
+    if (value.startsWith('data:')) {
       return '';
     }
     return value;
@@ -19,7 +20,8 @@ export async function registerRoutes(
 
   const stripBase64Array = (arr: string[] | null | undefined): string[] => {
     if (!arr || !Array.isArray(arr)) return [];
-    return arr.filter(item => !item.startsWith('data:image') && !item.startsWith('data:application'));
+    // Only filter out base64 data, keep valid URLs
+    return arr.filter(item => item && !item.startsWith('data:'));
   };
 
   // Get all products
