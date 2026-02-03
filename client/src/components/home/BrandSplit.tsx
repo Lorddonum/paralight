@@ -36,7 +36,7 @@ export default function BrandSplit() {
       {/* Animated sliding background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {/* Top row - sliding left */}
-        <div className="absolute top-0 left-0 w-full h-[300px] opacity-[0.08]">
+        <div className="absolute top-0 left-0 w-full h-[300px] opacity-[0.25]">
           <motion.div
             className="flex gap-16 items-center h-full"
             animate={{ x: [0, -1500] }}
@@ -55,7 +55,7 @@ export default function BrandSplit() {
         </div>
         
         {/* Bottom row - sliding right */}
-        <div className="absolute bottom-0 left-0 w-full h-[300px] opacity-[0.06]">
+        <div className="absolute bottom-0 left-0 w-full h-[300px] opacity-[0.2]">
           <motion.div
             className="flex gap-16 items-center h-full"
             animate={{ x: [-1500, 0] }}
