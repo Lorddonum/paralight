@@ -41,7 +41,7 @@ export default function BrandSplit() {
       <div 
         className="absolute top-0 w-[900px] h-[2400px] opacity-100 pointer-events-none z-0"
         style={{
-          right: '-150px',
+          right: '-50px',
           backgroundImage: 'url(/brand-split-pendant.png)',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
