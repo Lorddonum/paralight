@@ -45,60 +45,47 @@ export default function BrandSplit() {
         />
       </div>
       
-      {/* Hanging fixtures from track */}
-      <div className="absolute top-[40px] left-0 right-0 pointer-events-none z-0 overflow-visible">
+      {/* Sliding fixtures along track */}
+      <div className="absolute top-[40px] left-0 right-0 pointer-events-none z-0 overflow-hidden h-[350px]">
         <motion.div 
-          className="flex justify-around items-start px-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
+          className="flex items-start gap-24"
+          animate={{ x: [0, -1200] }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity, 
+            ease: "linear",
+          }}
+          style={{ width: 'max-content' }}
         >
-          {fixtures.map((fixture, index) => (
+          {[...fixtures, ...fixtures, ...fixtures].map((fixture, index) => (
             <motion.div
               key={index}
-              className="relative"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ 
-                delay: fixture.delay,
-                duration: 0.8,
-                ease: [0.25, 0.1, 0.25, 1]
-              }}
+              className="relative flex-shrink-0"
             >
-              {/* Magnetic connection effect */}
+              {/* Magnetic connection glow */}
               <motion.div
-                className="absolute -top-1 left-1/2 -translate-x-1/2 w-8 h-2 rounded-full"
-                initial={{ boxShadow: '0 0 0px rgba(236, 170, 0, 0)' }}
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-1 rounded-full bg-brand-gold/40"
                 animate={{ 
+                  opacity: [0.3, 0.8, 0.3],
                   boxShadow: [
-                    '0 0 0px rgba(236, 170, 0, 0)',
-                    '0 0 15px rgba(236, 170, 0, 0.6)',
-                    '0 0 8px rgba(236, 170, 0, 0.3)',
+                    '0 0 4px rgba(236, 170, 0, 0.3)',
+                    '0 0 12px rgba(236, 170, 0, 0.7)',
+                    '0 0 4px rgba(236, 170, 0, 0.3)',
                   ]
                 }}
                 transition={{ 
-                  delay: fixture.delay + 0.3,
-                  duration: 1.5,
+                  duration: 2,
                   repeat: Infinity,
-                  repeatType: "reverse"
+                  delay: index * 0.2
                 }}
               />
               
               {/* Fixture image */}
-              <motion.img 
+              <img 
                 src={fixture.src} 
                 alt=""
                 style={{ height: fixture.height }}
                 className="w-auto object-contain"
-                animate={{ 
-                  y: [0, 3, 0],
-                }}
-                transition={{
-                  duration: 4 + index * 0.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: index * 0.3
-                }}
               />
             </motion.div>
           ))}
