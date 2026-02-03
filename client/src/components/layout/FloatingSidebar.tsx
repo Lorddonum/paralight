@@ -93,10 +93,10 @@ export default function FloatingSidebar() {
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
-                    className="absolute right-14 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-xl shadow-xl p-4"
+                    className="absolute right-14 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-xl shadow-xl p-5"
                   >
-                    <div className="text-sm text-center text-gray-600 mb-3 font-medium">Scan to add on WeChat</div>
-                    <img src="/wechat-qr.png" alt="WeChat QR Code" className="w-56 h-56 object-contain" />
+                    <div className="text-base text-center text-gray-700 mb-4 font-medium">Scan to add on WeChat</div>
+                    <img src="/wechat-qr.png" alt="WeChat QR Code" className="w-72 h-72 object-contain" />
                   </motion.div>
                 )}
               </AnimatePresence>
