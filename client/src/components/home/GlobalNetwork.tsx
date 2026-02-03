@@ -11,7 +11,7 @@ export default function GlobalNetwork() {
   ];
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative h-full overflow-hidden flex flex-col justify-center">
       {/* Map background - full visibility */}
       <div className="absolute inset-0">
         <img

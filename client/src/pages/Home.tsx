@@ -11,19 +11,19 @@ export default function Home() {
     <div className="h-screen overflow-y-scroll snap-y snap-mandatory bg-white text-gray-900 selection:bg-[#00A8E8] selection:text-white">
       <Navbar />
       <main>
-        <section className="snap-start min-h-screen">
+        <section className="snap-start h-screen overflow-hidden">
           <Hero />
         </section>
-        <section className="snap-start min-h-screen">
+        <section className="snap-start h-screen overflow-hidden">
           <BrandSplit />
         </section>
-        <section className="snap-start min-h-screen">
+        <section className="snap-start h-screen overflow-hidden">
           <GlobalNetwork />
         </section>
-        <section className="snap-start min-h-screen">
+        <section className="snap-start h-screen overflow-hidden">
           <Exhibition />
         </section>
-        <section className="snap-start min-h-screen">
+        <section className="snap-start h-screen overflow-hidden">
           <ProjectGallery />
         </section>
         <section className="snap-start">

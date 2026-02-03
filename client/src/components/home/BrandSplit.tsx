@@ -9,7 +9,7 @@ export default function BrandSplit() {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
 
   return (
-    <section className="py-32 bg-white relative overflow-hidden">
+    <section className="h-full py-12 bg-white relative overflow-hidden flex flex-col justify-center">
       {/* Video background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <motion.video 

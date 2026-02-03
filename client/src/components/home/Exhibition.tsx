@@ -260,7 +260,7 @@ export default function Exhibition() {
   const visibleIndices = getVisibleIndices();
 
   return (
-    <section className="py-20 bg-gray-900">
+    <section className="h-full py-12 bg-gray-900 flex flex-col justify-center">
       <div className="container mx-auto px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
