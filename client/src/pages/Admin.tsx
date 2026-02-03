@@ -12,7 +12,7 @@ interface Product {
   name: string;
   modelNumber: string;
   description: string;
-  series: string;
+  series: string[];
   brand: string;
   application?: string | null;
   finish?: string | null;
@@ -30,7 +30,7 @@ interface Product {
   technicalDrawingUrl?: string | null;
   technicalDrawings?: string[] | null;
   // Paralight-specific fields
-  subSeries?: string | null;
+  subSeries?: string[] | null;
   standardLength?: string | null;
   diffuserFinish?: string | null;
   accessories?: string | null;
@@ -70,7 +70,7 @@ export default function Admin() {
     name: "",
     modelNumber: "",
     description: "",
-    series: "",
+    series: [] as string[],
     brand: "Paralight",
     application: "",
     finish: "",
@@ -88,7 +88,7 @@ export default function Admin() {
     technicalDrawingUrl: "",
     technicalDrawings: [] as string[],
     // Paralight-specific fields
-    subSeries: "",
+    subSeries: [] as string[],
     standardLength: "",
     diffuserFinish: "",
     accessories: "",
@@ -108,9 +108,10 @@ export default function Admin() {
     technicalSpecs: ""
   });
 
-  const existingSeries = Array.from(new Set(products.map(p => p.series).filter(Boolean))).sort();
+  const existingSeries = Array.from(new Set(products.flatMap(p => p.series || []).filter(Boolean))).sort();
+  const existingSubSeries = Array.from(new Set(products.flatMap(p => p.subSeries || []).filter(Boolean))).sort();
   const filteredSeries = existingSeries.filter(s => 
-    s.toLowerCase().includes((seriesFilter || formData.series).toLowerCase())
+    s.toLowerCase().includes(seriesFilter.toLowerCase())
   );
 
   const fetchProducts = async () => {
@@ -262,7 +263,7 @@ export default function Admin() {
       name: "",
       modelNumber: "",
       description: "",
-      series: "",
+      series: [],
       brand: "Paralight",
       application: "",
       finish: "",
@@ -279,7 +280,7 @@ export default function Admin() {
       catalogueUrl: "",
       technicalDrawingUrl: "",
       technicalDrawings: [],
-      subSeries: "",
+      subSeries: [],
       standardLength: "",
       diffuserFinish: "",
       diffuserMaterial: "",
@@ -306,7 +307,7 @@ export default function Admin() {
       name: product.name,
       modelNumber: product.modelNumber,
       description: product.description,
-      series: product.series,
+      series: product.series || [],
       brand: product.brand,
       application: product.application || "",
       finish: product.finish || "",
@@ -323,7 +324,7 @@ export default function Admin() {
       catalogueUrl: product.catalogueUrl || "",
       technicalDrawingUrl: product.technicalDrawingUrl || "",
       technicalDrawings: product.technicalDrawings || [],
-      subSeries: product.subSeries || "",
+      subSeries: product.subSeries || [],
       standardLength: product.standardLength || "",
       diffuserFinish: product.diffuserFinish || "",
       diffuserMaterial: product.diffuserMaterial || "",
@@ -478,21 +479,41 @@ export default function Admin() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Series *</label>
+                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Series * (Multiple)</label>
                       <div className="relative">
+                        {formData.series.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {formData.series.map((s, idx) => (
+                              <span key={idx} className="inline-flex items-center gap-1 px-2 py-1 bg-[#00A8E8]/10 text-[#00A8E8] text-xs rounded-full">
+                                {s}
+                                <button type="button" onClick={() => setFormData({...formData, series: formData.series.filter((_, i) => i !== idx)})} className="hover:text-red-500">
+                                  <X className="w-3 h-3" />
+                                </button>
+                              </span>
+                            ))}
+                          </div>
+                        )}
                         <input 
                           type="text" 
-                          required
                           data-testid="input-series"
-                          value={formData.series}
+                          value={seriesFilter}
                           onChange={(e) => {
-                            setFormData({...formData, series: e.target.value});
                             setSeriesFilter(e.target.value);
                             setShowSeriesDropdown(true);
                           }}
                           onFocus={() => setShowSeriesDropdown(true)}
                           onBlur={() => setTimeout(() => setShowSeriesDropdown(false), 200)}
-                          placeholder="Type or select a series..."
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && seriesFilter.trim()) {
+                              e.preventDefault();
+                              if (!formData.series.includes(seriesFilter.trim())) {
+                                setFormData({...formData, series: [...formData.series, seriesFilter.trim()]});
+                              }
+                              setSeriesFilter("");
+                              setShowSeriesDropdown(false);
+                            }
+                          }}
+                          placeholder={formData.series.length === 0 ? "Type and press Enter or select..." : "Add another series..."}
                           className="w-full bg-gray-50 border border-gray-200 px-4 py-3 pr-10 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
                         />
                         <button
@@ -502,21 +523,39 @@ export default function Admin() {
                         >
                           <ChevronDown className={`w-4 h-4 transition-transform ${showSeriesDropdown ? 'rotate-180' : ''}`} />
                         </button>
-                        {showSeriesDropdown && filteredSeries.length > 0 && (
+                        {showSeriesDropdown && (filteredSeries.length > 0 || seriesFilter.trim()) && (
                           <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                            {seriesFilter.trim() && !existingSeries.includes(seriesFilter.trim()) && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (!formData.series.includes(seriesFilter.trim())) {
+                                    setFormData({...formData, series: [...formData.series, seriesFilter.trim()]});
+                                  }
+                                  setSeriesFilter("");
+                                  setShowSeriesDropdown(false);
+                                }}
+                                className="w-full px-4 py-2.5 text-left text-sm text-[#00A8E8] hover:bg-[#00A8E8]/10 flex items-center gap-2 transition-colors border-b border-gray-100"
+                              >
+                                <Plus className="w-4 h-4" />
+                                <span>Add "{seriesFilter.trim()}"</span>
+                              </button>
+                            )}
                             {filteredSeries.map((series) => (
                               <button
                                 key={series}
                                 type="button"
                                 onClick={() => {
-                                  setFormData({...formData, series});
-                                  setShowSeriesDropdown(false);
+                                  if (!formData.series.includes(series)) {
+                                    setFormData({...formData, series: [...formData.series, series]});
+                                  }
                                   setSeriesFilter("");
+                                  setShowSeriesDropdown(false);
                                 }}
                                 className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-[#00A8E8]/10 hover:text-[#00A8E8] flex items-center justify-between transition-colors"
                               >
                                 <span>{series}</span>
-                                {formData.series === series && <Check className="w-4 h-4 text-[#00A8E8]" />}
+                                {formData.series.includes(series) && <Check className="w-4 h-4 text-[#00A8E8]" />}
                               </button>
                             ))}
                           </div>
@@ -537,15 +576,37 @@ export default function Admin() {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-gray-500">Sub Series</label>
-                      <input 
-                        type="text" 
-                        data-testid="input-sub-series"
-                        value={formData.subSeries}
-                        onChange={(e) => setFormData({...formData, subSeries: e.target.value})}
-                        placeholder="e.g. Premium, Standard"
-                        className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
-                      />
+                      <label className="text-[10px] uppercase tracking-widest text-gray-500">Sub Series (Multiple)</label>
+                      <div className="relative">
+                        {formData.subSeries.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {formData.subSeries.map((s, idx) => (
+                              <span key={idx} className="inline-flex items-center gap-1 px-2 py-1 bg-[#ECAA00]/10 text-[#ECAA00] text-xs rounded-full">
+                                {s}
+                                <button type="button" onClick={() => setFormData({...formData, subSeries: formData.subSeries.filter((_, i) => i !== idx)})} className="hover:text-red-500">
+                                  <X className="w-3 h-3" />
+                                </button>
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <input 
+                          type="text" 
+                          data-testid="input-sub-series"
+                          placeholder={formData.subSeries.length === 0 ? "Type and press Enter to add..." : "Add another sub-series..."}
+                          onKeyDown={(e) => {
+                            const input = e.currentTarget;
+                            if (e.key === 'Enter' && input.value.trim()) {
+                              e.preventDefault();
+                              if (!formData.subSeries.includes(input.value.trim())) {
+                                setFormData({...formData, subSeries: [...formData.subSeries, input.value.trim()]});
+                              }
+                              input.value = "";
+                            }
+                          }}
+                          className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -1211,7 +1272,7 @@ export default function Admin() {
                       <span className="text-gray-400 font-normal ml-2">
                         ({products.filter(p => 
                           (adminBrandFilter === "All" || p.brand === adminBrandFilter) &&
-                          (adminSeriesFilter === "All" || p.series === adminSeriesFilter) &&
+                          (adminSeriesFilter === "All" || (p.series || []).includes(adminSeriesFilter)) &&
                           (!adminSearchQuery.trim() || 
                             p.name.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
                             p.modelNumber.toLowerCase().includes(adminSearchQuery.toLowerCase())
@@ -1267,7 +1328,7 @@ export default function Admin() {
                         className="px-3 py-2 text-sm bg-white border border-gray-200 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] transition-colors"
                       >
                         <option value="All">All Series</option>
-                        {Array.from(new Set(products.map(p => p.series).filter(Boolean))).sort().map((series) => (
+                        {existingSeries.map((series) => (
                           <option key={series} value={series}>{series}</option>
                         ))}
                       </select>
@@ -1295,7 +1356,7 @@ export default function Admin() {
                       // Brand filter
                       if (adminBrandFilter !== "All" && product.brand !== adminBrandFilter) return false;
                       // Series filter
-                      if (adminSeriesFilter !== "All" && product.series !== adminSeriesFilter) return false;
+                      if (adminSeriesFilter !== "All" && !(product.series || []).includes(adminSeriesFilter)) return false;
                       // Search filter
                       if (!adminSearchQuery.trim()) return true;
                       const query = adminSearchQuery.toLowerCase();
@@ -1303,7 +1364,7 @@ export default function Admin() {
                         product.name.toLowerCase().includes(query) ||
                         product.modelNumber.toLowerCase().includes(query) ||
                         product.brand.toLowerCase().includes(query) ||
-                        product.series.toLowerCase().includes(query)
+                        (product.series || []).some(s => s.toLowerCase().includes(query))
                       );
                     })
                     .map((product) => (
@@ -1319,9 +1380,11 @@ export default function Admin() {
                         <div>
                           <h4 className="font-bold uppercase tracking-widest mb-1">{product.name}</h4>
                           <p className="text-[10px] text-gray-500 uppercase tracking-widest">{product.modelNumber}</p>
-                          <div className="flex gap-2 mt-2">
+                          <div className="flex flex-wrap gap-2 mt-2">
                             <span className={`text-[8px] px-2 py-1 uppercase tracking-widest rounded-full ${product.brand === 'Paralight' ? 'bg-[#00A8E8]/10 text-[#00A8E8]' : 'bg-[#ECAA00]/10 text-[#ECAA00]'}`}>{product.brand}</span>
-                            <span className="text-[8px] bg-gray-100 text-gray-600 px-2 py-1 uppercase tracking-widest rounded-full">{product.series}</span>
+                            {(product.series || []).map((s, idx) => (
+                              <span key={idx} className="text-[8px] bg-gray-100 text-gray-600 px-2 py-1 uppercase tracking-widest rounded-full">{s}</span>
+                            ))}
                           </div>
                         </div>
                       </div>

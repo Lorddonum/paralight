@@ -42,7 +42,7 @@ interface Product {
   name: string;
   modelNumber: string;
   description: string;
-  series: string;
+  series: string[];
   brand: string;
   category: string;
   application?: string | null;
@@ -61,7 +61,7 @@ interface Product {
   technicalDrawingUrl?: string | null;
   technicalDrawings?: string[] | null;
   // Paralight-specific fields
-  subSeries?: string | null;
+  subSeries?: string[] | null;
   standardLength?: string | null;
   diffuserFinish?: string | null;
   diffuserMaterial?: string | null;
@@ -138,12 +138,13 @@ export default function ProductDetail() {
           
           if (allProductsRes.ok) {
             const allProducts: Product[] = await allProductsRes.json();
+            const dataSeries = data.series || [];
             const related = allProducts
               .filter(p => p.id !== data.id)
-              .filter(p => p.series === data.series || p.brand === data.brand)
+              .filter(p => (p.series || []).some(s => dataSeries.includes(s)) || p.brand === data.brand)
               .sort((a, b) => {
-                const aScore = (a.series === data.series ? 2 : 0) + (a.brand === data.brand ? 1 : 0);
-                const bScore = (b.series === data.series ? 2 : 0) + (b.brand === data.brand ? 1 : 0);
+                const aScore = ((a.series || []).some(s => dataSeries.includes(s)) ? 2 : 0) + (a.brand === data.brand ? 1 : 0);
+                const bScore = ((b.series || []).some(s => dataSeries.includes(s)) ? 2 : 0) + (b.brand === data.brand ? 1 : 0);
                 return bScore - aScore;
               })
               .slice(0, 4);
@@ -178,7 +179,7 @@ export default function ProductDetail() {
       { label: "Beam Angle", value: product.beamAngle },
       // Paralight-specific specs
       ...(product.brand === "Paralight" ? [
-        { label: "Sub Series", value: product.subSeries },
+        { label: "Sub Series", value: (product.subSeries || []).join(", ") || null },
         { label: "Standard Length", value: product.standardLength },
         { label: "Diffuser Finish", value: product.diffuserFinish },
         { label: "Diffuser Material", value: product.diffuserMaterial },
@@ -285,12 +286,15 @@ export default function ProductDetail() {
             >
               {product.brand}
             </span>
-            <span
-              className="bg-gray-900 text-white px-3 py-1.5 text-[10px] font-medium tracking-[0.15em] uppercase"
-              data-testid="text-series"
-            >
-              {product.series}
-            </span>
+            {(product.series || []).map((s, idx) => (
+              <span
+                key={idx}
+                className="bg-gray-900 text-white px-3 py-1.5 text-[10px] font-medium tracking-[0.15em] uppercase"
+                data-testid={`text-series-${idx}`}
+              >
+                {s}
+              </span>
+            ))}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -787,7 +791,7 @@ export default function ProductDetail() {
                           {relatedProduct.brand}
                         </span>
                         <span className="text-[8px] text-gray-400 uppercase tracking-widest">
-                          {relatedProduct.series}
+                          {(relatedProduct.series || []).join(", ")}
                         </span>
                       </div>
                       <h3 className="font-bold text-sm text-gray-900 group-hover:text-[#00A8E8] transition-colors line-clamp-2">

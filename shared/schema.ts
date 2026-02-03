@@ -14,7 +14,7 @@ export const products = pgTable("products", {
   name: text("name").notNull(),
   modelNumber: text("model_number").notNull(),
   description: text("description").notNull(),
-  series: text("series").notNull(),
+  series: text("series").array().notNull().default(sql`'{}'::text[]`),
   brand: text("brand").notNull(),
   application: text("application"),
   finish: text("finish"),
@@ -32,7 +32,7 @@ export const products = pgTable("products", {
   technicalDrawingUrl: text("technical_drawing_url"),
   technicalDrawings: text("technical_drawings").array(),
   // Paralight-specific fields
-  subSeries: text("sub_series"),
+  subSeries: text("sub_series").array().default(sql`'{}'::text[]`),
   standardLength: text("standard_length"),
   diffuserFinish: text("diffuser_finish"),
   diffuserMaterial: text("diffuser_material"),

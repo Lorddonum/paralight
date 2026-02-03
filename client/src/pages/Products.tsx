@@ -10,8 +10,8 @@ interface Product {
   name: string;
   modelNumber: string;
   description: string;
-  series: string;
-  subSeries?: string | null;
+  series: string[];
+  subSeries?: string[] | null;
   brand: string;
   category: string;
   wattage: string | null;
@@ -71,27 +71,27 @@ export default function Products() {
     ? products 
     : products.filter(p => p.brand === activeBrand);
 
-  const seriesList = Array.from(new Set(brandFilteredProducts.map(p => p.series)));
+  const seriesList = Array.from(new Set(brandFilteredProducts.flatMap(p => p.series || [])));
 
   const seriesFilteredProducts = brandFilteredProducts
-    .filter(p => activeSeries === "All" || p.series === activeSeries);
+    .filter(p => activeSeries === "All" || (p.series || []).includes(activeSeries));
 
   const subSeriesList = Array.from(new Set(
     seriesFilteredProducts
-      .map(p => p.subSeries)
+      .flatMap(p => p.subSeries || [])
       .filter((s): s is string => !!s)
   ));
 
   const filteredProducts = seriesFilteredProducts
-    .filter(p => activeSubSeries === "All" || p.subSeries === activeSubSeries)
+    .filter(p => activeSubSeries === "All" || (p.subSeries || []).includes(activeSubSeries))
     .filter(p => {
       if (!searchQuery.trim()) return true;
       const query = searchQuery.toLowerCase();
       return (
         p.name.toLowerCase().includes(query) ||
         p.modelNumber.toLowerCase().includes(query) ||
-        p.series.toLowerCase().includes(query) ||
-        (p.subSeries && p.subSeries.toLowerCase().includes(query))
+        (p.series || []).some(s => s.toLowerCase().includes(query)) ||
+        (p.subSeries || []).some(s => s.toLowerCase().includes(query))
       );
     });
 
@@ -135,7 +135,7 @@ export default function Products() {
       });
     });
     
-    const matchingSeries = Array.from(new Set(products.map(p => p.series)))
+    const matchingSeries = Array.from(new Set(products.flatMap(p => p.series || [])))
       .filter(s => s.toLowerCase().includes(query))
       .slice(0, 3);
     
@@ -351,9 +351,9 @@ export default function Products() {
                       
                       {/* Series with nested sub-series */}
                       {seriesList.map(series => {
-                        const seriesProducts = brandFilteredProducts.filter(p => p.series === series);
+                        const seriesProducts = brandFilteredProducts.filter(p => (p.series || []).includes(series));
                         const seriesSubSeries = Array.from(new Set(
-                          seriesProducts.map(p => p.subSeries).filter((s): s is string => !!s)
+                          seriesProducts.flatMap(p => p.subSeries || []).filter((s): s is string => !!s)
                         ));
                         const hasCyan = seriesProducts.some(p => p.brand === "Paralight");
                         const isSeriesActive = activeSeries === series;
@@ -392,21 +392,21 @@ export default function Products() {
                             {/* Nested sub-series (show when series is active and has sub-series) */}
                             {isSeriesActive && seriesSubSeries.length > 0 && (
                               <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-100 pl-3">
-                                {seriesSubSeries.map(subSeries => {
-                                  const subSeriesCount = seriesProducts.filter(p => p.subSeries === subSeries).length;
+                                {seriesSubSeries.map(subSeriesItem => {
+                                  const subSeriesCount = seriesProducts.filter(p => (p.subSeries || []).includes(subSeriesItem)).length;
                                   return (
                                     <button
-                                      key={subSeries}
-                                      onClick={() => setActiveSubSeries(subSeries)}
-                                      data-testid={`filter-subseries-${subSeries.toLowerCase().replace(/\s+/g, '-')}`}
+                                      key={subSeriesItem}
+                                      onClick={() => setActiveSubSeries(subSeriesItem)}
+                                      data-testid={`filter-subseries-${subSeriesItem.toLowerCase().replace(/\s+/g, '-')}`}
                                       className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-all flex items-center justify-between ${
-                                        activeSubSeries === subSeries 
+                                        activeSubSeries === subSeriesItem 
                                           ? "bg-gray-900 text-white font-medium"
                                           : "text-gray-500 hover:bg-gray-50"
                                       }`}
                                     >
-                                      <span>{subSeries}</span>
-                                      <span className={`text-xs ${activeSubSeries === subSeries ? "text-white/70" : "text-gray-400"}`}>
+                                      <span>{subSeriesItem}</span>
+                                      <span className={`text-xs ${activeSubSeries === subSeriesItem ? "text-white/70" : "text-gray-400"}`}>
                                         {subSeriesCount}
                                       </span>
                                     </button>
