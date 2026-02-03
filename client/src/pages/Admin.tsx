@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Plus, Trash2, LogOut, Package, ChevronRight, Upload, Settings, Edit2, X, Image as ImageIcon, FileText, Ruler, Search, ChevronDown, Check } from "lucide-react";
+import { Plus, Trash2, LogOut, Package, ChevronRight, Upload, Settings, Edit2, X, Image as ImageIcon, FileText, Ruler, Search, ChevronDown, Check, Copy } from "lucide-react";
 import { PARALIGHT_SERIES, MAGLINEAR_SERIES, MAGLINEAR_ALL_SERIES, MAGLINEAR_ALL_SUBSERIES } from "@shared/series-config";
 
 const THEME_BG = "bg-[#1a2332]";
@@ -329,6 +329,51 @@ export default function Admin() {
     setFormData({
       name: product.name,
       modelNumber: product.modelNumber,
+      description: product.description,
+      series: product.series || [],
+      brand: product.brand,
+      application: product.application || "",
+      finish: product.finish || "",
+      material: product.material || "",
+      wattage: product.wattage || "",
+      dimensions: product.dimensions || "",
+      voltage: product.voltage || "",
+      color: product.color || "",
+      cri: product.cri || "",
+      cct: product.cct || "",
+      beamAngle: product.beamAngle || "",
+      image: product.image || "",
+      images: product.images || [],
+      catalogueUrl: product.catalogueUrl || "",
+      technicalDrawingUrl: product.technicalDrawingUrl || "",
+      technicalDrawings: product.technicalDrawings || [],
+      subSeries: product.subSeries || [],
+      standardLength: product.standardLength || "",
+      diffuserFinish: product.diffuserFinish || "",
+      diffuserMaterial: product.diffuserMaterial || "",
+      accessories: product.accessories || "",
+      ledStripSize: product.ledStripSize || "",
+      installationMethod: product.installationMethod || "",
+      packagingMethodADesc: product.packagingMethodADesc || "",
+      packagingMethodASpec: product.packagingMethodASpec || "",
+      packagingMethodBDesc: product.packagingMethodBDesc || "",
+      packagingMethodBSpec: product.packagingMethodBSpec || "",
+      accessoriesSpec: product.accessoriesSpec || "",
+      mountingTrack: product.mountingTrack || "",
+      conductionMethod: product.conductionMethod || "",
+      maglinearName: product.maglinearName || "",
+      inputVoltage: product.inputVoltage || "",
+      outputVoltage: product.outputVoltage || "",
+      technicalSpecs: product.technicalSpecs || ""
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDuplicate = (product: Product) => {
+    setEditingId(null);
+    setFormData({
+      name: product.name + " (Copy)",
+      modelNumber: product.modelNumber + "-COPY",
       description: product.description,
       series: product.series || [],
       brand: product.brand,
@@ -1488,14 +1533,24 @@ export default function Admin() {
                           onClick={() => handleEdit(product)}
                           data-testid={`button-edit-${product.id}`}
                           className={`p-3 transition-colors rounded-lg flex items-center gap-2 ${editingId === product.id ? 'bg-[#00A8E8] text-white' : 'bg-gray-100 border border-gray-200 hover:bg-[#00A8E8]/10 hover:border-[#00A8E8]'}`}
+                          title="Edit product"
                         >
                           <Edit2 className="w-4 h-4" />
                           {editingId === product.id && <span className="text-xs font-bold uppercase tracking-wider">Editing</span>}
                         </button>
                         <button 
+                          onClick={() => handleDuplicate(product)}
+                          data-testid={`button-duplicate-${product.id}`}
+                          className="p-3 bg-[#ECAA00]/10 border border-[#ECAA00]/20 text-[#ECAA00] hover:bg-[#ECAA00]/20 transition-colors rounded-lg"
+                          title="Duplicate product"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </button>
+                        <button 
                           onClick={() => handleDelete(product.id)}
                           data-testid={`button-delete-${product.id}`}
-                          className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-colors"
+                          className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-colors rounded-lg"
+                          title="Delete product"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
