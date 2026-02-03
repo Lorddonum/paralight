@@ -150,29 +150,66 @@ export default function Admin() {
     setLocation("/");
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>, field: 'image' | 'catalogueUrl' | 'technicalDrawingUrl') => {
+  const [compressing, setCompressing] = useState(false);
+
+  const compressImage = async (base64: string, maxWidth = 800, quality = 70): Promise<string> => {
+    try {
+      const response = await fetch('/api/compress-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64, maxWidth, quality })
+      });
+      if (!response.ok) throw new Error('Compression failed');
+      const data = await response.json();
+      console.log(`Compressed: ${Math.round(data.originalSize/1024)}KB → ${Math.round(data.newSize/1024)}KB (${data.savings} saved)`);
+      return data.image;
+    } catch (error) {
+      console.error('Compression error:', error);
+      return base64;
+    }
+  };
+
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>, field: 'image' | 'catalogueUrl' | 'technicalDrawingUrl') => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData(prev => ({ ...prev, [field]: reader.result as string }));
+      reader.onloadend = async () => {
+        const base64 = reader.result as string;
+        if (field !== 'catalogueUrl' && base64.startsWith('data:image')) {
+          setCompressing(true);
+          const compressed = await compressImage(base64);
+          setCompressing(false);
+          setFormData(prev => ({ ...prev, [field]: compressed }));
+        } else {
+          setFormData(prev => ({ ...prev, [field]: base64 }));
+        }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleMultipleFileChange = (e: ChangeEvent<HTMLInputElement>, field: 'images' | 'technicalDrawings') => {
+  const handleMultipleFileChange = async (e: ChangeEvent<HTMLInputElement>, field: 'images' | 'technicalDrawings') => {
     const files = e.target.files;
     if (files && files.length > 0) {
+      setCompressing(true);
       const promises = Array.from(files).map(file => {
         return new Promise<string>((resolve) => {
           const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
+          reader.onloadend = async () => {
+            const base64 = reader.result as string;
+            if (base64.startsWith('data:image')) {
+              const compressed = await compressImage(base64, 1200, 75);
+              resolve(compressed);
+            } else {
+              resolve(base64);
+            }
+          };
           reader.readAsDataURL(file);
         });
       });
       Promise.all(promises).then(results => {
         setFormData(prev => ({ ...prev, [field]: [...prev[field], ...results] }));
+        setCompressing(false);
       });
     }
   };
@@ -514,18 +551,22 @@ export default function Admin() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-gray-200">
                     <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Product Image URL</label>
-                      <div className="space-y-3">
+                      <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Product Image (Auto-Compressed)</label>
+                      <div className="relative group">
                         <input 
-                          type="url" 
-                          placeholder="Paste image URL (e.g., https://example.com/image.jpg)"
-                          value={formData.image}
-                          onChange={(e) => setFormData({...formData, image: e.target.value})}
-                          className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
+                          type="file" 
+                          accept="image/*"
+                          onChange={(e) => handleFileChange(e, 'image')}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                         />
-                        <div className={`border-2 border-dashed rounded-lg p-4 text-center transition-colors ${formData.image ? 'bg-[#00A8E8]/5 border-[#00A8E8]/30' : 'border-gray-300'}`}>
-                          {formData.image ? (
-                            <div className="flex items-center gap-4">
+                        <div className={`border-2 border-dashed rounded-lg p-4 text-center transition-colors min-h-[140px] flex flex-col justify-center items-center ${formData.image ? 'bg-[#00A8E8]/5 border-[#00A8E8]/30' : 'border-gray-300 hover:border-[#00A8E8]'}`}>
+                          {compressing ? (
+                            <div className="py-4">
+                              <div className="w-8 h-8 border-2 border-[#00A8E8] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                              <p className="text-[10px] text-[#00A8E8] font-medium">Compressing image...</p>
+                            </div>
+                          ) : formData.image ? (
+                            <div className="flex items-center gap-4 w-full">
                               <img 
                                 src={formData.image} 
                                 alt="Preview" 
@@ -533,12 +574,12 @@ export default function Admin() {
                                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                               />
                               <div className="flex-1 text-left">
-                                <p className="text-xs text-green-600 font-medium">Image URL Set</p>
-                                <p className="text-[10px] text-gray-500 truncate max-w-[200px]">{formData.image}</p>
+                                <p className="text-xs text-green-600 font-medium">Image Ready (Compressed)</p>
+                                <p className="text-[10px] text-gray-500">{Math.round(formData.image.length / 1024)} KB</p>
                                 <button 
                                   type="button" 
-                                  onClick={() => setFormData({...formData, image: ''})}
-                                  className="text-[10px] text-red-500 hover:underline mt-1"
+                                  onClick={(e) => { e.stopPropagation(); setFormData({...formData, image: ''}); }}
+                                  className="text-[10px] text-red-500 hover:underline mt-1 relative z-30"
                                 >
                                   Remove
                                 </button>
@@ -546,9 +587,9 @@ export default function Admin() {
                             </div>
                           ) : (
                             <div className="py-4">
-                              <ImageIcon className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-                              <p className="text-[10px] text-gray-500">Enter an image URL above</p>
-                              <p className="text-[8px] text-gray-400 mt-1">Use URLs from your website or image hosting service</p>
+                              <Upload className="w-6 h-6 text-gray-400 mx-auto mb-2 group-hover:text-[#00A8E8] transition-colors" />
+                              <p className="text-[10px] text-gray-500 group-hover:text-gray-700">Click to upload image</p>
+                              <p className="text-[8px] text-gray-400 mt-1">Images auto-compressed to ~20-50KB</p>
                             </div>
                           )}
                         </div>

@@ -2,37 +2,18 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertProductSchema } from "@shared/schema";
+import sharp from "sharp";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
   
-  // Helper function to strip base64 data but keep valid URLs
-  const stripBase64 = (value: string | null | undefined): string => {
-    if (!value) return '';
-    if (value.startsWith('data:')) return '';
-    return value;
-  };
-
-  const stripBase64Array = (arr: string[] | null | undefined): string[] => {
-    if (!arr || !Array.isArray(arr)) return [];
-    return arr.filter(item => item && !item.startsWith('data:'));
-  };
-
-  // Get all products (strips base64 to prevent timeout)
+  // Get all products
   app.get("/api/products", async (req, res) => {
     try {
       const products = await storage.getProducts();
-      const cleanedProducts = products.map((product: any) => ({
-        ...product,
-        image: stripBase64(product.image),
-        images: stripBase64Array(product.images),
-        technicalDrawings: stripBase64Array(product.technicalDrawings),
-        technicalDrawingUrl: stripBase64(product.technicalDrawingUrl),
-        catalogueUrl: stripBase64(product.catalogueUrl),
-      }));
-      res.json(cleanedProducts);
+      res.json(products);
     } catch (error) {
       console.error("Error fetching products:", error);
       res.status(500).json({ error: "Failed to fetch products", details: String(error) });
@@ -96,6 +77,65 @@ export async function registerRoutes(
       res.status(204).send();
     } catch (error) {
       res.status(500).json({ error: "Failed to delete product" });
+    }
+  });
+
+  // PUT product (full update)
+  app.put("/api/products/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const parsed = insertProductSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid product data", details: parsed.error });
+      }
+      const product = await storage.updateProduct(id, parsed.data);
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+      res.json(product);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update product" });
+    }
+  });
+
+  // Compress image endpoint
+  app.post("/api/compress-image", async (req, res) => {
+    try {
+      const { image, maxWidth = 800, quality = 70 } = req.body;
+      
+      if (!image || typeof image !== 'string') {
+        return res.status(400).json({ error: "No image provided" });
+      }
+
+      // Extract base64 data
+      const matches = image.match(/^data:image\/(\w+);base64,(.+)$/);
+      if (!matches) {
+        return res.status(400).json({ error: "Invalid base64 image format" });
+      }
+
+      const imageBuffer = Buffer.from(matches[2], 'base64');
+      
+      // Compress with sharp
+      const compressed = await sharp(imageBuffer)
+        .resize(maxWidth, null, { withoutEnlargement: true })
+        .jpeg({ quality: quality })
+        .toBuffer();
+
+      const compressedBase64 = `data:image/jpeg;base64,${compressed.toString('base64')}`;
+      
+      const originalSize = imageBuffer.length;
+      const newSize = compressed.length;
+      const savings = Math.round((1 - newSize / originalSize) * 100);
+
+      res.json({ 
+        image: compressedBase64,
+        originalSize,
+        newSize,
+        savings: `${savings}%`
+      });
+    } catch (error) {
+      console.error("Image compression error:", error);
+      res.status(500).json({ error: "Failed to compress image" });
     }
   });
 
