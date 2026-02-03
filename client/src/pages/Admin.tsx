@@ -621,7 +621,10 @@ export default function Admin() {
                           type="text" 
                           data-testid="input-sub-series"
                           value={subSeriesFilter}
-                          onChange={(e) => setSubSeriesFilter(e.target.value)}
+                          onChange={(e) => {
+                            setSubSeriesFilter(e.target.value);
+                            setShowSubSeriesDropdown(true);
+                          }}
                           onFocus={() => setShowSubSeriesDropdown(true)}
                           onBlur={() => setTimeout(() => setShowSubSeriesDropdown(false), 200)}
                           placeholder={formData.subSeries.length === 0 ? "Select or type sub-series..." : "Add another sub-series..."}
@@ -634,8 +637,15 @@ export default function Admin() {
                               setSubSeriesFilter("");
                             }
                           }}
-                          className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
+                          className="w-full bg-gray-50 border border-gray-200 px-4 py-3 pr-10 text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00] focus:ring-1 focus:ring-[#ECAA00]/20 transition-colors"
                         />
+                        <button
+                          type="button"
+                          onClick={() => setShowSubSeriesDropdown(!showSubSeriesDropdown)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        >
+                          <ChevronDown className={`w-4 h-4 transition-transform ${showSubSeriesDropdown ? 'rotate-180' : ''}`} />
+                        </button>
                         {showSubSeriesDropdown && (
                           <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
                             {subSeriesFilter.trim() && !availableSubSeries.includes(subSeriesFilter.trim()) && (
@@ -654,7 +664,7 @@ export default function Admin() {
                                 <span>Add "{subSeriesFilter.trim()}"</span>
                               </button>
                             )}
-                            {filteredSubSeries.map((subSeries) => (
+                            {filteredSubSeries.length > 0 ? filteredSubSeries.map((subSeries) => (
                               <button
                                 key={subSeries}
                                 type="button"
@@ -670,7 +680,15 @@ export default function Admin() {
                                 <span>{subSeries}</span>
                                 {formData.subSeries.includes(subSeries) && <Check className="w-4 h-4 text-[#ECAA00]" />}
                               </button>
-                            ))}
+                            )) : !subSeriesFilter.trim() && (
+                              <div className="px-4 py-3 text-sm text-gray-500">
+                                {formData.brand === "Maglinear" && formData.series.length === 0 
+                                  ? "Select a series first to see sub-series options" 
+                                  : formData.brand === "Maglinear" 
+                                    ? "No sub-series for selected series" 
+                                    : "Type to add a new sub-series"}
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
