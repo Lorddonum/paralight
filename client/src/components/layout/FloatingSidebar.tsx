@@ -94,9 +94,11 @@ export default function FloatingSidebar() {
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
-                    className="absolute right-14 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl p-2"
+                    className="absolute right-14 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-xl shadow-xl p-4"
                   >
-                    <img src="/wechat-qr.png?v=3" alt="WeChat QR Code" className="w-64 h-auto object-contain" />
+                    <div className="w-72 h-auto">
+                      <img src="/wechat-qr.png?v=4" alt="WeChat QR Code" className="w-full h-auto object-contain" />
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -118,10 +120,11 @@ export default function FloatingSidebar() {
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
-                    className="absolute right-14 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-xl shadow-xl p-5"
+                    className="absolute right-14 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-xl shadow-xl p-4"
                   >
-                    <div className="text-base text-center text-gray-700 mb-4 font-medium">Scan to chat on WhatsApp</div>
-                    <img src="/whatsapp-qr.png" alt="WhatsApp QR Code" className="w-72 h-72 object-contain" />
+                    <div className="w-72 h-auto">
+                      <img src="/whatsapp-qr.png" alt="WhatsApp QR Code" className="w-full h-auto object-contain" />
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
