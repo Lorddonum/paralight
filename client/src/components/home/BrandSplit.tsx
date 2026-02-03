@@ -39,8 +39,9 @@ export default function BrandSplit() {
       
       {/* Background decorative image - right pendant */}
       <div 
-        className="absolute top-0 right-0 w-[900px] h-[2400px] opacity-100 pointer-events-none z-0"
+        className="absolute top-0 w-[900px] h-[2400px] opacity-100 pointer-events-none z-0"
         style={{
+          right: '-150px',
           backgroundImage: 'url(/brand-split-pendant.png)',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
