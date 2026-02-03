@@ -8,7 +8,7 @@ const fixtures = [
   { src: "/fixture-1.png", height: 280, delay: 0 },
   { src: "/fixture-2.png", height: 160, delay: 0.5 },
   { src: "/fixture-3.png", height: 240, delay: 1 },
-  { src: "/fixture-4.png", height: 260, delay: 1.5 },
+  { src: "/fixture-4.png", height: 180, delay: 1.5 },
   { src: "/fixture-5.png", height: 300, delay: 2 },
   { src: "/fixture-6.png", height: 280, delay: 2.5 },
 ];
