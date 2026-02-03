@@ -65,12 +65,12 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Social Media - prominent */}
+            {/* Social Media - elegant minimal */}
             <div className="lg:text-right">
               <h4 className="text-[11px] font-medium uppercase tracking-[0.3em] text-white/50 mb-6">
                 Follow Us
               </h4>
-              <div className="flex flex-wrap lg:justify-end gap-3">
+              <div className="flex flex-wrap lg:justify-end gap-4">
                 {socials.map((social) => (
                   <a 
                     key={social.label}
@@ -78,17 +78,9 @@ export default function Footer() {
                     target="_blank" 
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-14 h-14 flex items-center justify-center rounded-xl bg-white/10 border border-white/10 text-white/70 hover:text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = social.color;
-                      e.currentTarget.style.color = '#ffffff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '';
-                      e.currentTarget.style.color = '';
-                    }}
+                    className="text-white/40 hover:text-brand-cyan transition-colors duration-300"
                   >
-                    <social.icon className="w-6 h-6" />
+                    <social.icon className="w-5 h-5" />
                   </a>
                 ))}
               </div>
