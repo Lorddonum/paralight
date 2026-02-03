@@ -96,7 +96,7 @@ export default function FloatingSidebar() {
                     exit={{ opacity: 0, x: 10 }}
                     className="absolute right-14 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl p-2"
                   >
-                    <img src="/wechat-qr.png" alt="WeChat QR Code" className="w-64 h-auto object-contain rounded-lg" />
+                    <img src="/wechat-qr.png?v=2" alt="WeChat QR Code" className="w-80 h-auto object-contain rounded-lg" />
                   </motion.div>
                 )}
               </AnimatePresence>
