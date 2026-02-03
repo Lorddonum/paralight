@@ -39,16 +39,27 @@ export default function Products() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProducts = async (retries = 3) => {
       setIsLoading(true);
       try {
         const res = await fetch('/api/products');
         if (res.ok) {
           const data = await res.json();
           setProducts(data);
+        } else {
+          const errorText = await res.text();
+          console.error("API error:", res.status, errorText);
+          if (retries > 0) {
+            setTimeout(() => fetchProducts(retries - 1), 1000);
+            return;
+          }
         }
       } catch (error) {
         console.error("Failed to fetch products:", error);
+        if (retries > 0) {
+          setTimeout(() => fetchProducts(retries - 1), 1000);
+          return;
+        }
       } finally {
         setIsLoading(false);
       }
