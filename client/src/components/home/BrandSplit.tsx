@@ -26,22 +26,19 @@ export default function BrandSplit() {
 
   return (
     <section className="py-32 bg-white relative overflow-hidden">
-      {/* Professional dynamic background */}
+      {/* Video background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Main background layer with subtle drift */}
-        <motion.div
-          className="absolute inset-0"
-          animate={{ x: [0, -30, 0], scale: [1, 1.02, 1] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover opacity-25"
         >
-          <img 
-            src="/brand-split-dynamic-bg.png" 
-            alt="" 
-            className="w-full h-full object-cover opacity-20"
-          />
-        </motion.div>
+          <source src="/brand-split-bg.mp4" type="video/mp4" />
+        </video>
         {/* Soft gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white opacity-50" />
       </div>
       
       <div className="container mx-auto px-8 lg:px-12 relative z-10 pt-8">
