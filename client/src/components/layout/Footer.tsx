@@ -102,10 +102,10 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <div className="flex items-center -space-x-6 mb-4">
               <div className="h-10 overflow-hidden flex items-center">
-                <img src={paralightLogo} alt="Paralight" className="h-28 max-w-[220px] object-cover object-center brightness-0 invert" />
+                <img src={paralightLogo} alt="Paralight" className="h-28 max-w-[220px] object-cover object-center" />
               </div>
               <div className="h-10 overflow-hidden flex items-center">
-                <img src={maglinearLogo} alt="Maglinear" className="h-16 max-w-[140px] object-cover object-center brightness-0 invert" />
+                <img src={maglinearLogo} alt="Maglinear" className="h-16 max-w-[140px] object-cover object-center" />
               </div>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-md">
