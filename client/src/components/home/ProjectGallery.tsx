@@ -47,7 +47,7 @@ export default function ProjectGallery() {
         </motion.div>
       </div>
 
-      <div className="relative z-10 flex items-end h-[320px] px-4 lg:px-8 pb-4 mt-auto">
+      <div className="relative z-10 flex items-end h-[360px] px-4 lg:px-8 pb-4 mt-auto">
         {applicationCategories.map((category, index) => {
           const isHovered = hoveredIndex === index;
           const isAnyHovered = hoveredIndex !== null;
@@ -63,10 +63,10 @@ export default function ProjectGallery() {
                   ? 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' 
                   : `polygon(${index === 0 ? '0' : '8%'} 0, 100% 0, ${index === applicationCategories.length - 1 ? '100%' : '92%'} 100%, 0 100%)`,
               }}
-              initial={{ flex: 1, height: 210 }}
+              initial={{ flex: 1, height: 250 }}
               animate={{
                 flex: isHovered ? 4 : isAnyHovered ? 0.5 : 1,
-                height: isHovered ? 320 : 210,
+                height: isHovered ? 360 : 250,
               }}
               transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
               onMouseEnter={() => setHoveredIndex(index)}
