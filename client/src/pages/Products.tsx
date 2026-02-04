@@ -312,6 +312,25 @@ export default function Products() {
       <section className="pt-20 pb-20 mt-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
         {/* Split image background */}
         <div className="absolute inset-0 overflow-hidden">
+          {/* All Products background image */}
+          <motion.div 
+            className="absolute inset-0 w-full h-full"
+            animate={{ 
+              opacity: activeBrand === "All" && !hoveredBrand ? 1 : 0
+            }}
+            transition={{ 
+              duration: 0.4, 
+              ease: [0.4, 0, 0.2, 1]
+            }}
+          >
+            <img
+              src="/all-products-hero.jpg"
+              alt="All Products"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900/40 via-transparent to-gray-900/60" />
+          </motion.div>
+          
           {/* Paralight image */}
           <motion.div 
             className="absolute inset-0 w-full h-full"
@@ -321,7 +340,7 @@ export default function Products() {
                   ? "polygon(0 0, 70% 0, 50% 100%, 0 100%)"
                   : hoveredBrand === "Maglinear"
                     ? "polygon(0 0, 50% 0, 30% 100%, 0 100%)"
-                    : "polygon(0 0, 60% 0, 40% 100%, 0 100%)" 
+                    : "polygon(0 0, 0% 0, 0% 100%, 0 100%)" 
                 : activeBrand === "Paralight" 
                   ? hoveredBrand === "Maglinear"
                     ? "polygon(0 0, 90% 0, 85% 100%, 0 100%)"
@@ -352,7 +371,7 @@ export default function Products() {
                   ? "polygon(50% 0, 100% 0, 100% 100%, 30% 100%)"
                   : hoveredBrand === "Paralight"
                     ? "polygon(70% 0, 100% 0, 100% 100%, 50% 100%)"
-                    : "polygon(60% 0, 100% 0, 100% 100%, 40% 100%)" 
+                    : "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)" 
                 : activeBrand === "Maglinear" 
                   ? hoveredBrand === "Paralight"
                     ? "polygon(10% 0, 100% 0, 100% 100%, 15% 100%)"
@@ -392,7 +411,11 @@ export default function Products() {
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-center max-w-3xl mx-auto"
           >
-            <div className="inline-block bg-[#f5f2ed] rounded-2xl px-10 py-8 border border-white/20 shadow-xl">
+            <div className="inline-block rounded-2xl px-10 py-8 border border-white/20 shadow-xl" style={{
+              background: 'linear-gradient(135deg, rgba(245, 242, 237, 0.15) 0%, rgba(245, 242, 237, 0.7) 100%)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)'
+            }}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
