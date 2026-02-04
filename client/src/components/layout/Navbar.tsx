@@ -67,11 +67,9 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
         "fixed top-0 w-full z-50 transition-all duration-500",
         isFooterSection
           ? "bg-[#0A1628]"
-          : isProductsPage
+          : scrolled
             ? "bg-white/95 backdrop-blur-md shadow-sm"
-            : scrolled
-              ? "bg-white/95 backdrop-blur-md shadow-sm"
-              : "bg-transparent",
+            : "bg-transparent",
       )}
     >
       <div className="container mx-auto px-8 lg:px-12">
