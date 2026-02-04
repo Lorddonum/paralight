@@ -36,6 +36,19 @@ export async function registerRoutes(
     }
   });
 
+  // Get related products (with caching)
+  app.get("/api/products/:id/related", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const limit = parseInt(req.query.limit as string) || 4;
+      const relatedProducts = await storage.getRelatedProducts(id, limit);
+      res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+      res.json(relatedProducts);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch related products" });
+    }
+  });
+
   // Create product
   app.post("/api/products", async (req, res) => {
     try {

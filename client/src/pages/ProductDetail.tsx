@@ -126,27 +126,16 @@ export default function ProductDetail() {
     const fetchProduct = async () => {
       if (!params?.id) return;
       try {
-        const [productRes, allProductsRes] = await Promise.all([
-          fetch(`/api/products/${params.id}`),
-          fetch(`/api/products`)
-        ]);
+        const productRes = await fetch(`/api/products/${params.id}`);
         
         if (productRes.ok) {
           const data = await productRes.json();
           setProduct(data);
           
-          if (allProductsRes.ok) {
-            const allProducts: Product[] = await allProductsRes.json();
-            const dataSeries = data.series || [];
-            const related = allProducts
-              .filter(p => p.id !== data.id)
-              .filter(p => (p.series || []).some(s => dataSeries.includes(s)) || p.brand === data.brand)
-              .sort((a, b) => {
-                const aScore = ((a.series || []).some(s => dataSeries.includes(s)) ? 2 : 0) + (a.brand === data.brand ? 1 : 0);
-                const bScore = ((b.series || []).some(s => dataSeries.includes(s)) ? 2 : 0) + (b.brand === data.brand ? 1 : 0);
-                return bScore - aScore;
-              })
-              .slice(0, 4);
+          // Fetch related products from dedicated endpoint
+          const relatedRes = await fetch(`/api/products/${params.id}/related?limit=4`);
+          if (relatedRes.ok) {
+            const related = await relatedRes.json();
             setRelatedProducts(related);
           }
         }
