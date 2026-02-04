@@ -204,21 +204,12 @@ export default function Products() {
             className="absolute inset-0 w-full h-full"
             style={{ clipPath: activeBrand === "All" ? "inset(0 50% 0 0)" : "none" }}
           >
-            <motion.img
+            <img
               src="/paralight-hero.png"
               alt="Paralight Aluminum Profiles"
-              className="absolute inset-0 w-full h-full object-cover"
-              animate={{ 
-                filter: activeBrand === "Paralight" ? "brightness(0.7)" : activeBrand === "Maglinear" ? "brightness(0.4)" : hoveredBrand === "Paralight" ? "brightness(0.7)" : "brightness(0.5)"
-              }}
-              transition={{ duration: 0.3 }}
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.6]"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/60 to-transparent" />
-            <motion.div 
-              className="absolute inset-0 bg-brand-cyan/15"
-              animate={{ opacity: activeBrand === "Paralight" || hoveredBrand === "Paralight" ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
           </motion.div>
           
           {/* Maglinear image - sliding overlay */}
@@ -230,21 +221,12 @@ export default function Products() {
             style={{ clipPath: activeBrand === "All" ? "inset(0 0 0 50%)" : "none" }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <motion.img
+            <img
               src="/maglinear-hero.png"
               alt="Maglinear Track Lighting"
-              className="absolute inset-0 w-full h-full object-cover"
-              animate={{ 
-                filter: activeBrand === "Maglinear" ? "brightness(0.7)" : activeBrand === "Paralight" ? "brightness(0.4)" : hoveredBrand === "Maglinear" ? "brightness(0.7)" : "brightness(0.5)"
-              }}
-              transition={{ duration: 0.3 }}
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.6]"
             />
             <div className="absolute inset-0 bg-gradient-to-l from-gray-900/80 via-gray-900/60 to-transparent" />
-            <motion.div 
-              className="absolute inset-0 bg-brand-gold/15"
-              animate={{ opacity: activeBrand === "Maglinear" || hoveredBrand === "Maglinear" ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
           </motion.div>
         </div>
         
