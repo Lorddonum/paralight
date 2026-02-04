@@ -44,6 +44,7 @@ export const products = pgTable("products", {
   packagingMethodASpec: text("packaging_method_a_spec"),
   packagingMethodBDesc: text("packaging_method_b_desc"),
   packagingMethodBSpec: text("packaging_method_b_spec"),
+  packagingMethodImage: text("packaging_method_image"),
   // Accessories Specification (JSON string for table data)
   accessoriesSpec: text("accessories_spec"),
   // Maglinear-specific fields

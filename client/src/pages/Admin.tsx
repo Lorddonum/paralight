@@ -41,6 +41,7 @@ interface Product {
   packagingMethodASpec?: string | null;
   packagingMethodBDesc?: string | null;
   packagingMethodBSpec?: string | null;
+  packagingMethodImage?: string | null;
   accessoriesSpec?: string | null;
   diffuserMaterial?: string | null;
   // Maglinear-specific fields
@@ -101,6 +102,7 @@ export default function Admin() {
     packagingMethodASpec: "",
     packagingMethodBDesc: "",
     packagingMethodBSpec: "",
+    packagingMethodImage: "",
     accessoriesSpec: "",
     diffuserMaterial: "",
     mountingTrack: "",

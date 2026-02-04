@@ -44,6 +44,7 @@ interface Product {
   packagingMethodASpec?: string | null;
   packagingMethodBDesc?: string | null;
   packagingMethodBSpec?: string | null;
+  packagingMethodImage?: string | null;
 }
 
 export default function Products() {
@@ -740,6 +741,21 @@ export default function Products() {
                           <p className="text-gray-600 leading-relaxed text-sm mb-6">
                             {selectedProduct.description}
                           </p>
+                          
+                          {/* Packaging Method Image - Paralight only */}
+                          {selectedProduct.brand === "Paralight" && selectedProduct.packagingMethodImage && (
+                            <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                              <h4 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-3 text-center">
+                                Packaging Method
+                              </h4>
+                              <img 
+                                src={selectedProduct.packagingMethodImage} 
+                                alt="Packaging Method" 
+                                className="max-w-full h-auto mx-auto"
+                              />
+                            </div>
+                          )}
+                          
                           <a
                             href={selectedProduct.catalogueUrl || undefined}
                             download={`${selectedProduct.name}-Catalogue.pdf`}
