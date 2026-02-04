@@ -877,6 +877,64 @@ export default function Products() {
                           </div>
                         </div>
 
+                        {/* Accessories Specification - Paralight only */}
+                        {selectedProduct.brand === "Paralight" && selectedProduct.accessoriesSpec && (() => {
+                          try {
+                            const accessoriesData = JSON.parse(selectedProduct.accessoriesSpec);
+                            if (!Array.isArray(accessoriesData) || accessoriesData.length === 0) return null;
+                            
+                            const applicationRow = accessoriesData.find((item: { no?: string }) => 
+                              item.no?.toLowerCase() === 'application'
+                            );
+                            const regularRows = accessoriesData.filter((item: { no?: string }) => 
+                              item.no?.toLowerCase() !== 'application'
+                            );
+                            
+                            return (
+                              <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <div 
+                                  className="p-4 border-b"
+                                  style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                                >
+                                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
+                                    Accessories Specification
+                                  </h3>
+                                </div>
+                                <div className="overflow-x-auto">
+                                  <table className="w-full text-sm">
+                                    <thead className="bg-gradient-to-r from-gray-50 to-white">
+                                      <tr>
+                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100 w-16">NO.</th>
+                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Specification</th>
+                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100 w-20">QTY</th>
+                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Remarks</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {regularRows.map((item: { no?: string; specification?: string; qty?: string; remarks?: string }, index: number) => (
+                                        <tr key={index} className="border-b border-gray-100">
+                                          <td className="px-4 py-3 text-center font-medium" style={{ color: brandColor }}>{item.no || '-'}</td>
+                                          <td className="px-4 py-3 text-center text-gray-600">{item.specification || '-'}</td>
+                                          <td className="px-4 py-3 text-center text-gray-600">{item.qty || '-'}</td>
+                                          <td className="px-4 py-3 text-center text-gray-600">{item.remarks || '-'}</td>
+                                        </tr>
+                                      ))}
+                                      {applicationRow && (
+                                        <tr className="bg-gray-50">
+                                          <td className="px-4 py-3 font-medium text-gray-700">Application:</td>
+                                          <td colSpan={3} className="px-4 py-3 text-gray-600">{(applicationRow as { specification?: string }).specification || '-'}</td>
+                                        </tr>
+                                      )}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            );
+                          } catch {
+                            return null;
+                          }
+                        })()}
+
                         {/* Packaging Information - Paralight only */}
                         {selectedProduct.brand === "Paralight" && (selectedProduct.packagingMethodADesc || selectedProduct.packagingMethodBDesc) && (
                           <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
