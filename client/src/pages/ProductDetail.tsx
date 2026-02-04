@@ -389,6 +389,32 @@ export default function ProductDetail() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div className="space-y-6">
+              {/* Product Banner */}
+              <div 
+                className="relative rounded-xl overflow-hidden p-4"
+                style={{ 
+                  background: `linear-gradient(135deg, ${brandColor}15 0%, ${brandColor}05 50%, transparent 100%)`,
+                  borderLeft: `4px solid ${brandColor}`
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-10 h-10 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${brandColor}20` }}
+                  >
+                    <Package className="w-5 h-5" style={{ color: brandColor }} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-gray-500 font-medium">
+                      {product.brand === "Paralight" ? "Aluminum Profile" : "Magnetic Track System"}
+                    </p>
+                    <p className="text-xs font-bold" style={{ color: brandColor }}>
+                      {product.brand === "Paralight" ? "Premium LED Housing Solution" : "Modular Lighting Design"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <h1
                   className="font-display text-3xl md:text-4xl text-gray-900 font-medium mb-2"
