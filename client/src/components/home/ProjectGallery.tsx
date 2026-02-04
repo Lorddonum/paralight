@@ -47,47 +47,38 @@ export default function ProjectGallery() {
   };
 
   return (
-    <section className="h-full overflow-hidden relative flex flex-col" style={{ background: 'linear-gradient(to bottom, #0a1628 0%, #0d1f35 100%)' }}>
-      <div className="flex-1 flex flex-col lg:flex-row">
-        <div className="lg:w-2/5 p-8 lg:p-12 flex flex-col justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white font-medium leading-tight">
-              <span className="italic font-normal">Industry</span> Applications
-            </h2>
-            <p className="text-gray-400 mt-6 text-sm lg:text-base leading-relaxed max-w-md">
-              Featuring hundreds of LED linear lighting aluminum profile models with 
-              extensive stock of premium materials. The range covers all dimensions, 
-              from compact precision components to large-scale profiles. The exquisite 
-              surface finishes and dynamic textures adapt perfectly to diverse spatial 
-              applications and aesthetic requirements.
-            </p>
-          </motion.div>
-        </div>
-
-        <div className="lg:w-3/5 relative flex-1 lg:flex-none">
-          <motion.div
-            className="absolute inset-0 lg:relative lg:h-full"
-            initial={{ opacity: 0, scale: 1.05 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <img
-              src="/gallery/hero-villa.jpg"
-              alt="Modern architectural lighting"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628] via-[#0a1628]/40 to-transparent lg:from-[#0a1628]/80 lg:via-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-transparent" />
-          </motion.div>
-        </div>
+    <section className="h-full overflow-hidden relative flex flex-col">
+      <div className="absolute inset-0">
+        <img
+          src="/gallery/hero-villa.jpg"
+          alt="Modern architectural lighting"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/50 to-[#0a1628]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-[#0a1628]/40" />
       </div>
 
-      <div className="relative px-4 lg:px-8 pb-6 lg:pb-8">
+      <div className="relative z-10 flex-1 flex flex-col justify-center p-8 lg:p-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-lg"
+        >
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white font-medium leading-tight">
+            <span className="italic font-normal">Industry</span> Applications
+          </h2>
+          <p className="text-gray-300 mt-6 text-sm lg:text-base leading-relaxed">
+            Featuring hundreds of LED linear lighting aluminum profile models with 
+            extensive stock of premium materials. The range covers all dimensions, 
+            from compact precision components to large-scale profiles. The exquisite 
+            surface finishes and dynamic textures adapt perfectly to diverse spatial 
+            applications and aesthetic requirements.
+          </p>
+        </motion.div>
+      </div>
+
+      <div className="relative z-10 px-4 lg:px-8 pb-6 lg:pb-8">
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
