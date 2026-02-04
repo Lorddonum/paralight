@@ -207,9 +207,8 @@ export default function Products() {
             <img
               src="/paralight-hero.png"
               alt="Paralight Aluminum Profiles"
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.6]"
+              className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/60 to-transparent" />
           </motion.div>
           
           {/* Maglinear image - sliding overlay */}
@@ -224,9 +223,8 @@ export default function Products() {
             <img
               src="/maglinear-hero.png"
               alt="Maglinear Track Lighting"
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.6]"
+              className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-l from-gray-900/80 via-gray-900/60 to-transparent" />
           </motion.div>
         </div>
         
