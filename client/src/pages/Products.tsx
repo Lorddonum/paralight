@@ -40,6 +40,10 @@ interface Product {
   cutOutSize?: string | null;
   technicalSpecs?: string | null;
   accessoriesSpec?: string | null;
+  packagingMethodADesc?: string | null;
+  packagingMethodASpec?: string | null;
+  packagingMethodBDesc?: string | null;
+  packagingMethodBSpec?: string | null;
 }
 
 export default function Products() {
@@ -872,6 +876,47 @@ export default function Products() {
                             })()}
                           </div>
                         </div>
+
+                        {/* Packaging Information - Paralight only */}
+                        {selectedProduct.brand === "Paralight" && (selectedProduct.packagingMethodADesc || selectedProduct.packagingMethodBDesc) && (
+                          <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div 
+                              className="p-4 border-b"
+                              style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                            >
+                              <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
+                                Packaging Information
+                              </h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                              <table className="w-full text-sm">
+                                <thead className="bg-gradient-to-r from-gray-50 to-white">
+                                  <tr>
+                                    <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Packaging Method</th>
+                                    <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Description</th>
+                                    <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Specifications</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {selectedProduct.packagingMethodADesc && (
+                                    <tr className="border-b border-gray-100">
+                                      <td className="px-4 py-3 font-medium text-gray-900">Method A</td>
+                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodADesc}</td>
+                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodASpec || '-'}</td>
+                                    </tr>
+                                  )}
+                                  {selectedProduct.packagingMethodBDesc && (
+                                    <tr>
+                                      <td className="px-4 py-3 font-medium" style={{ color: brandColor }}>Method B<br/><span className="text-[10px] text-gray-400">(Additional Fee)</span></td>
+                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodBDesc}</td>
+                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodBSpec || '-'}</td>
+                                    </tr>
+                                  )}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        )}
                       </motion.div>
                     </div>
                   </motion.div>
