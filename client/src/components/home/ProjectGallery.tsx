@@ -47,7 +47,7 @@ export default function ProjectGallery() {
         </motion.div>
       </div>
 
-      <div className="relative z-10 flex h-[200px] lg:h-[280px] px-4 lg:px-8 pb-4">
+      <div className="relative z-10 flex h-[200px] lg:h-[280px] px-4 lg:px-8 pb-4 mt-auto">
         {applicationCategories.map((category, index) => {
           const isHovered = hoveredIndex === index;
           const isAnyHovered = hoveredIndex !== null;
