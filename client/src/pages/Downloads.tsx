@@ -305,7 +305,7 @@ export default function Downloads() {
                   }`}
                   data-testid="filter-maglinear"
                 >
-                  Maglinear
+                  Maglinear Lighting
                 </button>
               </div>
             </motion.div>
