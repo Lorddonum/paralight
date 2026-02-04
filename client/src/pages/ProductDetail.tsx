@@ -417,6 +417,17 @@ export default function ProductDetail() {
                     : "Catalogue Not Available"}
                 </a>
               </div>
+
+              {/* Packaging Method - Paralight Only */}
+              {product.brand === "Paralight" && (
+                <div className="mt-6">
+                  <img 
+                    src="/packaging-method.png" 
+                    alt="Packaging Method"
+                    className="w-full max-w-2xl mx-auto"
+                  />
+                </div>
+              )}
             </div>
 
             <div className="space-y-8">
@@ -481,19 +492,6 @@ export default function ProductDetail() {
                   );
                 })}
               </div>
-
-              {/* Packaging Method - Paralight Only */}
-              {product.brand === "Paralight" && (
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="p-6">
-                    <img 
-                      src="/packaging-method.png" 
-                      alt="Packaging Method"
-                      className="w-full max-w-2xl mx-auto"
-                    />
-                  </div>
-                </div>
-              )}
 
               {/* Technical Drawing */}
               <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
