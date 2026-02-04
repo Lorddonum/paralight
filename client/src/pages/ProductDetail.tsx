@@ -251,9 +251,32 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div 
+          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.03]"
+          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 70%)` }}
+        />
+        <div 
+          className="absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full opacity-[0.02]"
+          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 70%)` }}
+        />
+        <div 
+          className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full opacity-[0.02]"
+          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 70%)` }}
+        />
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.015]"
+          style={{ 
+            backgroundImage: `linear-gradient(${brandColor} 1px, transparent 1px), linear-gradient(90deg, ${brandColor} 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }}
+        />
+      </div>
       <Navbar />
-      <main className="pt-32 pb-24">
+      <main className="pt-32 pb-24 relative z-10">
         <div className="container mx-auto px-8 lg:px-12">
           {/* Back to Catalog */}
           <Link href="/products">
@@ -313,7 +336,7 @@ export default function ProductDetail() {
                   <>
                     <div
                       ref={imageContainerRef}
-                      className="aspect-square max-w-md mx-auto bg-gray-50 border border-gray-100 relative overflow-hidden rounded-lg cursor-zoom-in"
+                      className="aspect-square max-w-md mx-auto bg-white border border-gray-100 relative overflow-hidden rounded-2xl cursor-zoom-in shadow-lg shadow-gray-200/50"
                       onMouseEnter={() => setIsZooming(true)}
                       onMouseLeave={() => setIsZooming(false)}
                       onMouseMove={handleMouseMove}
@@ -445,9 +468,12 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                <div className="p-4 border-b border-gray-100">
-                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-center">
+              <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div 
+                  className="p-4 border-b"
+                  style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                >
+                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
                     Technical Specifications
                   </h3>
                 </div>
@@ -494,13 +520,16 @@ export default function ProductDetail() {
               </div>
 
               {/* Technical Drawing */}
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                <div className="p-4 border-b border-gray-100">
-                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-center">
+              <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div 
+                  className="p-4 border-b"
+                  style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                >
+                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
                     Technical Drawing
                   </h3>
                 </div>
-                <div className="p-4 bg-gray-50">
+                <div className="p-4 bg-gradient-to-br from-gray-50 to-white">
                   {(() => {
                     const allDrawings = [
                       product.technicalDrawingUrl,
@@ -573,15 +602,18 @@ export default function ProductDetail() {
                   );
                   
                   return (
-                    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                      <div className="p-4 border-b border-gray-100">
-                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-center">
+                    <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                      <div 
+                        className="p-4 border-b"
+                        style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                      >
+                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
                           Accessories Specification
                         </h3>
                       </div>
                       <div className="overflow-x-auto">
                         <table className="w-full text-sm">
-                          <thead className="bg-gray-50">
+                          <thead className="bg-gradient-to-r from-gray-50 to-white">
                             <tr>
                               <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100 w-16">NO.</th>
                               <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Specification</th>
@@ -616,15 +648,18 @@ export default function ProductDetail() {
 
               {/* Packaging Information - Paralight only */}
               {product.brand === "Paralight" && (product.packagingMethodADesc || product.packagingMethodBDesc) && (
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="p-4 border-b border-gray-100">
-                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-center">
+                <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                  <div 
+                    className="p-4 border-b"
+                    style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                  >
+                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
                       Packaging Information
                     </h3>
                   </div>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
-                      <thead className="bg-gray-50">
+                      <thead className="bg-gradient-to-r from-gray-50 to-white">
                         <tr>
                           <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Packaging Method</th>
                           <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Description</th>
@@ -653,8 +688,11 @@ export default function ProductDetail() {
               )}
 
               <div
-                className="p-5 rounded-lg flex items-center justify-between"
-                style={{ backgroundColor: `${brandColor}15` }}
+                className="p-6 rounded-xl flex items-center justify-between shadow-sm"
+                style={{ 
+                  background: `linear-gradient(135deg, ${brandColor}15 0%, ${brandColor}08 100%)`,
+                  border: `1px solid ${brandColor}20`
+                }}
               >
                 <div className="flex items-center gap-3">
                   <Zap className="w-5 h-5" style={{ color: brandColor }} />
@@ -746,17 +784,18 @@ export default function ProductDetail() {
       )}
 
       {relatedProducts.length > 0 && (
-        <section className="container mx-auto px-6 py-16 border-t border-gray-100">
-          <h2 className="text-xl font-display font-bold uppercase tracking-widest text-gray-900 mb-8">
-            Related Products
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {relatedProducts.map((relatedProduct) => {
-              const relatedBrandColor = relatedProduct.brand === "Paralight" ? "#00A8E8" : "#ECAA00";
-              return (
-                <Link key={relatedProduct.id} href={`/products/${relatedProduct.id}`}>
-                  <div className="group bg-white border border-gray-100 rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-                    <div className="aspect-square bg-gray-50 flex items-center justify-center p-4">
+        <section className="relative bg-gradient-to-b from-gray-50 to-white py-16 mt-8">
+          <div className="container mx-auto px-6">
+            <h2 className="text-xl font-display font-bold uppercase tracking-widest text-gray-900 mb-8">
+              Related Products
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((relatedProduct) => {
+                const relatedBrandColor = relatedProduct.brand === "Paralight" ? "#00A8E8" : "#ECAA00";
+                return (
+                  <Link key={relatedProduct.id} href={`/products/${relatedProduct.id}`}>
+                    <div className="group bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer shadow-sm">
+                      <div className="aspect-square bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-4">
                       {relatedProduct.image ? (
                         <img
                           src={relatedProduct.image}
@@ -791,7 +830,8 @@ export default function ProductDetail() {
                   </div>
                 </Link>
               );
-            })}
+              })}
+            </div>
           </div>
         </section>
       )}
