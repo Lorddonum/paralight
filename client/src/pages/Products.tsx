@@ -298,31 +298,46 @@ export default function Products() {
               {getPageSubtitle()}
             </p>
             
-            {/* Brand selector tabs */}
-            <div className="flex justify-center gap-3 mt-10">
-              {["All", "Paralight", "Maglinear"].map((brand) => (
-                <motion.button
-                  key={brand}
-                  onClick={() => setActiveBrand(brand)}
-                  onMouseEnter={() => brand !== "All" && setHoveredBrand(brand)}
-                  onMouseLeave={() => setHoveredBrand(null)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`px-6 py-3 text-sm font-medium rounded-full transition-all duration-300 ${
-                    activeBrand === brand
-                      ? brand === "Paralight" 
-                        ? "bg-brand-cyan text-white shadow-lg shadow-brand-cyan/30"
-                        : brand === "Maglinear"
-                        ? "bg-brand-gold text-gray-900 shadow-lg shadow-brand-gold/30"
-                        : "bg-white text-gray-900"
-                      : "bg-white/10 text-white/70 hover:bg-white/20 border border-white/10"
-                  }`}
-                  data-testid={`hero-brand-${brand.toLowerCase()}`}
-                >
+          </motion.div>
+          
+          {/* Brand selector tabs - repositioned at bottom */}
+          <motion.div 
+            className="flex justify-center gap-4 mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {["All", "Paralight", "Maglinear"].map((brand) => (
+              <motion.button
+                key={brand}
+                onClick={() => setActiveBrand(brand)}
+                onMouseEnter={() => brand !== "All" && setHoveredBrand(brand)}
+                onMouseLeave={() => setHoveredBrand(null)}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className={`relative px-8 py-3.5 text-sm font-semibold tracking-wide transition-all duration-300 overflow-hidden ${
+                  activeBrand === brand
+                    ? brand === "Paralight" 
+                      ? "bg-brand-cyan text-white shadow-xl shadow-brand-cyan/40 rounded-full"
+                      : brand === "Maglinear"
+                      ? "bg-brand-gold text-gray-900 shadow-xl shadow-brand-gold/40 rounded-full"
+                      : "bg-white text-gray-900 shadow-xl rounded-full"
+                    : "bg-white/5 backdrop-blur-sm text-white/80 hover:bg-white/15 border border-white/20 rounded-full hover:border-white/40"
+                }`}
+                data-testid={`hero-brand-${brand.toLowerCase()}`}
+              >
+                <span className="relative z-10">
                   {brand === "All" ? "All Products" : brand === "Maglinear" ? "Maglinear Lighting" : brand}
-                </motion.button>
-              ))}
-            </div>
+                </span>
+                {activeBrand === brand && (
+                  <motion.div 
+                    className="absolute inset-0 rounded-full"
+                    layoutId="activeBrandIndicator"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+              </motion.button>
+            ))}
           </motion.div>
         </div>
       </section>
