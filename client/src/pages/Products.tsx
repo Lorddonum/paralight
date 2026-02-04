@@ -204,10 +204,10 @@ export default function Products() {
             className="absolute inset-0 w-full h-full"
             animate={{ 
               clipPath: activeBrand === "All" 
-                ? "inset(0 50% 0 0)" 
+                ? "polygon(0 0, 60% 0, 40% 100%, 0 100%)" 
                 : activeBrand === "Paralight" 
-                  ? "inset(0 0% 0 0)" 
-                  : "inset(0 100% 0 0)"
+                  ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)" 
+                  : "polygon(0 0, 0% 0, 0% 100%, 0 100%)"
             }}
             transition={{ 
               duration: 0.6, 
@@ -227,10 +227,10 @@ export default function Products() {
             className="absolute inset-0 w-full h-full"
             animate={{ 
               clipPath: activeBrand === "All" 
-                ? "inset(0 0 0 50%)" 
+                ? "polygon(60% 0, 100% 0, 100% 100%, 40% 100%)" 
                 : activeBrand === "Maglinear" 
-                  ? "inset(0 0 0 0%)" 
-                  : "inset(0 0 0 100%)"
+                  ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)" 
+                  : "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)"
             }}
             transition={{ 
               duration: 0.6, 
