@@ -263,7 +263,7 @@ export default function Products() {
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-center max-w-3xl mx-auto"
           >
-            <div className="inline-block bg-gray-900/90 backdrop-blur-md rounded-2xl px-10 py-8 border border-white/10">
+            <div className="inline-block bg-gray-900/70 rounded-2xl px-10 py-8 border border-white/10">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
