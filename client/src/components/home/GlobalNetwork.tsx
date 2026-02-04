@@ -78,7 +78,7 @@ export default function GlobalNetwork() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + index * 0.1, duration: 0.6 }}
-                  className="flex items-center gap-8 py-12 px-8"
+                  className="flex items-center gap-8 py-8 px-8"
                 >
                   <stat.icon className="w-10 h-10 text-brand-gold shrink-0" />
                   <div>
