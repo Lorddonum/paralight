@@ -255,63 +255,106 @@ export default function ProductDetail() {
       {/* Rich layered background */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-gray-100" />
       
-      {/* Large decorative gradient orbs */}
+      {/* Large decorative gradient orbs - more visible */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div 
-          className="absolute -top-32 -right-32 w-[800px] h-[800px] rounded-full blur-3xl opacity-[0.08]"
+          className="absolute -top-32 -right-32 w-[800px] h-[800px] rounded-full blur-3xl opacity-[0.15]"
           style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 60%)` }}
         />
         <div 
-          className="absolute top-1/4 -left-64 w-[700px] h-[700px] rounded-full blur-3xl opacity-[0.06]"
+          className="absolute top-1/4 -left-64 w-[700px] h-[700px] rounded-full blur-3xl opacity-[0.12]"
           style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 60%)` }}
         />
         <div 
-          className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full blur-3xl opacity-[0.05]"
+          className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full blur-3xl opacity-[0.10]"
           style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 60%)` }}
         />
         
-        {/* Diagonal lines pattern */}
+        {/* Diagonal lines pattern - more visible */}
         <div 
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{ 
             backgroundImage: `repeating-linear-gradient(45deg, ${brandColor} 0, ${brandColor} 1px, transparent 0, transparent 50%)`,
             backgroundSize: '40px 40px'
           }}
         />
         
-        {/* Dot pattern overlay */}
+        {/* Dot pattern overlay - more visible */}
         <div 
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.03]"
           style={{ 
-            backgroundImage: `radial-gradient(${brandColor} 1px, transparent 1px)`,
-            backgroundSize: '24px 24px'
+            backgroundImage: `radial-gradient(${brandColor} 1.5px, transparent 1.5px)`,
+            backgroundSize: '28px 28px'
           }}
         />
         
-        {/* Decorative geometric shapes */}
+        {/* Decorative geometric shapes - more visible */}
         <div 
-          className="absolute top-40 left-10 w-20 h-20 border opacity-[0.08] rotate-45"
+          className="absolute top-48 left-12 w-24 h-24 border-2 opacity-[0.12] rotate-45"
           style={{ borderColor: brandColor }}
         />
         <div 
-          className="absolute top-96 right-20 w-32 h-32 border opacity-[0.06] rotate-12"
+          className="absolute top-[500px] right-24 w-40 h-40 border-2 opacity-[0.10] rotate-12"
           style={{ borderColor: brandColor }}
         />
         <div 
-          className="absolute bottom-64 left-1/4 w-16 h-16 border opacity-[0.05] -rotate-12"
+          className="absolute bottom-96 left-1/4 w-20 h-20 border-2 opacity-[0.08] -rotate-12"
+          style={{ borderColor: brandColor }}
+        />
+        <div 
+          className="absolute top-[800px] left-20 w-16 h-16 border opacity-[0.10] rotate-[30deg]"
+          style={{ borderColor: brandColor }}
+        />
+        <div 
+          className="absolute bottom-40 right-1/3 w-12 h-12 border opacity-[0.08] -rotate-[20deg]"
           style={{ borderColor: brandColor }}
         />
         
-        {/* Gradient mesh accent */}
+        {/* Accent lines */}
         <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.02]"
+          className="absolute top-[300px] left-0 w-32 h-[2px] opacity-20"
+          style={{ background: `linear-gradient(90deg, ${brandColor}, transparent)` }}
+        />
+        <div 
+          className="absolute top-[600px] right-0 w-48 h-[2px] opacity-20"
+          style={{ background: `linear-gradient(270deg, ${brandColor}, transparent)` }}
+        />
+        <div 
+          className="absolute bottom-[400px] left-0 w-24 h-[2px] opacity-15"
+          style={{ background: `linear-gradient(90deg, ${brandColor}, transparent)` }}
+        />
+        
+        {/* Gradient mesh accent - more visible */}
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03]"
           style={{ 
             background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, ${brandColor} 60deg, transparent 120deg, ${brandColor} 180deg, transparent 240deg, ${brandColor} 300deg, transparent 360deg)`
           }}
         />
       </div>
       <Navbar />
-      <main className="pt-32 pb-24 relative z-10">
+      
+      {/* Hero Banner */}
+      <div 
+        className="relative pt-24 pb-8 overflow-hidden"
+        style={{ background: `linear-gradient(135deg, ${brandColor}12 0%, transparent 50%, ${brandColor}08 100%)` }}
+      >
+        <div 
+          className="absolute inset-0 opacity-10"
+          style={{ 
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='${brandColor.replace('#', '%23')}' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"
+        />
+        <div 
+          className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-20"
+          style={{ background: brandColor }}
+        />
+      </div>
+      
+      <main className="pb-24 relative z-10 -mt-8">
         <div className="container mx-auto px-8 lg:px-12">
           {/* Back to Catalog */}
           <Link href="/products">
