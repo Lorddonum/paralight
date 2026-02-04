@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
@@ -15,36 +15,7 @@ const applicationCategories = [
 
 export default function ProjectGallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const checkScroll = () => {
-      setCanScrollLeft(container.scrollLeft > 0);
-      setCanScrollRight(
-        container.scrollLeft < container.scrollWidth - container.clientWidth - 10
-      );
-    };
-
-    container.addEventListener("scroll", checkScroll);
-    checkScroll();
-    return () => container.removeEventListener("scroll", checkScroll);
-  }, []);
-
-  const scroll = (direction: "left" | "right") => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const scrollAmount = 300;
-    container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <section className="h-full overflow-hidden relative flex flex-col">
@@ -58,7 +29,7 @@ export default function ProjectGallery() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-[#0a1628]/40" />
       </div>
 
-      <div className="relative z-10 flex-1 flex flex-col justify-center p-8 lg:p-12">
+      <div className="relative z-10 p-8 lg:p-12 lg:pt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -68,68 +39,142 @@ export default function ProjectGallery() {
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white font-medium leading-tight">
             <span className="italic font-normal">Industry</span> Applications
           </h2>
-          <p className="text-gray-300 mt-6 text-sm lg:text-base leading-relaxed">
+          <p className="text-gray-300 mt-4 text-sm lg:text-base leading-relaxed">
             Featuring hundreds of LED linear lighting aluminum profile models with 
             extensive stock of premium materials. The range covers all dimensions, 
-            from compact precision components to large-scale profiles. The exquisite 
-            surface finishes and dynamic textures adapt perfectly to diverse spatial 
-            applications and aesthetic requirements.
+            from compact precision components to large-scale profiles.
           </p>
         </motion.div>
       </div>
 
-      <div className="relative z-10 px-4 lg:px-8 pb-6 lg:pb-8">
-        {canScrollLeft && (
-          <button
-            onClick={() => scroll("left")}
-            className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/50 hover:bg-black/70 text-white/70 hover:text-white transition-all rounded-full"
-            data-testid="gallery-scroll-left"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-        )}
-
-        {canScrollRight && (
-          <button
-            onClick={() => scroll("right")}
-            className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/50 hover:bg-black/70 text-white/70 hover:text-white transition-all rounded-full"
-            data-testid="gallery-scroll-right"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        )}
-
-        <div
-          ref={scrollRef}
-          className="flex gap-3 lg:gap-4 overflow-x-auto scrollbar-hide pb-2"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {applicationCategories.map((category, index) => (
+      <div className="relative z-10 flex-1 flex px-4 lg:px-8 pb-4">
+        {applicationCategories.map((category, index) => {
+          const isHovered = hoveredIndex === index;
+          const isAnyHovered = hoveredIndex !== null;
+          const isBlue = index % 2 === 0;
+          const accentColor = isBlue ? '#00A8E8' : '#ECAA00';
+          
+          return (
             <motion.div
               key={index}
-              className="flex-shrink-0 cursor-pointer group"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
+              className="relative overflow-hidden cursor-pointer"
+              style={{ 
+                clipPath: isHovered 
+                  ? 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' 
+                  : `polygon(${index === 0 ? '0' : '8%'} 0, 100% 0, ${index === applicationCategories.length - 1 ? '100%' : '92%'} 100%, 0 100%)`,
+              }}
+              initial={{ flex: 1 }}
+              animate={{
+                flex: isHovered ? 4 : isAnyHovered ? 0.5 : 1,
+              }}
+              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => setSelectedImage(index)}
-              data-testid={`button-category-${index}`}
+              data-testid={`button-project-${index}`}
             >
-              <div className="relative w-28 h-28 lg:w-36 lg:h-36 overflow-hidden">
-                <img
+              <motion.div
+                className="absolute inset-0"
+                animate={{
+                  filter: isAnyHovered && !isHovered 
+                    ? "brightness(0.3) saturate(0.3) blur(1px)" 
+                    : "brightness(1) saturate(1) blur(0px)",
+                }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.img
                   src={category.image}
                   alt={category.label}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                  animate={{
+                    scale: isHovered ? 1.05 : 1.4,
+                    x: isHovered ? 0 : `${(index - 3.5) * 8}%`,
+                  }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
                 />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                <div className="absolute inset-0 border border-white/10 group-hover:border-brand-cyan/50 transition-colors" />
-              </div>
-              <p className="text-white/70 text-[10px] lg:text-xs mt-2 text-center max-w-28 lg:max-w-36 leading-tight group-hover:text-white transition-colors">
-                {category.label}
-              </p>
+              </motion.div>
+
+              <motion.div 
+                className="absolute inset-0"
+                style={{
+                  background: isHovered 
+                    ? `linear-gradient(to top, ${isBlue ? 'rgba(0,30,45,0.7)' : 'rgba(45,35,0,0.7)'} 0%, rgba(0,0,0,0.3) 40%, transparent 70%)` 
+                    : 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.4) 100%)',
+                }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              />
+
+              <motion.div
+                className="absolute top-3 left-3 font-mono text-xs tracking-wider"
+                animate={{
+                  opacity: isHovered ? 1 : 0.4,
+                  color: isHovered ? accentColor : '#666',
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <span className="text-xl font-bold">0{index + 1}</span>
+                <span className="text-gray-500">/0{applicationCategories.length}</span>
+              </motion.div>
+
+              <motion.div
+                className="absolute bottom-0 left-0 right-0 p-4"
+                animate={{
+                  opacity: isHovered ? 1 : 0,
+                  y: isHovered ? 0 : 30,
+                }}
+                transition={{ duration: 0.5, delay: isHovered ? 0.15 : 0 }}
+              >
+                <motion.div
+                  className="h-[1px] mb-3"
+                  style={{ background: `linear-gradient(to right, ${accentColor}, ${accentColor}, transparent)` }}
+                  animate={{ width: isHovered ? '60%' : '0%' }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                />
+                <span style={{ color: accentColor }} className="text-[9px] uppercase tracking-[0.25em] font-medium">
+                  Application
+                </span>
+                <h3 className="text-white text-sm md:text-base font-medium mt-1 font-display leading-tight">
+                  {category.label}
+                </h3>
+                <motion.div 
+                  className="flex items-center gap-2 mt-3"
+                  animate={{ opacity: isHovered ? 1 : 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <span className="text-white/60 text-[10px] uppercase tracking-widest">Explore</span>
+                  <motion.div
+                    animate={{ x: isHovered ? [0, 5, 0] : 0 }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    <ChevronRight className="w-3 h-3" style={{ color: accentColor }} />
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                animate={{
+                  boxShadow: isHovered 
+                    ? `inset 0 0 60px ${isBlue ? 'rgba(0, 168, 232, 0.08)' : 'rgba(236, 170, 0, 0.08)'}, inset 0 0 0 1px ${isBlue ? 'rgba(0, 168, 232, 0.25)' : 'rgba(236, 170, 0, 0.25)'}` 
+                    : 'inset 0 0 0 0 transparent',
+                }}
+                transition={{ duration: 0.4 }}
+              />
+
+              <motion.div
+                className="absolute top-0 left-0 w-full h-[2px]"
+                style={{ background: `linear-gradient(to right, transparent, ${accentColor}, transparent)` }}
+                animate={{
+                  opacity: isHovered ? 1 : 0,
+                  scaleX: isHovered ? 1 : 0,
+                }}
+                transition={{ duration: 0.3 }}
+              />
             </motion.div>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
       <AnimatePresence>
