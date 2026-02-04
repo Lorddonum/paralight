@@ -50,7 +50,8 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
     return () => scrollContainer.removeEventListener('scroll', checkSection);
   }, [location]);
 
-  const useDarkText = (darkText || isLightSection || scrolled) && !isFooterSection;
+  const isProductsPage = location === '/products' || location.startsWith('/products/');
+  const useDarkText = (darkText || isLightSection || scrolled || isProductsPage) && !isFooterSection;
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -66,9 +67,11 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
         "fixed top-0 w-full z-50 transition-all duration-500",
         isFooterSection
           ? "bg-[#0A1628]"
-          : scrolled
+          : isProductsPage
             ? "bg-white/95 backdrop-blur-md shadow-sm"
-            : "bg-transparent",
+            : scrolled
+              ? "bg-white/95 backdrop-blur-md shadow-sm"
+              : "bg-transparent",
       )}
     >
       <div className="container mx-auto px-8 lg:px-12">
