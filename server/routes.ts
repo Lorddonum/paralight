@@ -84,8 +84,13 @@ export async function registerRoutes(
   const updateProductHandler = async (req: any, res: any) => {
     try {
       const id = parseInt(req.params.id);
+      console.log("Update request for product", id);
+      console.log("images count:", req.body.images?.length || 0);
+      console.log("technicalDrawings count:", req.body.technicalDrawings?.length || 0);
+      console.log("catalogueUrl:", req.body.catalogueUrl ? "present" : "empty");
       const parsed = insertProductSchema.safeParse(req.body);
       if (!parsed.success) {
+        console.error("Validation failed:", parsed.error);
         return res.status(400).json({ error: "Invalid product data", details: parsed.error });
       }
       const product = await storage.updateProduct(id, parsed.data);

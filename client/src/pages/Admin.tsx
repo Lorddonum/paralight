@@ -259,6 +259,10 @@ export default function Admin() {
           await fetchProducts();
           resetForm();
           alert("Product updated successfully!");
+        } else {
+          const errorData = await res.json();
+          console.error("Update failed:", errorData);
+          alert(`Update failed: ${errorData.error || 'Unknown error'}`);
         }
       } else {
         const res = await fetch("/api/products", {

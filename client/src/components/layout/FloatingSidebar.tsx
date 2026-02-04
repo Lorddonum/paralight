@@ -26,13 +26,13 @@ export default function FloatingSidebar() {
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 50, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-8 right-8 z-50"
+            className="fixed right-4 top-1/2 -translate-y-1/2 z-50"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col items-center gap-2">
               <div
                 className="relative"
                 onMouseEnter={() => setShowPhone(true)}
@@ -44,15 +44,15 @@ export default function FloatingSidebar() {
                 <AnimatePresence>
                   {showPhone && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute bottom-12 right-0 bg-[#0A1628] text-white rounded-lg shadow-xl px-4 py-2.5 whitespace-nowrap"
+                      initial={{ opacity: 0, x: 8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 8 }}
+                      className="absolute right-12 top-1/2 -translate-y-1/2 bg-[#0A1628] text-white rounded-lg shadow-xl px-4 py-2.5 whitespace-nowrap"
                     >
                       <a href={`tel:${companyPhone}`} className="text-sm font-medium tracking-wide">
                         {companyPhone}
                       </a>
-                      <div className="absolute bottom-0 right-4 translate-y-1/2 rotate-45 w-2 h-2 bg-[#0A1628]" />
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-2 h-2 bg-[#0A1628]" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -69,15 +69,15 @@ export default function FloatingSidebar() {
                 <AnimatePresence>
                   {showEmail && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute bottom-12 right-0 bg-[#0A1628] text-white rounded-lg shadow-xl px-4 py-2.5 whitespace-nowrap"
+                      initial={{ opacity: 0, x: 8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 8 }}
+                      className="absolute right-12 top-1/2 -translate-y-1/2 bg-[#0A1628] text-white rounded-lg shadow-xl px-4 py-2.5 whitespace-nowrap"
                     >
                       <a href={`mailto:${companyEmail}`} className="text-sm font-medium tracking-wide">
                         {companyEmail}
                       </a>
-                      <div className="absolute bottom-0 right-4 translate-y-1/2 rotate-45 w-2 h-2 bg-[#0A1628]" />
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-2 h-2 bg-[#0A1628]" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -96,10 +96,10 @@ export default function FloatingSidebar() {
                 <AnimatePresence>
                   {showWeChat && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute bottom-12 right-0 bg-white rounded-xl shadow-2xl p-3 border border-gray-200"
+                      initial={{ opacity: 0, x: 8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 8 }}
+                      className="absolute right-12 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-3 border border-gray-200"
                     >
                       <div className="text-xs text-gray-500 text-center mb-2 font-medium">Scan with WeChat</div>
                       <div className="w-48 h-auto">
@@ -123,10 +123,10 @@ export default function FloatingSidebar() {
                 <AnimatePresence>
                   {showWhatsApp && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute bottom-12 right-0 bg-white rounded-xl shadow-2xl p-3 border border-gray-200"
+                      initial={{ opacity: 0, x: 8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 8 }}
+                      className="absolute right-12 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-3 border border-gray-200"
                     >
                       <div className="text-xs text-gray-500 text-center mb-2 font-medium">Scan with WhatsApp</div>
                       <div className="w-48 h-auto">
@@ -137,7 +137,7 @@ export default function FloatingSidebar() {
                 </AnimatePresence>
               </div>
 
-              <div className="w-px h-6 bg-gray-300 mx-1" />
+              <div className="w-6 h-px bg-gray-300 my-1" />
 
               <button
                 onClick={scrollToTop}
@@ -161,14 +161,14 @@ export default function FloatingSidebar() {
       <AnimatePresence>
         {!isVisible && (
           <motion.button
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 50, opacity: 0 }}
             onClick={() => setIsVisible(true)}
-            className="fixed bottom-8 right-8 z-50 w-10 h-10 rounded-full border border-gray-300 bg-white text-gray-600 hover:border-gray-400 hover:text-gray-800 transition-all duration-200 flex items-center justify-center shadow-sm"
+            className="fixed right-4 top-1/2 -translate-y-1/2 z-50 w-10 h-10 rounded-full border border-gray-300 bg-white text-gray-600 hover:border-gray-400 hover:text-gray-800 transition-all duration-200 flex items-center justify-center shadow-sm"
             title="Contact"
           >
-            <ChevronLeft className="w-4 h-4 rotate-90" />
+            <ChevronLeft className="w-4 h-4" />
           </motion.button>
         )}
       </AnimatePresence>
