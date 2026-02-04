@@ -50,6 +50,10 @@ interface Product {
   maglinearName?: string | null;
   inputVoltage?: string | null;
   outputVoltage?: string | null;
+  wallThickness?: string | null;
+  cutOutSize?: string | null;
+  oneCct?: string | null;
+  threeCct?: string | null;
   // Technical Specifications (JSON string for table data)
   technicalSpecs?: string | null;
 }
@@ -112,6 +116,8 @@ export default function Admin() {
     outputVoltage: "",
     wallThickness: "",
     cutOutSize: "",
+    oneCct: "",
+    threeCct: "",
     technicalSpecs: ""
   });
 
@@ -322,6 +328,7 @@ export default function Admin() {
       packagingMethodASpec: "",
       packagingMethodBDesc: "",
       packagingMethodBSpec: "",
+      packagingMethodImage: "",
       accessoriesSpec: "",
       mountingTrack: "",
       conductionMethod: "",
@@ -330,6 +337,8 @@ export default function Admin() {
       outputVoltage: "",
       wallThickness: "",
       cutOutSize: "",
+      oneCct: "",
+      threeCct: "",
       technicalSpecs: ""
     });
   };
@@ -368,6 +377,7 @@ export default function Admin() {
       packagingMethodASpec: product.packagingMethodASpec || "",
       packagingMethodBDesc: product.packagingMethodBDesc || "",
       packagingMethodBSpec: product.packagingMethodBSpec || "",
+      packagingMethodImage: product.packagingMethodImage || "",
       accessoriesSpec: product.accessoriesSpec || "",
       mountingTrack: product.mountingTrack || "",
       conductionMethod: product.conductionMethod || "",
@@ -376,6 +386,8 @@ export default function Admin() {
       outputVoltage: product.outputVoltage || "",
       wallThickness: product.wallThickness || "",
       cutOutSize: product.cutOutSize || "",
+      oneCct: product.oneCct || "",
+      threeCct: product.threeCct || "",
       technicalSpecs: product.technicalSpecs || ""
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -415,6 +427,7 @@ export default function Admin() {
       packagingMethodASpec: product.packagingMethodASpec || "",
       packagingMethodBDesc: product.packagingMethodBDesc || "",
       packagingMethodBSpec: product.packagingMethodBSpec || "",
+      packagingMethodImage: product.packagingMethodImage || "",
       accessoriesSpec: product.accessoriesSpec || "",
       mountingTrack: product.mountingTrack || "",
       conductionMethod: product.conductionMethod || "",
@@ -423,6 +436,8 @@ export default function Admin() {
       outputVoltage: product.outputVoltage || "",
       wallThickness: product.wallThickness || "",
       cutOutSize: product.cutOutSize || "",
+      oneCct: product.oneCct || "",
+      threeCct: product.threeCct || "",
       technicalSpecs: product.technicalSpecs || ""
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1015,6 +1030,18 @@ export default function Admin() {
                           <div className="space-y-2">
                             <label className="text-[10px] uppercase tracking-widest text-gray-500">Cut Out Size</label>
                             <input type="text" value={formData.cutOutSize} onChange={e => setFormData({...formData, cutOutSize: e.target.value})} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. 70mm" />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-[10px] uppercase tracking-widest text-gray-500">1 CCT</label>
+                            <input type="text" value={formData.oneCct} onChange={e => setFormData({...formData, oneCct: e.target.value})} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. 3000K" />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-[10px] uppercase tracking-widest text-gray-500">3 CCT</label>
+                            <input type="text" value={formData.threeCct} onChange={e => setFormData({...formData, threeCct: e.target.value})} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. 2700K/3000K/4000K" />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-[10px] uppercase tracking-widest text-gray-500">Installation Method</label>
+                            <input type="text" value={formData.installationMethod} onChange={e => setFormData({...formData, installationMethod: e.target.value})} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. Surface Mount, Recessed" />
                           </div>
                         </>
                       )}
