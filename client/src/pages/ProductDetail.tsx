@@ -862,7 +862,14 @@ export default function ProductDetail() {
       )}
 
       {relatedProducts.length > 0 && (
-        <section className="relative bg-gradient-to-b from-gray-50 to-white py-16 mt-8">
+        <section 
+          className="relative py-16 mt-8"
+          style={{ 
+            background: product.brand === "Paralight" 
+              ? 'linear-gradient(to bottom, #E8F6FC, #F0FAFF, #F5FCFF)' 
+              : 'linear-gradient(to bottom, #FDF6E8, #FEF9F0, #FFFCF5)'
+          }}
+        >
           <div className="container mx-auto px-6">
             <h2 className="text-xl font-display font-bold uppercase tracking-widest text-gray-900 mb-8">
               Related Products
