@@ -196,7 +196,7 @@ export default function Products() {
       <Navbar />
       
       {/* Hero section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+      <section className="pt-20 pb-20 mt-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
         {/* Split image background */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Paralight image */}
