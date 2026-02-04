@@ -288,41 +288,98 @@ export default function ProductDetail() {
           }}
         />
         
-        {/* Decorative geometric shapes - more visible */}
+        {/* Decorative geometric shapes - animated */}
         <div 
-          className="absolute top-48 left-12 w-24 h-24 border-2 opacity-[0.12] rotate-45"
-          style={{ borderColor: brandColor }}
+          className="absolute top-48 left-12 w-24 h-24 border-2 opacity-[0.12]"
+          style={{ 
+            borderColor: brandColor,
+            animation: 'floatRotate1 20s ease-in-out infinite'
+          }}
         />
         <div 
-          className="absolute top-[500px] right-24 w-40 h-40 border-2 opacity-[0.10] rotate-12"
-          style={{ borderColor: brandColor }}
+          className="absolute top-[500px] right-24 w-40 h-40 border-2 opacity-[0.10]"
+          style={{ 
+            borderColor: brandColor,
+            animation: 'floatRotate2 25s ease-in-out infinite'
+          }}
         />
         <div 
-          className="absolute bottom-96 left-1/4 w-20 h-20 border-2 opacity-[0.08] -rotate-12"
-          style={{ borderColor: brandColor }}
+          className="absolute bottom-96 left-1/4 w-20 h-20 border-2 opacity-[0.08]"
+          style={{ 
+            borderColor: brandColor,
+            animation: 'floatRotate3 18s ease-in-out infinite'
+          }}
         />
         <div 
-          className="absolute top-[800px] left-20 w-16 h-16 border opacity-[0.10] rotate-[30deg]"
-          style={{ borderColor: brandColor }}
+          className="absolute top-[800px] left-20 w-16 h-16 border opacity-[0.10]"
+          style={{ 
+            borderColor: brandColor,
+            animation: 'floatRotate4 22s ease-in-out infinite'
+          }}
         />
         <div 
-          className="absolute bottom-40 right-1/3 w-12 h-12 border opacity-[0.08] -rotate-[20deg]"
-          style={{ borderColor: brandColor }}
+          className="absolute bottom-40 right-1/3 w-12 h-12 border opacity-[0.08]"
+          style={{ 
+            borderColor: brandColor,
+            animation: 'floatRotate5 16s ease-in-out infinite'
+          }}
         />
         
-        {/* Accent lines */}
+        {/* Accent lines - animated */}
         <div 
           className="absolute top-[300px] left-0 w-32 h-[2px] opacity-20"
-          style={{ background: `linear-gradient(90deg, ${brandColor}, transparent)` }}
+          style={{ 
+            background: `linear-gradient(90deg, ${brandColor}, transparent)`,
+            animation: 'slideRight 8s ease-in-out infinite'
+          }}
         />
         <div 
           className="absolute top-[600px] right-0 w-48 h-[2px] opacity-20"
-          style={{ background: `linear-gradient(270deg, ${brandColor}, transparent)` }}
+          style={{ 
+            background: `linear-gradient(270deg, ${brandColor}, transparent)`,
+            animation: 'slideLeft 10s ease-in-out infinite'
+          }}
         />
         <div 
           className="absolute bottom-[400px] left-0 w-24 h-[2px] opacity-15"
-          style={{ background: `linear-gradient(90deg, ${brandColor}, transparent)` }}
+          style={{ 
+            background: `linear-gradient(90deg, ${brandColor}, transparent)`,
+            animation: 'slideRight 7s ease-in-out infinite'
+          }}
         />
+        
+        {/* Animation keyframes */}
+        <style>{`
+          @keyframes floatRotate1 {
+            0%, 100% { transform: rotate(45deg) translateY(0px); }
+            50% { transform: rotate(55deg) translateY(-20px); }
+          }
+          @keyframes floatRotate2 {
+            0%, 100% { transform: rotate(12deg) translateY(0px) translateX(0px); }
+            33% { transform: rotate(20deg) translateY(-15px) translateX(10px); }
+            66% { transform: rotate(5deg) translateY(10px) translateX(-5px); }
+          }
+          @keyframes floatRotate3 {
+            0%, 100% { transform: rotate(-12deg) translateY(0px); }
+            50% { transform: rotate(-20deg) translateY(15px); }
+          }
+          @keyframes floatRotate4 {
+            0%, 100% { transform: rotate(30deg) translateX(0px); }
+            50% { transform: rotate(40deg) translateX(15px); }
+          }
+          @keyframes floatRotate5 {
+            0%, 100% { transform: rotate(-20deg) scale(1); }
+            50% { transform: rotate(-10deg) scale(1.1); }
+          }
+          @keyframes slideRight {
+            0%, 100% { transform: translateX(0); opacity: 0.2; }
+            50% { transform: translateX(20px); opacity: 0.35; }
+          }
+          @keyframes slideLeft {
+            0%, 100% { transform: translateX(0); opacity: 0.2; }
+            50% { transform: translateX(-20px); opacity: 0.35; }
+          }
+        `}</style>
         
         {/* Gradient mesh accent - more visible */}
         <div 
