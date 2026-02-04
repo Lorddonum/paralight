@@ -79,7 +79,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
             <img 
               src="/combined-logo.png" 
               alt="Paralight & Maglinear Lighting" 
-              className="h-16 w-auto object-contain" 
+              className="h-32 w-auto object-contain" 
             />
           </Link>
           
