@@ -47,7 +47,11 @@ export default function ProjectGallery() {
         </motion.div>
       </div>
 
-      <div className="relative z-10 flex h-[100px] lg:h-[140px] px-4 lg:px-8 pb-4 mt-auto">
+      <motion.div 
+        className="relative z-10 flex px-4 lg:px-8 pb-4 mt-auto"
+        animate={{ height: hoveredIndex !== null ? 180 : 140 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      >
         {applicationCategories.map((category, index) => {
           const isHovered = hoveredIndex === index;
           const isAnyHovered = hoveredIndex !== null;
@@ -175,7 +179,7 @@ export default function ProjectGallery() {
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
       <AnimatePresence>
         {selectedImage !== null && (
