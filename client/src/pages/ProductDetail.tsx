@@ -251,27 +251,62 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
-      {/* Background decorative elements */}
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Rich layered background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-gray-100" />
+      
+      {/* Large decorative gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div 
-          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.03]"
-          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 70%)` }}
+          className="absolute -top-32 -right-32 w-[800px] h-[800px] rounded-full blur-3xl opacity-[0.08]"
+          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 60%)` }}
         />
         <div 
-          className="absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full opacity-[0.02]"
-          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 70%)` }}
+          className="absolute top-1/4 -left-64 w-[700px] h-[700px] rounded-full blur-3xl opacity-[0.06]"
+          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 60%)` }}
         />
         <div 
-          className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full opacity-[0.02]"
-          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 70%)` }}
+          className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full blur-3xl opacity-[0.05]"
+          style={{ background: `radial-gradient(circle, ${brandColor} 0%, transparent 60%)` }}
         />
-        {/* Subtle grid pattern */}
+        
+        {/* Diagonal lines pattern */}
         <div 
-          className="absolute inset-0 opacity-[0.015]"
+          className="absolute inset-0 opacity-[0.03]"
           style={{ 
-            backgroundImage: `linear-gradient(${brandColor} 1px, transparent 1px), linear-gradient(90deg, ${brandColor} 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
+            backgroundImage: `repeating-linear-gradient(45deg, ${brandColor} 0, ${brandColor} 1px, transparent 0, transparent 50%)`,
+            backgroundSize: '40px 40px'
+          }}
+        />
+        
+        {/* Dot pattern overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{ 
+            backgroundImage: `radial-gradient(${brandColor} 1px, transparent 1px)`,
+            backgroundSize: '24px 24px'
+          }}
+        />
+        
+        {/* Decorative geometric shapes */}
+        <div 
+          className="absolute top-40 left-10 w-20 h-20 border opacity-[0.08] rotate-45"
+          style={{ borderColor: brandColor }}
+        />
+        <div 
+          className="absolute top-96 right-20 w-32 h-32 border opacity-[0.06] rotate-12"
+          style={{ borderColor: brandColor }}
+        />
+        <div 
+          className="absolute bottom-64 left-1/4 w-16 h-16 border opacity-[0.05] -rotate-12"
+          style={{ borderColor: brandColor }}
+        />
+        
+        {/* Gradient mesh accent */}
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.02]"
+          style={{ 
+            background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, ${brandColor} 60deg, transparent 120deg, ${brandColor} 180deg, transparent 240deg, ${brandColor} 300deg, transparent 360deg)`
           }}
         />
       </div>
