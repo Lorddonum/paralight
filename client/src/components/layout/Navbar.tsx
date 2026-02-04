@@ -69,8 +69,9 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
             : "bg-transparent",
       )}
     >
-      <div className="flex items-center justify-between w-full">
-          {/* Logo - sticks to left edge */}
+      <div className="container mx-auto px-8 lg:px-12">
+        <div className="flex items-center justify-between h-14 lg:h-16">
+          {/* Logo */}
           <Link
             href="/"
             className="flex items-center hover:opacity-80 transition-opacity duration-300"
@@ -83,7 +84,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-12 pr-8 lg:pr-12">
+          <div className="hidden lg:flex items-center space-x-12">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -129,6 +130,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
