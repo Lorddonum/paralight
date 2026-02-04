@@ -35,6 +35,7 @@ export default function Products() {
   const [showFilters, setShowFilters] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [, setLocation] = useLocation();
 
@@ -196,6 +197,65 @@ export default function Products() {
       
       {/* Hero section */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+        {/* Split image background for "All Products" view */}
+        {activeBrand === "All" && (
+          <div className="absolute inset-0 flex">
+            {/* Paralight image - left half */}
+            <motion.div 
+              className="relative overflow-hidden"
+              initial={{ flex: 1 }}
+              animate={{ 
+                flex: hoveredBrand === "Paralight" ? 1.3 : hoveredBrand === "Maglinear" ? 0.7 : 1 
+              }}
+              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <motion.img
+                src="/attached_assets/image_1770192888904.png"
+                alt="Paralight Aluminum Profiles"
+                className="absolute inset-0 w-full h-full object-cover"
+                animate={{ 
+                  scale: hoveredBrand === "Paralight" ? 1.05 : 1,
+                  filter: hoveredBrand === "Maglinear" ? "brightness(0.4)" : "brightness(0.6)"
+                }}
+                transition={{ duration: 0.5 }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/60 to-transparent" />
+              <motion.div 
+                className="absolute inset-0 bg-brand-cyan/20"
+                animate={{ opacity: hoveredBrand === "Paralight" ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
+            
+            {/* Maglinear image - right half */}
+            <motion.div 
+              className="relative overflow-hidden"
+              initial={{ flex: 1 }}
+              animate={{ 
+                flex: hoveredBrand === "Maglinear" ? 1.3 : hoveredBrand === "Paralight" ? 0.7 : 1 
+              }}
+              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <motion.img
+                src="/attached_assets/image_1770193231637.png"
+                alt="Maglinear Track Lighting"
+                className="absolute inset-0 w-full h-full object-cover"
+                animate={{ 
+                  scale: hoveredBrand === "Maglinear" ? 1.05 : 1,
+                  filter: hoveredBrand === "Paralight" ? "brightness(0.4)" : "brightness(0.6)"
+                }}
+                transition={{ duration: 0.5 }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-gray-900/80 via-gray-900/60 to-transparent" />
+              <motion.div 
+                className="absolute inset-0 bg-brand-gold/20"
+                animate={{ opacity: hoveredBrand === "Maglinear" ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
+          </div>
+        )}
+        
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
@@ -244,6 +304,8 @@ export default function Products() {
                 <motion.button
                   key={brand}
                   onClick={() => setActiveBrand(brand)}
+                  onMouseEnter={() => brand !== "All" && setHoveredBrand(brand)}
+                  onMouseLeave={() => setHoveredBrand(null)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`px-6 py-3 text-sm font-medium rounded-full transition-all duration-300 ${
