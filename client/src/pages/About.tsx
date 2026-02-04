@@ -513,8 +513,8 @@ export default function About() {
     {
       year: "2019",
       month: "Jan",
-      title: "Birth of Maglinear Brand",
-      description: "To meet growing demand for smart commercial lighting, Maglinear was launched. Specializing in high-end magnetic track systems and commercial fixtures, Maglinear marked Paralight Group's entry into integrated lighting solutions.",
+      title: "Birth of Maglinear Lighting Brand",
+      description: "To meet growing demand for smart commercial lighting, Maglinear Lighting was launched. Specializing in high-end magnetic track systems and commercial fixtures, Maglinear Lighting marked Paralight Group's entry into integrated lighting solutions.",
       images: [milestone2019_1, milestone2019_2, milestone2019_3],
     },
     {
@@ -535,7 +535,7 @@ export default function About() {
       year: "2022",
       month: "Dec",
       title: "VIP Room & International Expansion",
-      description: "The Maglinear VIP experience room was introduced to provide an immersive product demonstration environment for global partners. This year also marked Paralight Group's active global strategy in overseas markets.",
+      description: "The Maglinear Lighting VIP experience room was introduced to provide an immersive product demonstration environment for global partners. This year also marked Paralight Group's active global strategy in overseas markets.",
       images: [milestone2022dec_1, milestone2022dec_2, milestone2022dec_3],
     },
     {

@@ -82,7 +82,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
               <img src={paralightLogo} alt="Paralight" className="h-28 lg:h-32 max-w-[240px] object-cover object-center" />
             </div>
             <div className="h-10 lg:h-12 overflow-hidden flex items-center">
-              <img src={maglinearLogo} alt="Maglinear" className="h-16 lg:h-20 max-w-[160px] object-cover object-center" />
+              <img src={maglinearLogo} alt="Maglinear Lighting" className="h-16 lg:h-20 max-w-[160px] object-cover object-center" />
             </div>
           </Link>
           

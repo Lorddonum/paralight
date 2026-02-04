@@ -257,7 +257,7 @@ export default function Products() {
                   }`}
                   data-testid={`hero-brand-${brand.toLowerCase()}`}
                 >
-                  {brand === "All" ? "All Products" : brand}
+                  {brand === "All" ? "All Products" : brand === "Maglinear" ? "Maglinear Lighting" : brand}
                 </motion.button>
               ))}
             </div>

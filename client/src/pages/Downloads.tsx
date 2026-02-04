@@ -343,7 +343,7 @@ export default function Downloads() {
                 )}
                 {(activeBrand === "all" || activeBrand === "Maglinear") && (
                   <BrandSection 
-                    brand="Maglinear" 
+                    brand="Maglinear Lighting" 
                     tagline="Magnetic Track Lighting" 
                     color="#ECAA00" 
                     productsBySeries={maglinearBySeries} 

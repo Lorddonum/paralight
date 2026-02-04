@@ -656,7 +656,7 @@ export default function Admin() {
                         className="w-full bg-gray-50 border border-gray-200 px-4 py-3 text-gray-900 rounded-lg focus:outline-none focus:border-[#00A8E8] focus:ring-1 focus:ring-[#00A8E8]/20 transition-colors"
                       >
                         <option value="Paralight">Paralight</option>
-                        <option value="Maglinear">Maglinear</option>
+                        <option value="Maglinear">Maglinear Lighting</option>
                       </select>
                     </div>
                     {formData.brand === "Maglinear" ? (
@@ -1473,7 +1473,7 @@ export default function Admin() {
                                 : 'bg-white text-gray-600 hover:bg-gray-100'
                             }`}
                           >
-                            {brand}
+                            {brand === "Maglinear" ? "Maglinear Lighting" : brand}
                           </button>
                         ))}
                       </div>
