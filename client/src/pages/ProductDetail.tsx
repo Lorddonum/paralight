@@ -13,6 +13,128 @@ import {
 import { Link } from "wouter";
 import controlIntegrationImg from "@/assets/control-integration.png";
 
+interface FloatingShape {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  opacity: number;
+  rotation: number;
+  rotationSpeed: number;
+}
+
+function FloatingShapes({ brandColor }: { brandColor: string }) {
+  const [shapes, setShapes] = useState<FloatingShape[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number>();
+
+  useEffect(() => {
+    const initialShapes: FloatingShape[] = Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+      size: 20 + Math.random() * 60,
+      opacity: 0.08 + Math.random() * 0.18,
+      rotation: Math.random() * 360,
+      rotationSpeed: (Math.random() - 0.5) * 0.5,
+    }));
+    setShapes(initialShapes);
+  }, []);
+
+  useEffect(() => {
+    const animate = () => {
+      setShapes(prevShapes => {
+        const newShapes = prevShapes.map(shape => {
+          let newX = shape.x + shape.vx;
+          let newY = shape.y + shape.vy;
+          let newVx = shape.vx;
+          let newVy = shape.vy;
+
+          // Bounce off walls
+          if (newX <= 0 || newX >= 100) {
+            newVx = -newVx * 0.9;
+            newX = Math.max(0, Math.min(100, newX));
+          }
+          if (newY <= 0 || newY >= 100) {
+            newVy = -newVy * 0.9;
+            newY = Math.max(0, Math.min(100, newY));
+          }
+
+          return {
+            ...shape,
+            x: newX,
+            y: newY,
+            vx: newVx,
+            vy: newVy,
+            rotation: shape.rotation + shape.rotationSpeed,
+          };
+        });
+
+        // Check collisions between shapes
+        for (let i = 0; i < newShapes.length; i++) {
+          for (let j = i + 1; j < newShapes.length; j++) {
+            const a = newShapes[i];
+            const b = newShapes[j];
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const minDist = (a.size + b.size) / 40;
+
+            if (dist < minDist && dist > 0) {
+              const nx = dx / dist;
+              const ny = dy / dist;
+              const dvx = a.vx - b.vx;
+              const dvy = a.vy - b.vy;
+              const dvn = dvx * nx + dvy * ny;
+
+              if (dvn > 0) {
+                newShapes[i].vx -= dvn * nx * 0.5;
+                newShapes[i].vy -= dvn * ny * 0.5;
+                newShapes[j].vx += dvn * nx * 0.5;
+                newShapes[j].vy += dvn * ny * 0.5;
+              }
+            }
+          }
+        }
+
+        return newShapes;
+      });
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
+      {shapes.map(shape => (
+        <div
+          key={shape.id}
+          className="absolute border-2 rounded-sm"
+          style={{
+            left: `${shape.x}%`,
+            top: `${shape.y}%`,
+            width: shape.size,
+            height: shape.size,
+            opacity: shape.opacity,
+            borderColor: brandColor,
+            transform: `translate(-50%, -50%) rotate(${shape.rotation}deg)`,
+            transition: 'none',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 const COLOR_MAP: Record<string, string> = {
   white: "#FFFFFF",
   black: "#000000",
@@ -288,106 +410,8 @@ export default function ProductDetail() {
           }}
         />
         
-        {/* Decorative geometric shapes - animated and more visible */}
-        <div 
-          className="absolute top-48 left-8 w-32 h-32 border-[3px] rounded-sm"
-          style={{ 
-            borderColor: brandColor,
-            opacity: 0.25,
-            animation: 'floatRotate1 15s ease-in-out infinite'
-          }}
-        />
-        <div 
-          className="absolute top-[400px] right-16 w-48 h-48 border-[3px] rounded-sm"
-          style={{ 
-            borderColor: brandColor,
-            opacity: 0.20,
-            animation: 'floatRotate2 20s ease-in-out infinite'
-          }}
-        />
-        <div 
-          className="absolute bottom-[600px] left-[15%] w-28 h-28 border-[3px] rounded-sm"
-          style={{ 
-            borderColor: brandColor,
-            opacity: 0.18,
-            animation: 'floatRotate3 12s ease-in-out infinite'
-          }}
-        />
-        <div 
-          className="absolute top-[650px] left-12 w-20 h-20 border-2 rounded-sm"
-          style={{ 
-            borderColor: brandColor,
-            opacity: 0.22,
-            animation: 'floatRotate4 18s ease-in-out infinite'
-          }}
-        />
-        <div 
-          className="absolute bottom-[300px] right-[20%] w-24 h-24 border-2 rounded-sm"
-          style={{ 
-            borderColor: brandColor,
-            opacity: 0.15,
-            animation: 'floatRotate5 14s ease-in-out infinite'
-          }}
-        />
-        
-        {/* Accent lines - animated and more visible */}
-        <div 
-          className="absolute top-[280px] left-0 w-48 h-[3px] rounded-r-full"
-          style={{ 
-            background: `linear-gradient(90deg, ${brandColor}, transparent)`,
-            opacity: 0.4,
-            animation: 'slideRight 6s ease-in-out infinite'
-          }}
-        />
-        <div 
-          className="absolute top-[550px] right-0 w-64 h-[3px] rounded-l-full"
-          style={{ 
-            background: `linear-gradient(270deg, ${brandColor}, transparent)`,
-            opacity: 0.35,
-            animation: 'slideLeft 8s ease-in-out infinite'
-          }}
-        />
-        <div 
-          className="absolute bottom-[500px] left-0 w-40 h-[3px] rounded-r-full"
-          style={{ 
-            background: `linear-gradient(90deg, ${brandColor}, transparent)`,
-            opacity: 0.3,
-            animation: 'slideRight 5s ease-in-out infinite'
-          }}
-        />
-        
-        {/* Animation keyframes */}
-        <style>{`
-          @keyframes floatRotate1 {
-            0%, 100% { transform: rotate(45deg) translateY(0px) translateX(0px); }
-            50% { transform: rotate(60deg) translateY(-30px) translateX(10px); }
-          }
-          @keyframes floatRotate2 {
-            0%, 100% { transform: rotate(15deg) translateY(0px) translateX(0px); }
-            33% { transform: rotate(25deg) translateY(-25px) translateX(15px); }
-            66% { transform: rotate(5deg) translateY(15px) translateX(-10px); }
-          }
-          @keyframes floatRotate3 {
-            0%, 100% { transform: rotate(-15deg) translateY(0px); }
-            50% { transform: rotate(-30deg) translateY(25px); }
-          }
-          @keyframes floatRotate4 {
-            0%, 100% { transform: rotate(30deg) translateX(0px) translateY(0px); }
-            50% { transform: rotate(50deg) translateX(20px) translateY(-15px); }
-          }
-          @keyframes floatRotate5 {
-            0%, 100% { transform: rotate(-20deg) scale(1); }
-            50% { transform: rotate(-5deg) scale(1.15); }
-          }
-          @keyframes slideRight {
-            0%, 100% { transform: translateX(0); width: 3rem; }
-            50% { transform: translateX(30px); width: 5rem; }
-          }
-          @keyframes slideLeft {
-            0%, 100% { transform: translateX(0); width: 4rem; }
-            50% { transform: translateX(-30px); width: 6rem; }
-          }
-        `}</style>
+        {/* Floating geometric shapes with physics */}
+        <FloatingShapes brandColor={brandColor} />
         
         {/* Gradient mesh accent - more visible */}
         <div 
