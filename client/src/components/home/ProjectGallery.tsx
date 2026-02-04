@@ -19,7 +19,7 @@ export default function ProjectGallery() {
 
   return (
     <section className="h-full overflow-hidden relative flex flex-col">
-      <div className="absolute inset-0 bottom-[243px]">
+      <div className="absolute inset-0 bottom-[240px]">
         <img
           src="/gallery/hero-villa-cropped.jpg"
           alt="Modern architectural lighting"
@@ -47,7 +47,7 @@ export default function ProjectGallery() {
         </motion.div>
       </div>
 
-      <div className="relative z-10 flex items-end h-[243px] px-4 lg:px-8 pb-4 mt-auto bg-[#0a1628]">
+      <div className="relative z-10 flex items-end h-[280px] px-4 lg:px-8 pb-4 mt-auto" style={{ background: 'linear-gradient(to bottom, transparent 0%, #0a1628 15%, #0a1628 100%)' }}>
         {applicationCategories.map((category, index) => {
           const isHovered = hoveredIndex === index;
           const isAnyHovered = hoveredIndex !== null;
