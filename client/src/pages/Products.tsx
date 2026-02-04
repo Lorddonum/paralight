@@ -204,7 +204,11 @@ export default function Products() {
             className="relative overflow-hidden"
             initial={{ flex: 1 }}
             animate={{ 
-              flex: activeBrand === "Paralight" ? 10 : activeBrand === "Maglinear" ? 0 : hoveredBrand === "Paralight" ? 1.3 : hoveredBrand === "Maglinear" ? 0.7 : 1 
+              flex: activeBrand === "Paralight" 
+              ? (hoveredBrand === "Maglinear" ? 8 : 10) 
+              : activeBrand === "Maglinear" 
+                ? (hoveredBrand === "Paralight" ? 0.15 : 0)
+                : hoveredBrand === "Paralight" ? 1.3 : hoveredBrand === "Maglinear" ? 0.7 : 1 
             }}
             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
           >
@@ -230,7 +234,11 @@ export default function Products() {
             className="relative overflow-hidden"
             initial={{ flex: 1 }}
             animate={{ 
-              flex: activeBrand === "Maglinear" ? 10 : activeBrand === "Paralight" ? 0 : hoveredBrand === "Maglinear" ? 1.3 : hoveredBrand === "Paralight" ? 0.7 : 1 
+              flex: activeBrand === "Maglinear" 
+              ? (hoveredBrand === "Paralight" ? 8 : 10) 
+              : activeBrand === "Paralight" 
+                ? (hoveredBrand === "Maglinear" ? 0.15 : 0)
+                : hoveredBrand === "Maglinear" ? 1.3 : hoveredBrand === "Paralight" ? 0.7 : 1 
             }}
             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
           >
@@ -303,7 +311,7 @@ export default function Products() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            {["All", "Paralight", "Maglinear"].map((brand) => (
+            {["Paralight", "All", "Maglinear"].map((brand) => (
               <motion.button
                 key={brand}
                 onClick={() => setActiveBrand(brand)}
