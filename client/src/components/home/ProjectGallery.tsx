@@ -29,7 +29,7 @@ export default function ProjectGallery() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/40 via-transparent to-transparent" />
       </div>
 
-      <div className="relative z-10 p-8 lg:p-12 lg:pt-16">
+      <div className="relative z-10 p-8 lg:p-12 lg:pt-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
