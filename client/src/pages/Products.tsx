@@ -214,8 +214,7 @@ export default function Products() {
                 alt="Paralight Aluminum Profiles"
                 className="absolute inset-0 w-full h-full object-cover"
                 animate={{ 
-                  scale: hoveredBrand === "Paralight" ? 1.05 : 1,
-                  filter: hoveredBrand === "Maglinear" ? "brightness(0.4)" : "brightness(0.6)"
+                  filter: hoveredBrand === "Maglinear" ? "brightness(0.4)" : hoveredBrand === "Paralight" ? "brightness(0.8)" : "brightness(0.6)"
                 }}
                 transition={{ duration: 0.5 }}
               />
@@ -241,8 +240,7 @@ export default function Products() {
                 alt="Maglinear Track Lighting"
                 className="absolute inset-0 w-full h-full object-cover"
                 animate={{ 
-                  scale: hoveredBrand === "Maglinear" ? 1.05 : 1,
-                  filter: hoveredBrand === "Paralight" ? "brightness(0.4)" : "brightness(0.6)"
+                  filter: hoveredBrand === "Paralight" ? "brightness(0.4)" : hoveredBrand === "Maglinear" ? "brightness(0.8)" : "brightness(0.6)"
                 }}
                 transition={{ duration: 0.5 }}
               />
