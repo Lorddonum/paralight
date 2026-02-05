@@ -2,7 +2,8 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import navbarLogo from "/navbar-logo.png";
+const logoWhite = "/logo-white.png";
+const logoBlack = "/logo-black.png";
 
 export default function Navbar({ darkText = false }: { darkText?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
@@ -35,10 +36,10 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= 100 && rect.bottom > 100) {
-          // Sections with light backgrounds: BrandSplit (1), GlobalNetwork (2), Exhibition (3), ProjectGallery (4)
-          setIsLightSection(index === 1 || index === 2 || index === 3 || index === 4);
-          // Footer section (index 5) has dark blue background
-          setIsFooterSection(index === 5);
+          // Sections with light backgrounds: BrandSplit (1), GlobalNetwork (2), Exhibition (3)
+          setIsLightSection(index === 1 || index === 2 || index === 3);
+          // Dark sections: ProjectGallery (4), Footer (5) have dark backgrounds
+          setIsFooterSection(index === 4 || index === 5);
         }
       });
     };
@@ -80,7 +81,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
             href="/"
             className="flex items-center hover:opacity-80 transition-opacity duration-300"
           >
-            <img src={navbarLogo} alt="Paralight & Maglinear Lighting" className="h-10 lg:h-12 object-contain" />
+            <img src={useDarkText ? logoBlack : logoWhite} alt="Paralight & Maglinear Lighting" className="h-10 lg:h-12 object-contain" />
           </Link>
           
           {/* Desktop Navigation */}
