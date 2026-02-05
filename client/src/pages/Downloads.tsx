@@ -132,8 +132,8 @@ export default function Downloads() {
           <FolderOpen className="w-4 h-4" style={{ color: brandColor }} />
         </div>
         <div>
-          <h3 className="text-sm font-semibold text-white">{series}</h3>
-          <p className="text-[10px] text-white/40 uppercase tracking-wider">{prods.length} catalogue{prods.length !== 1 ? 's' : ''}</p>
+          <h3 className="text-sm font-semibold text-gray-900">{series}</h3>
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{prods.length} catalogue{prods.length !== 1 ? 's' : ''}</p>
         </div>
       </div>
       <div className="space-y-3">
@@ -188,7 +188,7 @@ export default function Downloads() {
           </div>
         </div>
         
-        <div className="p-8">
+        <div className="p-8 bg-[#e8e2d8]">
           {Object.keys(productsBySeries).length === 0 ? (
             <div className="text-center py-16">
               <div 
@@ -197,8 +197,8 @@ export default function Downloads() {
               >
                 <FileText className="w-7 h-7" style={{ color }} />
               </div>
-              <p className="text-sm text-white/50">No catalogues available</p>
-              <p className="text-xs text-white/30 mt-1">Check back soon for updates</p>
+              <p className="text-sm text-gray-600">No catalogues available</p>
+              <p className="text-xs text-gray-400 mt-1">Check back soon for updates</p>
             </div>
           ) : (
             Object.entries(productsBySeries).map(([series, prods]) => (
