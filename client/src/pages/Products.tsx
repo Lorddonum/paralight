@@ -1325,7 +1325,7 @@ export default function Products() {
                         <div className="w-1 h-6 rounded-full" style={{ backgroundColor: brandColor }} />
                         <h2 className="text-xl font-display font-semibold text-gray-900">Frequently Asked Questions</h2>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-3 max-w-2xl">
                         {[
                           {
                             question: "What is the minimum order quantity?",
@@ -1354,29 +1354,33 @@ export default function Products() {
                         ].map((faq, index) => (
                           <div 
                             key={index} 
-                            className="bg-gray-50 border border-gray-100 rounded-xl overflow-hidden"
+                            className="space-y-2"
                             data-testid={`faq-${index}`}
                           >
+                            {/* Question bubble */}
                             <button
                               onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                              className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-gray-100 transition-colors"
+                              className="inline-flex items-center gap-2 px-4 py-2.5 text-left text-white rounded-2xl rounded-bl-md shadow-sm hover:opacity-90 transition-opacity cursor-pointer"
+                              style={{ backgroundColor: brandColor }}
                             >
-                              <span className="text-sm font-medium text-gray-900">{faq.question}</span>
+                              <HelpCircle className="w-4 h-4 flex-shrink-0" />
+                              <span className="text-sm font-medium">{faq.question}</span>
                               <ChevronDown 
-                                className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-200 ${expandedFaq === index ? 'rotate-180' : ''}`}
+                                className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${expandedFaq === index ? 'rotate-180' : ''}`}
                               />
                             </button>
+                            {/* Answer bubble */}
                             <AnimatePresence>
                               {expandedFaq === index && (
                                 <motion.div
-                                  initial={{ height: 0, opacity: 0 }}
-                                  animate={{ height: "auto", opacity: 1 }}
-                                  exit={{ height: 0, opacity: 0 }}
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -10 }}
                                   transition={{ duration: 0.2 }}
-                                  className="overflow-hidden"
+                                  className="ml-6"
                                 >
-                                  <div className="px-5 pb-4 pt-0">
-                                    <p className="text-sm text-gray-600 leading-relaxed">
+                                  <div className="inline-block bg-gray-100 text-gray-700 px-4 py-3 rounded-2xl rounded-tl-md max-w-lg">
+                                    <p className="text-sm leading-relaxed">
                                       {faq.answer}
                                     </p>
                                   </div>
