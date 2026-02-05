@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Package, Loader2, X, SlidersHorizontal, Search, ArrowRight, ChevronRight, ChevronDown, Sparkles, ArrowLeft, FileText, HelpCircle } from "lucide-react";
+import { Package, Loader2, X, SlidersHorizontal, Search, ArrowRight, ChevronRight, ChevronDown, ChevronLeft, Sparkles, ArrowLeft, FileText, HelpCircle } from "lucide-react";
 import { useLocation } from "wouter";
 import controlIntegrationImg from "@/assets/control-integration.png";
 
@@ -64,6 +64,7 @@ export default function Products() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [currentDrawingIndex, setCurrentDrawingIndex] = useState(0);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const [, setLocation] = useLocation();
@@ -199,6 +200,7 @@ export default function Products() {
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
     setSelectedImageIndex(0);
+    setCurrentDrawingIndex(0);
     setTimeout(() => {
       detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
@@ -207,6 +209,7 @@ export default function Products() {
   const handleBackToGrid = () => {
     setSelectedProduct(null);
     setSelectedImageIndex(0);
+    setCurrentDrawingIndex(0);
   };
 
   // Calculate specs for selected product
@@ -976,55 +979,86 @@ export default function Products() {
 
                         {/* Technical Drawing */}
                         <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
-                          <div 
-                            className="p-4 border-b"
-                            style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
-                          >
-                            <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
-                              Technical Drawing
-                            </h3>
-                          </div>
-                          <div className="p-4 bg-gradient-to-br from-gray-50 to-white">
-                            {(() => {
-                              const allDrawings = [
-                                selectedProduct.technicalDrawingUrl,
-                                ...(selectedProduct.technicalDrawings || [])
-                              ].filter(Boolean) as string[];
+                          {(() => {
+                            const allDrawings = [
+                              selectedProduct.technicalDrawingUrl,
+                              ...(selectedProduct.technicalDrawings || [])
+                            ].filter(Boolean) as string[];
+                            const safeDrawingIndex = Math.min(currentDrawingIndex, allDrawings.length - 1);
+                            const currentDrawing = allDrawings[safeDrawingIndex];
 
-                              if (allDrawings.length === 0) {
-                                return (
-                                  <div className="flex items-center justify-center h-32">
-                                    <p className="text-[10px] text-gray-400 uppercase tracking-widest">
-                                      Technical drawing available upon request
-                                    </p>
-                                  </div>
-                                );
-                              }
-
-                              return (
-                                <div className={`grid gap-3 ${allDrawings.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                                  {allDrawings.map((drawing, index) => (
-                                    <div 
-                                      key={index}
-                                      className="h-44 bg-white border border-gray-100 rounded flex items-center justify-center p-2 cursor-pointer group relative"
-                                      onClick={() => setLightboxImage(drawing)}
-                                    >
-                                      <img
-                                        src={drawing}
-                                        alt={`Technical Drawing ${index + 1}`}
-                                        className="max-w-full max-h-full object-contain"
-                                      />
-                                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center rounded">
-                                        <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium bg-black/50 px-2 py-1 rounded">
-                                          Click to enlarge
-                                        </span>
-                                      </div>
-                                    </div>
-                                  ))}
+                            return (
+                              <>
+                                <div 
+                                  className="p-4 border-b flex items-center justify-center gap-2"
+                                  style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                                >
+                                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
+                                    Technical Drawing
+                                  </h3>
+                                  {allDrawings.length > 1 && (
+                                    <span className="text-[10px] text-gray-400 font-medium">
+                                      ({safeDrawingIndex + 1}/{allDrawings.length})
+                                    </span>
+                                  )}
                                 </div>
-                              );
-                            })()}
-                          </div>
+                                <div className="p-4 bg-gradient-to-br from-gray-50 to-white">
+                                  {allDrawings.length === 0 ? (
+                                    <div className="flex items-center justify-center h-32">
+                                      <p className="text-[10px] text-gray-400 uppercase tracking-widest">
+                                        Technical drawing available upon request
+                                      </p>
+                                    </div>
+                                  ) : (
+                                    <div className="relative">
+                                      <div 
+                                        className="h-56 bg-white border border-gray-100 rounded flex items-center justify-center p-2 cursor-pointer group"
+                                        onClick={() => setLightboxImage(currentDrawing)}
+                                      >
+                                        <img
+                                          src={currentDrawing}
+                                          alt={`Technical Drawing ${safeDrawingIndex + 1}`}
+                                          className="max-w-full max-h-full object-contain"
+                                        />
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center rounded">
+                                          <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium bg-black/50 px-2 py-1 rounded">
+                                            Click to enlarge
+                                          </span>
+                                        </div>
+                                      </div>
+                                      
+                                      {allDrawings.length > 1 && (
+                                        <div className="flex justify-center gap-3 mt-3">
+                                          <button
+                                            onClick={() => setCurrentDrawingIndex(prev => Math.max(0, prev - 1))}
+                                            disabled={safeDrawingIndex === 0}
+                                            className={`p-2 rounded-full border transition-colors ${
+                                              safeDrawingIndex === 0 
+                                                ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+                                                : 'border-gray-300 text-gray-600 hover:bg-gray-100'
+                                            }`}
+                                          >
+                                            <ChevronLeft className="w-4 h-4" />
+                                          </button>
+                                          <button
+                                            onClick={() => setCurrentDrawingIndex(prev => Math.min(allDrawings.length - 1, prev + 1))}
+                                            disabled={safeDrawingIndex === allDrawings.length - 1}
+                                            className={`p-2 rounded-full border transition-colors ${
+                                              safeDrawingIndex === allDrawings.length - 1 
+                                                ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+                                                : 'border-gray-300 text-gray-600 hover:bg-gray-100'
+                                            }`}
+                                          >
+                                            <ChevronRight className="w-4 h-4" />
+                                          </button>
+                                        </div>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </>
+                            );
+                          })()}
                         </div>
 
                         {/* Accessories Specification - Paralight only */}
@@ -1165,6 +1199,7 @@ export default function Products() {
                                   onClick={() => {
                                     setSelectedProduct(product);
                                     setSelectedImageIndex(0);
+                                    setCurrentDrawingIndex(0);
                                     setExpandedFaq(null);
                                     if (detailRef.current) {
                                       detailRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
