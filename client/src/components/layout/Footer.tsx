@@ -1,6 +1,5 @@
 import { Facebook, Instagram, Linkedin, Youtube, Twitter, Music2, Pin, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
-import paralightLogo from "@/assets/paralight-logo.png";
-import maglinearLogo from "@/assets/maglinear-logo.png";
+import footerLogo from "/footer-logo.png";
 import { Link } from "wouter";
 
 export default function Footer() {
@@ -100,13 +99,8 @@ export default function Footer() {
         <div className="py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Brand */}
           <div className="lg:col-span-5">
-            <div className="flex items-center -space-x-6 mb-4">
-              <div className="h-10 overflow-hidden flex items-center">
-                <img src={paralightLogo} alt="Paralight" className="h-28 max-w-[220px] object-cover object-center" />
-              </div>
-              <div className="h-10 overflow-hidden flex items-center">
-                <img src={maglinearLogo} alt="Maglinear Lighting" className="h-16 max-w-[140px] object-cover object-center" />
-              </div>
+            <div className="mb-4">
+              <img src={footerLogo} alt="Paralight & Maglinear Lighting" className="h-12 object-contain" />
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-md">
               Premium LED aluminum profiles and magnetic track lighting systems, 
