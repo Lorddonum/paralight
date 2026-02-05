@@ -11,12 +11,12 @@ async function warmupCache() {
     console.log("Warming up product cache...");
     const products = await storage.getProducts();
     products.forEach(product => {
-      cache.set(`product:${product.id}`, product, 300);
+      cache.set(`product:${product.id}`, product, 600); // 10 minutes
     });
-    cache.set('products:all', products, 120);
+    cache.set('products:all', products, 300); // 5 minutes
     
     const gridProducts = await storage.getProductsForGrid();
-    cache.set('products:grid', gridProducts, 120);
+    cache.set('products:grid', gridProducts, 300); // 5 minutes
     
     console.log(`Cache warmed with ${products.length} products`);
   } catch (error) {
@@ -29,8 +29,8 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
-  // Warm up cache on startup
-  warmupCache();
+  // Warm up cache on startup - await to ensure cache is ready before serving
+  await warmupCache();
   
   // Get all products for grid view (optimized - only essential fields)
   app.get("/api/products/grid", async (req, res) => {
@@ -40,7 +40,7 @@ export async function registerRoutes(
       
       if (!products) {
         products = await storage.getProductsForGrid();
-        cache.set(cacheKey, products, 120); // Cache for 2 minutes
+        cache.set(cacheKey, products, 300); // Cache for 5 minutes
       }
       
       res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
