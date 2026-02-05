@@ -491,7 +491,7 @@ export default function About() {
       bgGradient: "from-sky-50 via-white to-cyan-50",
     },
     {
-      name: "Michelle Tang",
+      name: "Michelle",
       role: "CEO",
       tagline: "One-stop lighting solutions with the client at the center.",
       subtitle: "A globalized perspective managing systematic operations.",
