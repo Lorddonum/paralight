@@ -441,14 +441,14 @@ export default function Products() {
               
               <h1 className="font-display text-4xl md:text-6xl text-gray-900 font-medium mb-5">
                 {activeBrand === "All" ? (
-                  <>Explore Our <span className="italic font-normal text-brand-cyan">Collection</span></>
+                  <>Explore Our <span className="italic font-normal text-white">Collection</span></>
                 ) : activeBrand === "Paralight" ? (
                   <>Paralight <span className="italic font-normal text-brand-cyan">Profiles</span></>
                 ) : (
                   <>Maglinear <span className="italic font-normal text-brand-gold">Lighting</span></>
                 )}
               </h1>
-              <p className="text-gray-600 text-lg max-w-xl mx-auto">
+              <p className="text-gray-600 text-lg max-w-xl mx-auto font-semibold">
                 {getPageSubtitle()}
               </p>
             </div>
