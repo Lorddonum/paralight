@@ -557,7 +557,7 @@ export default function Products() {
           <div 
             className="absolute inset-0 opacity-[0.08]"
             style={{
-              backgroundImage: `radial-gradient(circle, #9ca3af 1.5px, transparent 1.5px)`,
+              backgroundImage: `radial-gradient(circle, #8B7355 1.5px, transparent 1.5px)`,
               backgroundSize: '32px 32px'
             }}
           />
@@ -566,8 +566,8 @@ export default function Products() {
             className="absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage: `
-                linear-gradient(to right, #00A8E8 1px, transparent 1px),
-                linear-gradient(to bottom, #00A8E8 1px, transparent 1px)
+                linear-gradient(to right, #A0826D 1px, transparent 1px),
+                linear-gradient(to bottom, #A0826D 1px, transparent 1px)
               `,
               backgroundSize: '80px 80px'
             }}
@@ -577,9 +577,9 @@ export default function Products() {
             className="absolute inset-0"
             style={{
               background: `
-                radial-gradient(ellipse at 20% 30%, rgba(0, 168, 232, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 60%, rgba(236, 170, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 90%, rgba(0, 168, 232, 0.05) 0%, transparent 40%)
+                radial-gradient(ellipse at 20% 30%, rgba(139, 115, 85, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 60%, rgba(210, 180, 140, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 90%, rgba(160, 130, 109, 0.08) 0%, transparent 40%)
               `
             }}
           />
@@ -588,7 +588,7 @@ export default function Products() {
         {/* Animated Background Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div 
-            className="absolute w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#00A8E8]/30 via-[#00A8E8]/15 to-transparent blur-3xl"
+            className="absolute w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#8B7355]/35 via-[#A0826D]/18 to-transparent blur-3xl"
             initial={{ x: 0, y: 0, scale: 1 }}
             animate={{ 
               x: [0, 100, 0],
@@ -604,7 +604,7 @@ export default function Products() {
             style={{ top: '0%', left: '-20%' }}
           />
           <motion.div 
-            className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#ECAA00]/30 via-[#ECAA00]/15 to-transparent blur-3xl"
+            className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#D2B48C]/35 via-[#C4A77D]/18 to-transparent blur-3xl"
             initial={{ x: 0, y: 0, scale: 1 }}
             animate={{ 
               x: [0, -80, 0],
@@ -621,7 +621,7 @@ export default function Products() {
             style={{ top: '30%', right: '-15%' }}
           />
           <motion.div 
-            className="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#00A8E8]/25 via-[#00A8E8]/12 to-transparent blur-3xl"
+            className="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#A0826D]/30 via-[#8B7355]/15 to-transparent blur-3xl"
             initial={{ x: 0, y: 0, scale: 1 }}
             animate={{ 
               x: [0, 120, 0],
@@ -639,7 +639,7 @@ export default function Products() {
           />
           {/* Rotating circle accents */}
           <motion.div 
-            className="absolute w-[300px] h-[300px] rounded-full border-2 border-[#00A8E8]/30"
+            className="absolute w-[300px] h-[300px] rounded-full border-2 border-[#8B7355]/35"
             initial={{ rotate: 0 }}
             animate={{ rotate: 360 }}
             transition={{ 
@@ -651,7 +651,7 @@ export default function Products() {
             style={{ top: '15%', right: '15%' }}
           />
           <motion.div 
-            className="absolute w-[220px] h-[220px] rounded-full border-2 border-[#ECAA00]/30"
+            className="absolute w-[220px] h-[220px] rounded-full border-2 border-[#D2B48C]/35"
             initial={{ rotate: 360 }}
             animate={{ rotate: 0 }}
             transition={{ 
