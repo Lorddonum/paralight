@@ -79,9 +79,26 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center hover:opacity-80 transition-opacity duration-300"
+            className="flex items-center hover:opacity-80 transition-opacity duration-300 relative"
           >
-            <img src={useDarkText ? logoBlack : logoWhite} alt="Paralight & Maglinear Lighting" className="h-10 lg:h-12 object-contain transition-opacity duration-150" />
+            <div className="relative h-10 lg:h-12 w-[200px] lg:w-[260px]">
+              <img 
+                src={logoWhite} 
+                alt="Paralight & Maglinear Lighting" 
+                className={cn(
+                  "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-200",
+                  useDarkText ? "opacity-0" : "opacity-100"
+                )} 
+              />
+              <img 
+                src={logoBlack} 
+                alt="Paralight & Maglinear Lighting" 
+                className={cn(
+                  "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-200",
+                  useDarkText ? "opacity-100" : "opacity-0"
+                )} 
+              />
+            </div>
           </Link>
           
           {/* Desktop Navigation */}
