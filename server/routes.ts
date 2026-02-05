@@ -3,16 +3,24 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertProductSchema } from "@shared/schema";
 import sharp from "sharp";
+import { cache } from "./cache";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
   
-  // Get all products (with caching)
+  // Get all products (with in-memory caching)
   app.get("/api/products", async (req, res) => {
     try {
-      const products = await storage.getProducts();
+      const cacheKey = 'products:all';
+      let products = cache.get<any[]>(cacheKey);
+      
+      if (!products) {
+        products = await storage.getProducts();
+        cache.set(cacheKey, products, 120); // Cache for 2 minutes
+      }
+      
       res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
       res.json(products);
     } catch (error) {
@@ -57,6 +65,7 @@ export async function registerRoutes(
         return res.status(400).json({ error: "Invalid product data", details: parsed.error });
       }
       const product = await storage.createProduct(parsed.data);
+      cache.invalidatePattern('^products:'); // Invalidate all product caches
       res.status(201).json(product);
     } catch (error) {
       res.status(500).json({ error: "Failed to create product" });
@@ -75,6 +84,7 @@ export async function registerRoutes(
       if (!product) {
         return res.status(404).json({ error: "Product not found" });
       }
+      cache.invalidatePattern('^products:'); // Invalidate all product caches
       res.json(product);
     } catch (error) {
       res.status(500).json({ error: "Failed to update product" });
@@ -89,6 +99,7 @@ export async function registerRoutes(
       if (!success) {
         return res.status(404).json({ error: "Product not found" });
       }
+      cache.invalidatePattern('^products:'); // Invalidate all product caches
       res.status(204).send();
     } catch (error) {
       res.status(500).json({ error: "Failed to delete product" });
@@ -112,6 +123,7 @@ export async function registerRoutes(
       if (!product) {
         return res.status(404).json({ error: "Product not found" });
       }
+      cache.invalidatePattern('^products:'); // Invalidate all product caches
       res.json(product);
     } catch (error) {
       console.error("Failed to update product:", error);
@@ -120,7 +132,6 @@ export async function registerRoutes(
   };
   
   app.put("/api/products/:id", updateProductHandler);
-  app.patch("/api/products/:id", updateProductHandler);
 
   // Compress image endpoint
   app.post("/api/compress-image", async (req, res) => {

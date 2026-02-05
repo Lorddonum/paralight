@@ -1,4 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
+import compression from "compression";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
@@ -11,6 +12,20 @@ declare module "http" {
     rawBody: unknown;
   }
 }
+
+// Enable gzip/deflate compression for all responses
+app.use(compression({
+  level: 6, // Balanced compression level (1-9, higher = better compression but slower)
+  threshold: 1024, // Only compress responses larger than 1KB
+  filter: (req, res) => {
+    // Don't compress responses with no-transform directive
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    // Use compression filter defaults
+    return compression.filter(req, res);
+  }
+}));
 
 app.use(
   express.json({
