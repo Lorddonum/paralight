@@ -23,14 +23,11 @@ function BouncingCircles() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    // Fixed circle sizes
+    const LARGE_RADIUS = 120;
+    const MEDIUM_RADIUS = 70;
+    const SMALL_RADIUS = 35;
 
-    // Initialize circles with various sizes
     const colors = [
       'rgba(139, 115, 85, 0.25)',   // brown
       'rgba(210, 180, 140, 0.25)',  // tan
@@ -39,45 +36,59 @@ function BouncingCircles() {
       'rgba(139, 115, 85, 0.18)',   // lighter brown
     ];
 
-    const initCircles = () => {
+    const initCircles = (width: number, height: number) => {
       const circles: Circle[] = [];
+      const area = width * height;
+      
+      // Calculate number of circles based on screen area
+      const numLarge = Math.max(2, Math.floor(area / 400000));
+      const numMedium = Math.max(3, Math.floor(area / 200000));
+      const numSmall = Math.max(5, Math.floor(area / 100000));
+
       // Large circles - very slow drift
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < numLarge; i++) {
         circles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: LARGE_RADIUS + Math.random() * (width - LARGE_RADIUS * 2),
+          y: LARGE_RADIUS + Math.random() * (height - LARGE_RADIUS * 2),
           vx: (Math.random() - 0.5) * 0.3,
           vy: (Math.random() - 0.5) * 0.3,
-          radius: 100 + Math.random() * 80,
+          radius: LARGE_RADIUS,
           color: colors[i % colors.length]
         });
       }
       // Medium circles - gentle movement
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < numMedium; i++) {
         circles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: MEDIUM_RADIUS + Math.random() * (width - MEDIUM_RADIUS * 2),
+          y: MEDIUM_RADIUS + Math.random() * (height - MEDIUM_RADIUS * 2),
           vx: (Math.random() - 0.5) * 0.4,
           vy: (Math.random() - 0.5) * 0.4,
-          radius: 50 + Math.random() * 40,
+          radius: MEDIUM_RADIUS,
           color: colors[(i + 1) % colors.length]
         });
       }
       // Small circles - slightly faster but still smooth
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < numSmall; i++) {
         circles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: SMALL_RADIUS + Math.random() * (width - SMALL_RADIUS * 2),
+          y: SMALL_RADIUS + Math.random() * (height - SMALL_RADIUS * 2),
           vx: (Math.random() - 0.5) * 0.6,
           vy: (Math.random() - 0.5) * 0.6,
-          radius: 20 + Math.random() * 25,
+          radius: SMALL_RADIUS,
           color: colors[(i + 2) % colors.length]
         });
       }
       return circles;
     };
 
-    circlesRef.current = initCircles();
+    const resizeCanvas = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      // Reinitialize circles based on new size
+      circlesRef.current = initCircles(canvas.width, canvas.height);
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
     const checkCollision = (c1: Circle, c2: Circle) => {
       const dx = c2.x - c1.x;
