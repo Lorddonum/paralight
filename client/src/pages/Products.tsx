@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Package, Loader2, X, SlidersHorizontal, Search, ArrowRight, ChevronRight, ChevronDown, ChevronLeft, Sparkles, ArrowLeft, FileText, HelpCircle } from "lucide-react";
+import { Package, Loader2, X, SlidersHorizontal, Search, ArrowRight, ChevronRight, ChevronDown, ChevronLeft, Sparkles, ArrowLeft, FileText, HelpCircle, Zap, Ruler, Palette, Sun, Eye, Layers, Box, Settings, Download, Image, Info, ListChecks, Wrench } from "lucide-react";
 import { useLocation } from "wouter";
 import controlIntegrationImg from "@/assets/control-integration.png";
 
@@ -80,6 +80,7 @@ export default function Products() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [currentDrawingIndex, setCurrentDrawingIndex] = useState(0);
+  const [activeDetailTab, setActiveDetailTab] = useState<'overview' | 'specs' | 'drawings' | 'accessories'>('overview');
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const [, setLocation] = useLocation();
@@ -124,6 +125,7 @@ export default function Products() {
         setSelectedProduct(data);
         setSelectedImageIndex(0);
         setCurrentDrawingIndex(0);
+        setActiveDetailTab('overview');
         setTimeout(() => {
           detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
@@ -769,308 +771,458 @@ export default function Products() {
             {/* Product grid or detail view */}
             <div className="flex-1" ref={detailRef}>
               <AnimatePresence mode="wait">
-                {selectedProduct ? (
-                  /* Inline Product Detail View */
+{selectedProduct ? (
+                  /* Professional Technical Product Detail View */
                   <motion.div
                     key="detail"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    className="bg-white"
                   >
-                    {/* Back button */}
-                    <motion.button
-                      onClick={handleBackToGrid}
-                      className="flex items-center gap-2 text-xs text-gray-500 hover:text-gray-900 transition-colors group mb-6"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 }}
-                    >
-                      <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                      Back to Catalog
-                    </motion.button>
+                    {/* Document Header - Professional Style */}
+                    <div className="border-b-2 border-gray-900 pb-6 mb-8">
+                      <div className="flex items-start justify-between gap-4 mb-4">
+                        <motion.button
+                          onClick={handleBackToGrid}
+                          className="flex items-center gap-2 text-xs text-gray-500 hover:text-gray-900 transition-colors group"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 }}
+                        >
+                          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                          Back to Catalog
+                        </motion.button>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="px-3 py-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-white rounded"
+                            style={{ backgroundColor: brandColor }}
+                          >
+                            {selectedProduct.brand === "Maglinear" ? "Maglinear Lighting" : selectedProduct.brand}
+                          </span>
+                          {(selectedProduct.series || []).map((s, idx) => (
+                            <span
+                              key={idx}
+                              className="bg-gray-100 text-gray-700 px-3 py-1.5 text-[10px] font-medium tracking-[0.1em] uppercase rounded"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                        <div>
+                          <h1 className="font-display text-3xl md:text-4xl text-gray-900 font-semibold tracking-tight">
+                            {selectedProduct.name}
+                          </h1>
+                          <div className="flex items-center gap-4 mt-2">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium">Model</span>
+                              <span className="text-sm font-mono font-semibold text-gray-900 bg-gray-100 px-2 py-0.5 rounded">{selectedProduct.modelNumber}</span>
+                            </div>
+                            {selectedProduct.category && (
+                              <div className="flex items-center gap-2">
+                                <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium">Category</span>
+                                <span className="text-xs text-gray-600">{selectedProduct.category}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        {/* Quick Actions */}
+                        <div className="flex items-center gap-3">
+                          <a
+                            href={selectedProduct.catalogueUrl || undefined}
+                            download={`${selectedProduct.name}-Catalogue.pdf`}
+                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all ${
+                              !selectedProduct.catalogueUrl
+                                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                                : "bg-gray-900 text-white hover:bg-gray-800"
+                            }`}
+                            onClick={(e) => !selectedProduct.catalogueUrl && e.preventDefault()}
+                          >
+                            <Download className="w-4 h-4" />
+                            Download PDF
+                          </a>
+                        </div>
+                      </div>
+                    </div>
 
-                    {/* Product header */}
+                    {/* Quick Specs Bar */}
                     <motion.div 
-                      className="flex items-center gap-3 mb-8"
+                      className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
                     >
-                      <span
-                        className="px-3 py-1.5 text-[10px] font-medium tracking-[0.15em] uppercase text-white rounded"
-                        style={{ backgroundColor: brandColor }}
-                      >
-                        {selectedProduct.brand}
-                      </span>
-                      {(selectedProduct.series || []).map((s, idx) => (
-                        <span
+                      {[
+                        { icon: Zap, label: "Power", value: selectedProduct.wattage },
+                        { icon: Ruler, label: "Dimensions", value: selectedProduct.dimensions },
+                        { icon: Sun, label: "CCT", value: selectedProduct.cct },
+                        { icon: Eye, label: "CRI", value: selectedProduct.cri },
+                        { icon: Layers, label: "Beam Angle", value: selectedProduct.beamAngle },
+                        { icon: Settings, label: "Voltage", value: selectedProduct.voltage },
+                      ].filter(item => item.value).map((item, idx) => (
+                        <div 
                           key={idx}
-                          className="bg-gray-900 text-white px-3 py-1.5 text-[10px] font-medium tracking-[0.15em] uppercase rounded"
+                          className="bg-gray-50 border border-gray-100 rounded-lg p-3 hover:border-gray-200 transition-colors"
                         >
-                          {s}
-                        </span>
+                          <div className="flex items-center gap-2 mb-1">
+                            <item.icon className="w-3.5 h-3.5" style={{ color: brandColor }} />
+                            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-medium">{item.label}</span>
+                          </div>
+                          <p className="text-sm font-semibold text-gray-900">{item.value}</p>
+                        </div>
                       ))}
                     </motion.div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                      {/* Left column - Images */}
-                      <motion.div 
-                        className="space-y-6"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        <div>
-                          <h1 className="font-display text-3xl md:text-4xl text-gray-900 font-medium mb-2">
-                            {selectedProduct.name}
-                          </h1>
-                          <p className="text-sm text-gray-400 tracking-wide">
-                            {selectedProduct.modelNumber}
-                          </p>
-                        </div>
+                    {/* Tab Navigation */}
+                    <div className="border-b border-gray-200 mb-8">
+                      <div className="flex gap-1 -mb-px">
+                        {[
+                          { id: 'overview' as const, label: 'Overview', icon: Info },
+                          { id: 'specs' as const, label: 'Specifications', icon: ListChecks },
+                          { id: 'drawings' as const, label: 'Drawings', icon: Image },
+                          ...(selectedProduct.brand === "Paralight" && selectedProduct.accessoriesSpec ? [{ id: 'accessories' as const, label: 'Accessories', icon: Wrench }] : []),
+                        ].map((tab) => (
+                          <button
+                            key={tab.id}
+                            onClick={() => setActiveDetailTab(tab.id)}
+                            className={`flex items-center gap-2 px-4 py-3 text-xs font-medium uppercase tracking-wide transition-colors border-b-2 ${
+                              activeDetailTab === tab.id
+                                ? 'border-gray-900 text-gray-900'
+                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            }`}
+                          >
+                            <tab.icon className="w-4 h-4" />
+                            {tab.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
-                        {/* Main image */}
-                        {(() => {
-                          const allImages = [
-                            selectedProduct.image,
-                            ...(selectedProduct.images || [])
-                          ].filter(Boolean) as string[];
-                          const currentImage = allImages[selectedImageIndex] || selectedProduct.image;
+                    {/* Tab Content */}
+                    <AnimatePresence mode="wait">
+                      {activeDetailTab === 'overview' && (
+                        <motion.div
+                          key="overview"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="grid grid-cols-1 lg:grid-cols-2 gap-10"
+                        >
+                          {/* Left: Images */}
+                          <div className="space-y-6">
+                            {(() => {
+                              const allImages = [
+                                selectedProduct.image,
+                                ...(selectedProduct.images || [])
+                              ].filter(Boolean) as string[];
+                              const currentImage = allImages[selectedImageIndex] || selectedProduct.image;
 
-                          return (
-                            <>
-                              <div 
-                                className="aspect-square max-w-md mx-auto bg-white border border-gray-100 relative overflow-hidden rounded-2xl shadow-lg cursor-pointer group"
-                                onClick={() => currentImage && setLightboxImage(currentImage)}
-                              >
-                                <div className="w-full h-full flex items-center justify-center p-8">
-                                  {currentImage ? (
-                                    <>
-                                      <img
-                                        src={currentImage}
-                                        alt={selectedProduct.name}
-                                        className="max-w-full max-h-full object-contain"
-                                      />
-                                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                                        <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-medium bg-black/50 px-3 py-1 rounded">
-                                          Click to enlarge
-                                        </span>
-                                      </div>
-                                    </>
-                                  ) : (
-                                    <Package className="w-24 h-24 text-gray-200" />
+                              return (
+                                <>
+                                  <div 
+                                    className="aspect-square bg-gradient-to-br from-gray-50 to-white border border-gray-200 relative overflow-hidden rounded-xl cursor-pointer group"
+                                    onClick={() => currentImage && setLightboxImage(currentImage)}
+                                  >
+                                    <div className="w-full h-full flex items-center justify-center p-8">
+                                      {currentImage ? (
+                                        <>
+                                          <img
+                                            src={currentImage}
+                                            alt={selectedProduct.name}
+                                            className="max-w-full max-h-full object-contain"
+                                          />
+                                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
+                                            <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium bg-black/70 px-3 py-1.5 rounded-full">
+                                              Click to enlarge
+                                            </span>
+                                          </div>
+                                        </>
+                                      ) : (
+                                        <Package className="w-24 h-24 text-gray-200" />
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  {allImages.length > 1 && (
+                                    <div className="flex gap-2 overflow-x-auto pb-2">
+                                      {allImages.map((img, index) => (
+                                        <button
+                                          key={index}
+                                          onClick={() => setSelectedImageIndex(index)}
+                                          className={`flex-shrink-0 w-16 h-16 border-2 rounded-lg overflow-hidden transition-all ${
+                                            selectedImageIndex === index 
+                                              ? 'border-gray-900 ring-2 ring-gray-900/20' 
+                                              : 'border-gray-200 hover:border-gray-400'
+                                          }`}
+                                        >
+                                          <img 
+                                            src={img} 
+                                            alt={`${selectedProduct.name} ${index + 1}`}
+                                            className="w-full h-full object-cover"
+                                          />
+                                        </button>
+                                      ))}
+                                    </div>
                                   )}
-                                </div>
+                                </>
+                              );
+                            })()}
+                          </div>
+
+                          {/* Right: Description & Info */}
+                          <div className="space-y-6">
+                            {/* Description Section */}
+                            <div className="prose prose-sm max-w-none">
+                              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3 flex items-center gap-2">
+                                <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                Product Description
+                              </h3>
+                              <p className="text-gray-600 leading-relaxed">
+                                {selectedProduct.description}
+                              </p>
+                            </div>
+
+                            {/* Key Features */}
+                            <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 flex items-center gap-2">
+                                <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                Key Features
+                              </h3>
+                              <div className="grid grid-cols-2 gap-3">
+                                {[
+                                  { label: "Application", value: selectedProduct.application },
+                                  { label: "Material", value: selectedProduct.material },
+                                  { label: "Finish", value: selectedProduct.finish },
+                                  { label: "Color Options", value: selectedProduct.color },
+                                  { label: "Standard Length", value: selectedProduct.standardLength },
+                                  { label: "Installation", value: selectedProduct.installationMethod },
+                                ].filter(item => item.value).map((item, idx) => (
+                                  <div key={idx} className="flex flex-col">
+                                    <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium">{item.label}</span>
+                                    <span className="text-sm text-gray-900">{item.value}</span>
+                                  </div>
+                                ))}
                               </div>
+                            </div>
 
-                              {allImages.length > 1 && (
-                                <div className="flex gap-2 overflow-x-auto pb-2">
-                                  {allImages.map((img, index) => (
-                                    <button
-                                      key={index}
-                                      onClick={() => setSelectedImageIndex(index)}
-                                      className={`flex-shrink-0 w-16 h-16 border-2 rounded overflow-hidden transition-all ${
-                                        selectedImageIndex === index 
-                                          ? 'border-gray-900' 
-                                          : 'border-gray-200 hover:border-gray-400'
-                                      }`}
-                                    >
-                                      <img 
-                                        src={img} 
-                                        alt={`${selectedProduct.name} ${index + 1}`}
-                                        className="w-full h-full object-cover"
-                                      />
-                                    </button>
+                            {/* Control Integration - Maglinear only */}
+                            {selectedProduct.brand !== "Paralight" && (
+                              <div className="bg-gray-900 rounded-xl p-5 text-white">
+                                <h3 className="text-sm font-bold uppercase tracking-wide mb-4 flex items-center gap-2">
+                                  <div className="w-1 h-4 rounded-full bg-[#ECAA00]" />
+                                  Control Integration
+                                </h3>
+                                <img 
+                                  src={controlIntegrationImg} 
+                                  alt="Control Integration" 
+                                  className="w-full max-w-xl mx-auto object-contain rounded-lg"
+                                />
+                              </div>
+                            )}
+
+                            {/* Packaging Method Image - Paralight only */}
+                            {selectedProduct.brand === "Paralight" && (
+                              <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 flex items-center gap-2">
+                                  <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                  Packaging Method
+                                </h3>
+                                <img 
+                                  src="/packaging-method.png" 
+                                  alt="Packaging Method" 
+                                  className="max-w-full h-auto mx-auto rounded-lg"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {activeDetailTab === 'specs' && (
+                        <motion.div
+                          key="specs"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="space-y-8"
+                        >
+                          {/* Technical Specifications Table */}
+                          <div className="border border-gray-200 rounded-xl overflow-hidden">
+                            <div 
+                              className="px-6 py-4 border-b border-gray-200"
+                              style={{ background: `linear-gradient(135deg, ${brandColor}10 0%, transparent 100%)` }}
+                            >
+                              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
+                                <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                Technical Specifications
+                              </h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                              <table className="w-full">
+                                <tbody>
+                                  {specs.map((spec, i) => (
+                                    <tr key={spec.label} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                      <td className="px-6 py-3 text-xs uppercase tracking-widest text-gray-500 font-medium w-1/3 border-r border-gray-100">
+                                        {spec.label}
+                                      </td>
+                                      <td className="px-6 py-3 text-sm text-gray-900 font-medium">
+                                        {spec.value}
+                                      </td>
+                                    </tr>
                                   ))}
-                                </div>
-                              )}
-                            </>
-                          );
-                        })()}
+                                  {additionalSpecRows.map((row, rowIndex) => {
+                                    const rowSpecs = getAdditionalRowSpecs(row, selectedProduct.modelNumber);
+                                    return rowSpecs.map((spec, i) => (
+                                      <tr key={`${rowIndex}-${spec.label}`} className={(specs.length + i) % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                        <td className="px-6 py-3 text-xs uppercase tracking-widest text-gray-500 font-medium w-1/3 border-r border-gray-100">
+                                          {spec.label}
+                                        </td>
+                                        <td className="px-6 py-3 text-sm text-gray-900 font-medium">
+                                          {spec.value}
+                                        </td>
+                                      </tr>
+                                    ));
+                                  })}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
 
-                        {/* Description */}
-                        <div className="pt-4">
-                          <p className="text-gray-600 leading-relaxed text-sm mb-6">
-                            {selectedProduct.description}
-                          </p>
-                          
-                          {/* Packaging Method Image - Paralight only */}
-                          {selectedProduct.brand === "Paralight" && (
-                            <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
-                              <h4 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-3 text-center">
-                                Packaging Method
-                              </h4>
-                              <img 
-                                src="/packaging-method.png" 
-                                alt="Packaging Method" 
-                                className="max-w-full h-auto mx-auto"
-                              />
+                          {/* Packaging Information - Paralight only */}
+                          {selectedProduct.brand === "Paralight" && (selectedProduct.packagingMethodADesc || selectedProduct.packagingMethodBDesc) && (
+                            <div className="border border-gray-200 rounded-xl overflow-hidden">
+                              <div 
+                                className="px-6 py-4 border-b border-gray-200"
+                                style={{ background: `linear-gradient(135deg, ${brandColor}10 0%, transparent 100%)` }}
+                              >
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
+                                  <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                  Packaging Information
+                                </h3>
+                              </div>
+                              <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                  <thead className="bg-gray-50">
+                                    <tr>
+                                      <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Method</th>
+                                      <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Description</th>
+                                      <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Specifications</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {selectedProduct.packagingMethodADesc && (
+                                      <tr className="border-b border-gray-100">
+                                        <td className="px-6 py-4 font-semibold text-gray-900">Method A</td>
+                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodADesc}</td>
+                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodASpec || '-'}</td>
+                                      </tr>
+                                    )}
+                                    {selectedProduct.packagingMethodBDesc && (
+                                      <tr>
+                                        <td className="px-6 py-4">
+                                          <span className="font-semibold" style={{ color: brandColor }}>Method B</span>
+                                          <span className="block text-[10px] text-gray-400">(Additional Fee)</span>
+                                        </td>
+                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodBDesc}</td>
+                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodBSpec || '-'}</td>
+                                      </tr>
+                                    )}
+                                  </tbody>
+                                </table>
+                              </div>
                             </div>
                           )}
-                          
-                          <a
-                            href={selectedProduct.catalogueUrl || undefined}
-                            download={`${selectedProduct.name}-Catalogue.pdf`}
-                            className={`inline-flex items-center gap-3 text-xs uppercase tracking-widest transition-all ${
-                              !selectedProduct.catalogueUrl
-                                ? "text-gray-300 cursor-not-allowed"
-                                : "text-gray-500 hover:text-gray-900"
-                            }`}
-                            onClick={(e) => !selectedProduct.catalogueUrl && e.preventDefault()}
-                          >
-                            <FileText className="w-4 h-4" />
-                            {selectedProduct.catalogueUrl
-                              ? "Download Catalogue"
-                              : "Catalogue Not Available"}
-                          </a>
-                        </div>
-                      </motion.div>
+                        </motion.div>
+                      )}
 
-                      {/* Right column - Specs */}
-                      <motion.div 
-                        className="space-y-8"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        {selectedProduct.brand !== "Paralight" && (
-                          <div className="bg-gray-50 border border-gray-100 p-6 rounded-xl">
-                            <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4 text-center">
-                              Control Integration
-                            </h3>
-                            <img 
-                              src={controlIntegrationImg} 
-                              alt="Control Integration" 
-                              className="w-full max-w-xl mx-auto object-contain"
-                            />
-                          </div>
-                        )}
-
-                        {/* Technical Specifications */}
-                        <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
-                          <div 
-                            className="p-4 border-b"
-                            style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
-                          >
-                            <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
-                              Technical Specifications
-                            </h3>
-                          </div>
-                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-                            {specs.map((spec, i) => (
-                              <div
-                                key={spec.label}
-                                className={`p-4 ${i < specs.length - (specs.length % 4 || 4) ? "border-b" : ""} ${(i + 1) % 4 !== 0 ? "border-r" : ""} border-gray-100`}
-                              >
-                                <p className="text-[9px] uppercase tracking-widest text-gray-400 mb-1">
-                                  {spec.label}
-                                </p>
-                                <p className="text-xs font-medium text-gray-900 break-words">
-                                  {spec.value}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Additional Specification Rows */}
-                          {additionalSpecRows.map((row, rowIndex) => {
-                            const rowSpecs = getAdditionalRowSpecs(row, selectedProduct.modelNumber);
-                            if (rowSpecs.length === 0) return null;
-                            return (
-                              <div key={rowIndex} className="border-t border-gray-100">
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-                                  {rowSpecs.map((spec, i) => (
-                                    <div
-                                      key={`${rowIndex}-${spec.label}`}
-                                      className={`p-4 ${i < rowSpecs.length - (rowSpecs.length % 4 || 4) ? "border-b" : ""} ${(i + 1) % 4 !== 0 ? "border-r" : ""} border-gray-100`}
-                                    >
-                                      <p className="text-[9px] uppercase tracking-widest text-gray-400 mb-1">
-                                        {spec.label}
-                                      </p>
-                                      <p className="text-xs font-medium text-gray-900 break-words">
-                                        {spec.value}
-                                      </p>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-
-                        {/* Technical Drawing */}
-                        <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+                      {activeDetailTab === 'drawings' && (
+                        <motion.div
+                          key="drawings"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                        >
                           {(() => {
                             const allDrawings = [
                               selectedProduct.technicalDrawingUrl,
                               ...(selectedProduct.technicalDrawings || [])
                             ].filter(Boolean) as string[];
-                            const safeDrawingIndex = Math.min(currentDrawingIndex, allDrawings.length - 1);
+                            const safeDrawingIndex = Math.min(currentDrawingIndex, Math.max(0, allDrawings.length - 1));
                             const currentDrawing = allDrawings[safeDrawingIndex];
 
                             return (
-                              <>
+                              <div className="border border-gray-200 rounded-xl overflow-hidden">
                                 <div 
-                                  className="p-4 border-b flex items-center justify-center gap-2"
-                                  style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
+                                  className="px-6 py-4 border-b border-gray-200 flex items-center justify-between"
+                                  style={{ background: `linear-gradient(135deg, ${brandColor}10 0%, transparent 100%)` }}
                                 >
-                                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
-                                    Technical Drawing
+                                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
+                                    <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                    Technical Drawings
                                   </h3>
                                   {allDrawings.length > 1 && (
-                                    <span className="text-[10px] text-gray-400 font-medium">
-                                      ({safeDrawingIndex + 1}/{allDrawings.length})
+                                    <span className="text-xs text-gray-500 font-medium bg-gray-100 px-2 py-1 rounded">
+                                      {safeDrawingIndex + 1} of {allDrawings.length}
                                     </span>
                                   )}
                                 </div>
-                                <div className="p-4 bg-gradient-to-br from-gray-50 to-white">
+                                <div className="p-8 bg-gradient-to-br from-gray-50 to-white">
                                   {allDrawings.length === 0 ? (
-                                    <div className="flex items-center justify-center h-32">
-                                      <p className="text-[10px] text-gray-400 uppercase tracking-widest">
-                                        Technical drawing available upon request
-                                      </p>
+                                    <div className="flex flex-col items-center justify-center py-16 text-center">
+                                      <Image className="w-12 h-12 text-gray-300 mb-4" />
+                                      <p className="text-sm text-gray-500">Technical drawings available upon request</p>
+                                      <p className="text-xs text-gray-400 mt-1">Contact us for detailed specifications</p>
                                     </div>
                                   ) : (
-                                    <div className="relative">
+                                    <div className="space-y-6">
                                       <div 
-                                        className="h-56 bg-white border border-gray-100 rounded flex items-center justify-center p-2 cursor-pointer group"
+                                        className="bg-white border border-gray-200 rounded-lg p-6 flex items-center justify-center min-h-[400px] cursor-pointer group"
                                         onClick={() => setLightboxImage(currentDrawing)}
                                       >
                                         <img
                                           src={currentDrawing}
                                           alt={`Technical Drawing ${safeDrawingIndex + 1}`}
-                                          className="max-w-full max-h-full object-contain"
+                                          className="max-w-full max-h-[500px] object-contain"
                                         />
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center rounded">
-                                          <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium bg-black/50 px-2 py-1 rounded">
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center rounded-lg">
+                                          <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium bg-black/70 px-3 py-1.5 rounded-full">
                                             Click to enlarge
                                           </span>
                                         </div>
                                       </div>
                                       
                                       {allDrawings.length > 1 && (
-                                        <div className="flex justify-center gap-3 mt-3">
+                                        <div className="flex justify-center gap-3">
                                           <button
                                             onClick={() => setCurrentDrawingIndex(prev => Math.max(0, prev - 1))}
                                             disabled={safeDrawingIndex === 0}
-                                            className={`p-2 rounded-full border transition-colors ${
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
                                               safeDrawingIndex === 0 
                                                 ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
-                                                : 'border-gray-300 text-gray-600 hover:bg-gray-100'
+                                                : 'border-gray-300 text-gray-700 hover:bg-gray-100'
                                             }`}
                                           >
                                             <ChevronLeft className="w-4 h-4" />
+                                            Previous
                                           </button>
                                           <button
                                             onClick={() => setCurrentDrawingIndex(prev => Math.min(allDrawings.length - 1, prev + 1))}
                                             disabled={safeDrawingIndex === allDrawings.length - 1}
-                                            className={`p-2 rounded-full border transition-colors ${
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
                                               safeDrawingIndex === allDrawings.length - 1 
                                                 ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
-                                                : 'border-gray-300 text-gray-600 hover:bg-gray-100'
+                                                : 'border-gray-300 text-gray-700 hover:bg-gray-100'
                                             }`}
                                           >
+                                            Next
                                             <ChevronRight className="w-4 h-4" />
                                           </button>
                                         </div>
@@ -1078,111 +1230,80 @@ export default function Products() {
                                     </div>
                                   )}
                                 </div>
-                              </>
-                            );
-                          })()}
-                        </div>
-
-                        {/* Accessories Specification - Paralight only */}
-                        {selectedProduct.brand === "Paralight" && selectedProduct.accessoriesSpec && (() => {
-                          try {
-                            const accessoriesData = JSON.parse(selectedProduct.accessoriesSpec);
-                            if (!Array.isArray(accessoriesData) || accessoriesData.length === 0) return null;
-                            
-                            const applicationRow = accessoriesData.find((item: { no?: string }) => 
-                              item.no?.toLowerCase() === 'application'
-                            );
-                            const regularRows = accessoriesData.filter((item: { no?: string }) => 
-                              item.no?.toLowerCase() !== 'application'
-                            );
-                            
-                            return (
-                              <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                                <div 
-                                  className="p-4 border-b"
-                                  style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
-                                >
-                                  <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
-                                    Accessories Specification
-                                  </h3>
-                                </div>
-                                <div className="overflow-x-auto">
-                                  <table className="w-full text-sm">
-                                    <thead className="bg-gradient-to-r from-gray-50 to-white">
-                                      <tr>
-                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100 w-16">NO.</th>
-                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Specification</th>
-                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100 w-20">QTY</th>
-                                        <th className="px-4 py-3 text-center text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Remarks</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {regularRows.map((item: { no?: string; specification?: string; qty?: string; remarks?: string }, index: number) => (
-                                        <tr key={index} className="border-b border-gray-100">
-                                          <td className="px-4 py-3 text-center font-medium" style={{ color: brandColor }}>{item.no || '-'}</td>
-                                          <td className="px-4 py-3 text-center text-gray-600">{item.specification || '-'}</td>
-                                          <td className="px-4 py-3 text-center text-gray-600">{item.qty || '-'}</td>
-                                          <td className="px-4 py-3 text-center text-gray-600">{item.remarks || '-'}</td>
-                                        </tr>
-                                      ))}
-                                      {applicationRow && (
-                                        <tr className="bg-gray-50">
-                                          <td className="px-4 py-3 font-medium text-gray-700">Application:</td>
-                                          <td colSpan={3} className="px-4 py-3 text-gray-600">{(applicationRow as { specification?: string }).specification || '-'}</td>
-                                        </tr>
-                                      )}
-                                    </tbody>
-                                  </table>
-                                </div>
                               </div>
                             );
-                          } catch {
-                            return null;
-                          }
-                        })()}
+                          })()}
+                        </motion.div>
+                      )}
 
-                        {/* Packaging Information - Paralight only */}
-                        {selectedProduct.brand === "Paralight" && (selectedProduct.packagingMethodADesc || selectedProduct.packagingMethodBDesc) && (
-                          <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                            <div 
-                              className="p-4 border-b"
-                              style={{ borderColor: `${brandColor}20`, background: `linear-gradient(135deg, ${brandColor}08 0%, transparent 100%)` }}
-                            >
-                              <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 font-bold text-center">
-                                Packaging Information
-                              </h3>
-                            </div>
-                            <div className="overflow-x-auto">
-                              <table className="w-full text-sm">
-                                <thead className="bg-gradient-to-r from-gray-50 to-white">
-                                  <tr>
-                                    <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Packaging Method</th>
-                                    <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Description</th>
-                                    <th className="px-4 py-3 text-left text-[10px] uppercase tracking-widest text-gray-500 font-bold border-b border-gray-100">Specifications</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {selectedProduct.packagingMethodADesc && (
-                                    <tr className="border-b border-gray-100">
-                                      <td className="px-4 py-3 font-medium text-gray-900">Method A</td>
-                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodADesc}</td>
-                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodASpec || '-'}</td>
-                                    </tr>
-                                  )}
-                                  {selectedProduct.packagingMethodBDesc && (
-                                    <tr>
-                                      <td className="px-4 py-3 font-medium" style={{ color: brandColor }}>Method B<br/><span className="text-[10px] text-gray-400">(Additional Fee)</span></td>
-                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodBDesc}</td>
-                                      <td className="px-4 py-3 text-gray-600">{selectedProduct.packagingMethodBSpec || '-'}</td>
-                                    </tr>
-                                  )}
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        )}
-                      </motion.div>
-                    </div>
+                      {activeDetailTab === 'accessories' && selectedProduct.brand === "Paralight" && selectedProduct.accessoriesSpec && (
+                        <motion.div
+                          key="accessories"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {(() => {
+                            try {
+                              const accessoriesData = JSON.parse(selectedProduct.accessoriesSpec);
+                              if (!Array.isArray(accessoriesData) || accessoriesData.length === 0) return null;
+                              
+                              const applicationRow = accessoriesData.find((item: { no?: string }) => 
+                                item.no?.toLowerCase() === 'application'
+                              );
+                              const regularRows = accessoriesData.filter((item: { no?: string }) => 
+                                item.no?.toLowerCase() !== 'application'
+                              );
+                              
+                              return (
+                                <div className="border border-gray-200 rounded-xl overflow-hidden">
+                                  <div 
+                                    className="px-6 py-4 border-b border-gray-200"
+                                    style={{ background: `linear-gradient(135deg, ${brandColor}10 0%, transparent 100%)` }}
+                                  >
+                                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
+                                      <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                      Accessories Specification
+                                    </h3>
+                                  </div>
+                                  <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                      <thead className="bg-gray-50">
+                                        <tr>
+                                          <th className="px-6 py-3 text-center text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200 w-20">NO.</th>
+                                          <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Specification</th>
+                                          <th className="px-6 py-3 text-center text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200 w-24">QTY</th>
+                                          <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Remarks</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {regularRows.map((item: { no?: string; specification?: string; qty?: string; remarks?: string }, index: number) => (
+                                          <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                            <td className="px-6 py-4 text-center font-bold" style={{ color: brandColor }}>{item.no || '-'}</td>
+                                            <td className="px-6 py-4 text-gray-700">{item.specification || '-'}</td>
+                                            <td className="px-6 py-4 text-center text-gray-600">{item.qty || '-'}</td>
+                                            <td className="px-6 py-4 text-gray-600">{item.remarks || '-'}</td>
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                    {applicationRow && (
+                                      <div className="px-6 py-4 bg-gray-100 border-t border-gray-200">
+                                        <span className="font-bold text-gray-700 mr-2">Application:</span>
+                                        <span className="text-gray-600">{(applicationRow as { specification?: string }).specification || '-'}</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            } catch {
+                              return null;
+                            }
+                          })()}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     {/* Related Products Section */}
                     {(() => {
