@@ -718,7 +718,7 @@ export default function Products() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                    className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 lg:p-10"
+                    className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 lg:p-10 overflow-hidden"
                   >
                     {/* Document Header - Professional Style */}
                     <div className="border-b-2 border-gray-900 pb-8 mb-10">
@@ -973,8 +973,8 @@ export default function Products() {
                                 Technical Specifications
                               </h3>
                             </div>
-                            <div className="overflow-x-auto">
-                              <table className="w-full min-w-max">
+                            <div className="overflow-x-auto max-w-full">
+                              <table className="w-full">
                                 <tbody>
                                   {specs.map((spec, i) => (
                                     <tr key={spec.label} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
