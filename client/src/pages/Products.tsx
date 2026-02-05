@@ -553,23 +553,27 @@ export default function Products() {
       <main className="py-16 bg-gradient-to-b from-[#f5f2ed] via-[#faf8f5] to-white min-h-screen relative overflow-hidden">
         {/* Textured Background Layer */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Dot grid pattern */}
+          {/* Dot grid pattern with diagonal fade */}
           <div 
-            className="absolute inset-0 opacity-[0.08]"
+            className="absolute inset-0"
             style={{
               backgroundImage: `radial-gradient(circle, #8B7355 1.5px, transparent 1.5px)`,
-              backgroundSize: '32px 32px'
+              backgroundSize: '32px 32px',
+              maskImage: 'linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 30%, rgba(0,0,0,0.03) 60%, transparent 85%)',
+              WebkitMaskImage: 'linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 30%, rgba(0,0,0,0.03) 60%, transparent 85%)'
             }}
           />
-          {/* Cross pattern */}
+          {/* Cross pattern with diagonal fade */}
           <div 
-            className="absolute inset-0 opacity-[0.04]"
+            className="absolute inset-0"
             style={{
               backgroundImage: `
                 linear-gradient(to right, #A0826D 1px, transparent 1px),
                 linear-gradient(to bottom, #A0826D 1px, transparent 1px)
               `,
-              backgroundSize: '80px 80px'
+              backgroundSize: '80px 80px',
+              maskImage: 'linear-gradient(135deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.08) 25%, rgba(0,0,0,0.02) 50%, transparent 75%)',
+              WebkitMaskImage: 'linear-gradient(135deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.08) 25%, rgba(0,0,0,0.02) 50%, transparent 75%)'
             }}
           />
           {/* Gradient mesh */}
