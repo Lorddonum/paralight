@@ -5,10 +5,32 @@ import { insertProductSchema } from "@shared/schema";
 import sharp from "sharp";
 import { cache } from "./cache";
 
+// Pre-warm cache with all products for instant detail loading
+async function warmupCache() {
+  try {
+    console.log("Warming up product cache...");
+    const products = await storage.getProducts();
+    products.forEach(product => {
+      cache.set(`product:${product.id}`, product, 300);
+    });
+    cache.set('products:all', products, 120);
+    
+    const gridProducts = await storage.getProductsForGrid();
+    cache.set('products:grid', gridProducts, 120);
+    
+    console.log(`Cache warmed with ${products.length} products`);
+  } catch (error) {
+    console.error("Cache warmup failed:", error);
+  }
+}
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  
+  // Warm up cache on startup
+  warmupCache();
   
   // Get all products for grid view (optimized - only essential fields)
   app.get("/api/products/grid", async (req, res) => {
@@ -52,7 +74,16 @@ export async function registerRoutes(
   app.get("/api/products/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const product = await storage.getProduct(id);
+      const cacheKey = `product:${id}`;
+      let product = cache.get<any>(cacheKey);
+      
+      if (!product) {
+        product = await storage.getProduct(id);
+        if (product) {
+          cache.set(cacheKey, product, 300); // Cache for 5 minutes
+        }
+      }
+      
       if (!product) {
         return res.status(404).json({ error: "Product not found" });
       }
