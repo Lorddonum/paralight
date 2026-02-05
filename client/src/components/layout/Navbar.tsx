@@ -64,7 +64,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
   return (
     <nav
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-500",
+        "fixed top-0 w-full z-50 transition-all duration-150",
         isFooterSection
           ? "bg-[#0A1628]"
           : isProductsPage
@@ -81,7 +81,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
             href="/"
             className="flex items-center hover:opacity-80 transition-opacity duration-300"
           >
-            <img src={useDarkText ? logoBlack : logoWhite} alt="Paralight & Maglinear Lighting" className="h-10 lg:h-12 object-contain" />
+            <img src={useDarkText ? logoBlack : logoWhite} alt="Paralight & Maglinear Lighting" className="h-10 lg:h-12 object-contain transition-opacity duration-150" />
           </Link>
           
           {/* Desktop Navigation */}
