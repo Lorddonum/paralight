@@ -13,10 +13,17 @@
     <meta name="twitter:description" content="Specializing in high-quality aluminum profiles and magnetic track lighting solutions for architectural spaces." />
 
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Modern typography: Outfit for bold headings, DM Sans for clean body text -->
+    
+    <!-- Preconnect to external origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Preload critical JS module -->
+    <link rel="modulepreload" href="/src/main.tsx">
   </head>
   <body>
     <div id="root"></div>
