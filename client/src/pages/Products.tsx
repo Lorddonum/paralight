@@ -588,73 +588,79 @@ export default function Products() {
         {/* Animated Background Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div 
-            className="absolute w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#00A8E8]/25 via-[#00A8E8]/12 to-transparent blur-3xl"
-            style={{ top: '0%', left: '-20%' }}
+            className="absolute w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#00A8E8]/30 via-[#00A8E8]/15 to-transparent blur-3xl"
+            initial={{ x: 0, y: 0, scale: 1 }}
             animate={{ 
               x: [0, 100, 0],
               y: [0, 60, 0],
               scale: [1, 1.2, 1],
             }}
             transition={{ 
-              duration: 15,
+              duration: 12,
               repeat: Infinity,
+              repeatType: "loop",
               ease: "easeInOut"
             }}
+            style={{ top: '0%', left: '-20%' }}
           />
           <motion.div 
-            className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#ECAA00]/25 via-[#ECAA00]/12 to-transparent blur-3xl"
-            style={{ top: '30%', right: '-15%' }}
+            className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#ECAA00]/30 via-[#ECAA00]/15 to-transparent blur-3xl"
+            initial={{ x: 0, y: 0, scale: 1 }}
             animate={{ 
               x: [0, -80, 0],
               y: [0, 80, 0],
               scale: [1, 1.25, 1],
             }}
             transition={{ 
-              duration: 18,
+              duration: 14,
               repeat: Infinity,
+              repeatType: "loop",
               ease: "easeInOut",
-              delay: 2
+              delay: 1
             }}
+            style={{ top: '30%', right: '-15%' }}
           />
           <motion.div 
-            className="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#00A8E8]/20 via-[#00A8E8]/10 to-transparent blur-3xl"
-            style={{ bottom: '5%', left: '20%' }}
+            className="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#00A8E8]/25 via-[#00A8E8]/12 to-transparent blur-3xl"
+            initial={{ x: 0, y: 0, scale: 1 }}
             animate={{ 
               x: [0, 120, 0],
               y: [0, -70, 0],
               scale: [1, 1.3, 1],
             }}
             transition={{ 
-              duration: 20,
+              duration: 16,
               repeat: Infinity,
+              repeatType: "loop",
               ease: "easeInOut",
-              delay: 4
+              delay: 2
             }}
+            style={{ bottom: '5%', left: '20%' }}
           />
           {/* Rotating circle accents */}
           <motion.div 
-            className="absolute w-[250px] h-[250px] rounded-full border-2 border-[#00A8E8]/20"
-            style={{ top: '15%', right: '15%' }}
-            animate={{ 
-              rotate: [0, 360],
-            }}
+            className="absolute w-[300px] h-[300px] rounded-full border-2 border-[#00A8E8]/30"
+            initial={{ rotate: 0 }}
+            animate={{ rotate: 360 }}
             transition={{ 
-              duration: 30,
+              duration: 20,
               repeat: Infinity,
+              repeatType: "loop",
               ease: "linear"
             }}
+            style={{ top: '15%', right: '15%' }}
           />
           <motion.div 
-            className="absolute w-[180px] h-[180px] rounded-full border-2 border-[#ECAA00]/20"
-            style={{ bottom: '25%', left: '8%' }}
-            animate={{ 
-              rotate: [360, 0],
-            }}
+            className="absolute w-[220px] h-[220px] rounded-full border-2 border-[#ECAA00]/30"
+            initial={{ rotate: 360 }}
+            animate={{ rotate: 0 }}
             transition={{ 
-              duration: 25,
+              duration: 18,
               repeat: Infinity,
+              repeatType: "loop",
               ease: "linear"
             }}
+            style={{ bottom: '25%', left: '8%' }}
           />
         </div>
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
