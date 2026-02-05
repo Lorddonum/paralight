@@ -251,10 +251,12 @@ export default function Exhibition() {
 
   const getVisibleIndices = () => {
     const total = exhibitionEvents.length;
+    const farLeft = (activeIndex - 2 + total) % total;
     const left = (activeIndex - 1 + total) % total;
     const center = activeIndex;
     const right = (activeIndex + 1) % total;
-    return [left, center, right];
+    const farRight = (activeIndex + 2) % total;
+    return [farLeft, left, center, right, farRight];
   };
 
   const visibleIndices = getVisibleIndices();
@@ -280,7 +282,7 @@ export default function Exhibition() {
           </p>
         </motion.div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-6xl mx-auto">
           <button
             onClick={goPrev}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 p-3 text-gray-400 hover:text-gray-700 transition-colors"
@@ -297,26 +299,27 @@ export default function Exhibition() {
             <ChevronRight className="w-10 h-10" />
           </button>
 
-          <div className="flex items-center justify-center gap-6 md:gap-10 overflow-hidden py-4">
+          <div className="flex items-center justify-center gap-3 md:gap-6 overflow-hidden py-4">
             {visibleIndices.map((eventIndex, position) => {
               const event = exhibitionEvents[eventIndex];
-              const isCenter = position === 1;
+              const isCenter = position === 2;
+              const isNear = position === 1 || position === 3;
               
               return (
                 <motion.div
                   key={`${eventIndex}-${activeIndex}`}
-                  initial={{ opacity: 0, x: position === 0 ? -100 : position === 2 ? 100 : 0 }}
+                  initial={{ opacity: 0, x: position < 2 ? -100 : position > 2 ? 100 : 0 }}
                   animate={{ 
-                    opacity: isCenter ? 1 : 0.5,
+                    opacity: isCenter ? 1 : isNear ? 0.7 : 0.4,
                     x: 0,
-                    scale: isCenter ? 1.1 : 0.9,
+                    scale: isCenter ? 1.1 : isNear ? 0.95 : 0.8,
                   }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   onClick={() => setSelectedEvent(event)}
                   className="group cursor-pointer flex-shrink-0"
                   data-testid={`exhibition-logo-${eventIndex}`}
                 >
-                  <div className={`overflow-hidden h-48 w-48 md:h-56 md:w-56 lg:h-64 lg:w-64 transition-all duration-500 ${
+                  <div className={`overflow-hidden h-32 w-32 md:h-40 md:w-40 lg:h-48 lg:w-48 transition-all duration-500 ${
                     isCenter 
                       ? "ring-2 ring-brand-cyan/50 shadow-lg shadow-brand-cyan/20" 
                       : "hover:opacity-80"
