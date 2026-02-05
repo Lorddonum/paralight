@@ -41,36 +41,36 @@ function BouncingCircles() {
 
     const initCircles = () => {
       const circles: Circle[] = [];
-      // Large circles
+      // Large circles - very slow drift
       for (let i = 0; i < 3; i++) {
         circles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 1.2,
-          vy: (Math.random() - 0.5) * 1.2,
-          radius: 80 + Math.random() * 60,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          radius: 100 + Math.random() * 80,
           color: colors[i % colors.length]
         });
       }
-      // Medium circles
+      // Medium circles - gentle movement
       for (let i = 0; i < 5; i++) {
         circles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 1.8,
-          vy: (Math.random() - 0.5) * 1.8,
-          radius: 40 + Math.random() * 30,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: 50 + Math.random() * 40,
           color: colors[(i + 1) % colors.length]
         });
       }
-      // Small circles
+      // Small circles - slightly faster but still smooth
       for (let i = 0; i < 8; i++) {
         circles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 2.5,
-          vy: (Math.random() - 0.5) * 2.5,
-          radius: 15 + Math.random() * 20,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          radius: 20 + Math.random() * 25,
           color: colors[(i + 2) % colors.length]
         });
       }
