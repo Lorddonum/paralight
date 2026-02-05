@@ -716,10 +716,10 @@ export default function Products() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                    className="bg-white"
+                    className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 lg:p-10"
                   >
                     {/* Document Header - Professional Style */}
-                    <div className="border-b-2 border-gray-900 pb-6 mb-8">
+                    <div className="border-b-2 border-gray-900 pb-8 mb-10">
                       <div className="flex items-start justify-between gap-4 mb-4">
                         <motion.button
                           onClick={handleBackToGrid}
@@ -751,10 +751,10 @@ export default function Products() {
                       
                       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                         <div>
-                          <h1 className="font-display text-3xl md:text-4xl text-gray-900 font-semibold tracking-tight">
+                          <h1 className="font-display text-4xl md:text-5xl text-gray-900 font-bold tracking-tight">
                             {selectedProduct.name}
                           </h1>
-                          <div className="flex items-center gap-4 mt-2">
+                          <div className="flex items-center gap-4 mt-3">
                             <div className="flex items-center gap-2">
                               <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium">Model</span>
                               <span className="text-sm font-mono font-semibold text-gray-900 bg-gray-100 px-2 py-0.5 rounded">{selectedProduct.modelNumber}</span>
@@ -789,7 +789,7 @@ export default function Products() {
 
                     {/* Quick Specs Bar */}
                     <motion.div 
-                      className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8"
+                      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
@@ -804,40 +804,40 @@ export default function Products() {
                       ].filter(item => item.value).map((item, idx) => (
                         <div 
                           key={idx}
-                          className="bg-gray-50 border border-gray-100 rounded-lg p-3 hover:border-gray-200 transition-colors"
+                          className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-4 hover:shadow-md hover:border-gray-300 transition-all"
                         >
-                          <div className="flex items-center gap-2 mb-1">
-                            <item.icon className="w-3.5 h-3.5" style={{ color: brandColor }} />
-                            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-medium">{item.label}</span>
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${brandColor}15` }}>
+                              <item.icon className="w-4 h-4" style={{ color: brandColor }} />
+                            </div>
                           </div>
-                          <p className="text-sm font-semibold text-gray-900">{item.value}</p>
+                          <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium block mb-1">{item.label}</span>
+                          <p className="text-base font-bold text-gray-900">{item.value}</p>
                         </div>
                       ))}
                     </motion.div>
 
                     {/* Tab Navigation */}
-                    <div className="border-b border-gray-200 mb-8">
-                      <div className="flex gap-1 -mb-px">
-                        {[
-                          { id: 'overview' as const, label: 'Overview', icon: Info },
-                          { id: 'specs' as const, label: 'Specifications', icon: ListChecks },
-                          { id: 'drawings' as const, label: 'Drawings', icon: Image },
-                          ...(selectedProduct.brand === "Paralight" && selectedProduct.accessoriesSpec ? [{ id: 'accessories' as const, label: 'Accessories', icon: Wrench }] : []),
-                        ].map((tab) => (
-                          <button
-                            key={tab.id}
-                            onClick={() => setActiveDetailTab(tab.id)}
-                            className={`flex items-center gap-2 px-4 py-3 text-xs font-medium uppercase tracking-wide transition-colors border-b-2 ${
-                              activeDetailTab === tab.id
-                                ? 'border-gray-900 text-gray-900'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                            }`}
-                          >
-                            <tab.icon className="w-4 h-4" />
-                            {tab.label}
-                          </button>
-                        ))}
-                      </div>
+                    <div className="bg-gray-50 rounded-xl p-1.5 mb-10 inline-flex gap-1">
+                      {[
+                        { id: 'overview' as const, label: 'Overview', icon: Info },
+                        { id: 'specs' as const, label: 'Specifications', icon: ListChecks },
+                        { id: 'drawings' as const, label: 'Drawings', icon: Image },
+                        ...(selectedProduct.brand === "Paralight" && selectedProduct.accessoriesSpec ? [{ id: 'accessories' as const, label: 'Accessories', icon: Wrench }] : []),
+                      ].map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setActiveDetailTab(tab.id)}
+                          className={`flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all rounded-lg ${
+                            activeDetailTab === tab.id
+                              ? 'bg-white text-gray-900 shadow-sm'
+                              : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+                          }`}
+                        >
+                          <tab.icon className="w-4 h-4" />
+                          {tab.label}
+                        </button>
+                      ))}
                     </div>
 
                     {/* Tab Content */}
@@ -849,7 +849,7 @@ export default function Products() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
                           transition={{ duration: 0.2 }}
-                          className="grid grid-cols-1 lg:grid-cols-2 gap-10"
+                          className="grid grid-cols-1 lg:grid-cols-2 gap-12"
                         >
                           {/* Left: Images */}
                           <div className="space-y-6">
@@ -863,7 +863,7 @@ export default function Products() {
                               return (
                                 <>
                                   <div 
-                                    className="aspect-square bg-gradient-to-br from-gray-50 to-white border border-gray-200 relative overflow-hidden rounded-xl cursor-pointer group"
+                                    className="aspect-square bg-gradient-to-br from-gray-50 via-white to-gray-50 border border-gray-200 relative overflow-hidden rounded-2xl cursor-pointer group shadow-sm hover:shadow-lg transition-shadow"
                                     onClick={() => currentImage && setLightboxImage(currentImage)}
                                   >
                                     <div className="w-full h-full flex items-center justify-center p-8">
@@ -887,15 +887,15 @@ export default function Products() {
                                   </div>
 
                                   {allImages.length > 1 && (
-                                    <div className="flex gap-2 overflow-x-auto pb-2">
+                                    <div className="flex gap-3 overflow-x-auto pb-2">
                                       {allImages.map((img, index) => (
                                         <button
                                           key={index}
                                           onClick={() => setSelectedImageIndex(index)}
-                                          className={`flex-shrink-0 w-16 h-16 border-2 rounded-lg overflow-hidden transition-all ${
+                                          className={`flex-shrink-0 w-20 h-20 border-2 rounded-xl overflow-hidden transition-all ${
                                             selectedImageIndex === index 
-                                              ? 'border-gray-900 ring-2 ring-gray-900/20' 
-                                              : 'border-gray-200 hover:border-gray-400'
+                                              ? 'border-gray-900 ring-2 ring-gray-900/20 shadow-md' 
+                                              : 'border-gray-200 hover:border-gray-400 hover:shadow-sm'
                                           }`}
                                         >
                                           <img 
@@ -913,25 +913,25 @@ export default function Products() {
                           </div>
 
                           {/* Right: Description & Info */}
-                          <div className="space-y-6">
+                          <div className="space-y-8">
                             {/* Description Section */}
                             <div className="prose prose-sm max-w-none">
-                              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3 flex items-center gap-2">
-                                <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                              <h3 className="text-base font-bold text-gray-900 uppercase tracking-wide mb-4 flex items-center gap-2">
+                                <div className="w-1.5 h-5 rounded-full" style={{ backgroundColor: brandColor }} />
                                 Product Description
                               </h3>
-                              <p className="text-gray-600 leading-relaxed">
+                              <p className="text-gray-600 leading-relaxed text-base">
                                 {selectedProduct.description}
                               </p>
                             </div>
 
                             {/* Key Features */}
-                            <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 flex items-center gap-2">
-                                <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                              <h3 className="text-base font-bold text-gray-900 uppercase tracking-wide mb-5 flex items-center gap-2">
+                                <div className="w-1.5 h-5 rounded-full" style={{ backgroundColor: brandColor }} />
                                 Key Features
                               </h3>
-                              <div className="grid grid-cols-2 gap-3">
+                              <div className="grid grid-cols-2 gap-4">
                                 {[
                                   { label: "Application", value: selectedProduct.application },
                                   { label: "Material", value: selectedProduct.material },
@@ -940,9 +940,9 @@ export default function Products() {
                                   { label: "Standard Length", value: selectedProduct.standardLength },
                                   { label: "Installation", value: selectedProduct.installationMethod },
                                 ].filter(item => item.value).map((item, idx) => (
-                                  <div key={idx} className="flex flex-col">
-                                    <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium">{item.label}</span>
-                                    <span className="text-sm text-gray-900">{item.value}</span>
+                                  <div key={idx} className="flex flex-col p-3 bg-white rounded-lg border border-gray-100">
+                                    <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium mb-1">{item.label}</span>
+                                    <span className="text-sm font-medium text-gray-900">{item.value}</span>
                                   </div>
                                 ))}
                               </div>
@@ -950,9 +950,9 @@ export default function Products() {
 
                             {/* Control Integration - Maglinear only */}
                             {selectedProduct.brand !== "Paralight" && (
-                              <div className="bg-gray-900 rounded-xl p-5 text-white">
-                                <h3 className="text-sm font-bold uppercase tracking-wide mb-4 flex items-center gap-2">
-                                  <div className="w-1 h-4 rounded-full bg-[#ECAA00]" />
+                              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white shadow-lg">
+                                <h3 className="text-base font-bold uppercase tracking-wide mb-5 flex items-center gap-2">
+                                  <div className="w-1.5 h-5 rounded-full bg-[#ECAA00]" />
                                   Control Integration
                                 </h3>
                                 <img 
@@ -965,9 +965,9 @@ export default function Products() {
 
                             {/* Packaging Method Image - Paralight only */}
                             {selectedProduct.brand === "Paralight" && (
-                              <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 flex items-center gap-2">
-                                  <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                                <h3 className="text-base font-bold text-gray-900 uppercase tracking-wide mb-5 flex items-center gap-2">
+                                  <div className="w-1.5 h-5 rounded-full" style={{ backgroundColor: brandColor }} />
                                   Packaging Method
                                 </h3>
                                 <img 
