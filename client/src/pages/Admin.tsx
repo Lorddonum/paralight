@@ -56,6 +56,7 @@ interface Product {
   threeCct?: string | null;
   protectionRating?: string | null;
   bluetoothVersion?: string | null;
+  adjustableAngle?: string | null;
   // Technical Specifications (JSON string for table data)
   technicalSpecs?: string | null;
 }
@@ -122,6 +123,7 @@ export default function Admin() {
     threeCct: "",
     protectionRating: "",
     bluetoothVersion: "",
+    adjustableAngle: "",
     technicalSpecs: ""
   });
 
@@ -345,6 +347,7 @@ export default function Admin() {
       threeCct: "",
       protectionRating: "",
       bluetoothVersion: "",
+      adjustableAngle: "",
       technicalSpecs: ""
     });
   };
@@ -396,6 +399,7 @@ export default function Admin() {
       threeCct: product.threeCct || "",
       protectionRating: product.protectionRating || "",
       bluetoothVersion: product.bluetoothVersion || "",
+      adjustableAngle: product.adjustableAngle || "",
       technicalSpecs: product.technicalSpecs || ""
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -448,6 +452,7 @@ export default function Admin() {
       threeCct: product.threeCct || "",
       protectionRating: product.protectionRating || "",
       bluetoothVersion: product.bluetoothVersion || "",
+      adjustableAngle: product.adjustableAngle || "",
       technicalSpecs: product.technicalSpecs || ""
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1061,6 +1066,10 @@ export default function Admin() {
                             <label className="text-[10px] uppercase tracking-widest text-gray-500">Bluetooth Version</label>
                             <input type="text" value={formData.bluetoothVersion} onChange={e => setFormData({...formData, bluetoothVersion: e.target.value})} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. 5.0, 5.1, 5.2" />
                           </div>
+                          <div className="space-y-2">
+                            <label className="text-[10px] uppercase tracking-widest text-gray-500">Adjustable Angle</label>
+                            <input type="text" value={formData.adjustableAngle} onChange={e => setFormData({...formData, adjustableAngle: e.target.value})} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. 0-30°, 0-45°, 360°" />
+                          </div>
                         </>
                       )}
                     </div>
@@ -1069,7 +1078,7 @@ export default function Admin() {
 
                   {/* Additional Specification Rows */}
                   {formData.technicalSpecs && JSON.parse(formData.technicalSpecs || '[]').length > 0 && (
-                    JSON.parse(formData.technicalSpecs || '[]').map((specRow: { model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string; conductionMethod?: string; maglinearName?: string; inputVoltage?: string; outputVoltage?: string; wallThickness?: string; cutOutSize?: string; oneCct?: string; threeCct?: string; protectionRating?: string; bluetoothVersion?: string }, rowIndex: number) => (
+                    JSON.parse(formData.technicalSpecs || '[]').map((specRow: { model?: string; wattage?: string; application?: string; finish?: string; material?: string; dimensions?: string; voltage?: string; color?: string; cri?: string; cct?: string; beamAngle?: string; mountingTrack?: string; diffuserMaterial?: string; accessories?: string; ledStripSize?: string; installationMethod?: string; conductionMethod?: string; maglinearName?: string; inputVoltage?: string; outputVoltage?: string; wallThickness?: string; cutOutSize?: string; oneCct?: string; threeCct?: string; protectionRating?: string; bluetoothVersion?: string; adjustableAngle?: string }, rowIndex: number) => (
                       <div key={rowIndex} className="space-y-6 pt-6 border-t border-gray-200">
                         <div className="flex items-center justify-between">
                           <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#00A8E8] font-bold">Technical Specifications Row {rowIndex + 2}</h4>
@@ -1279,6 +1288,14 @@ export default function Admin() {
                                   specs[rowIndex].bluetoothVersion = e.target.value;
                                   setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
                                 }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. 5.0, 5.1, 5.2" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500">Adjustable Angle</label>
+                                <input type="text" value={specRow.adjustableAngle || ''} onChange={e => {
+                                  const specs = JSON.parse(formData.technicalSpecs || '[]');
+                                  specs[rowIndex].adjustableAngle = e.target.value;
+                                  setFormData({...formData, technicalSpecs: JSON.stringify(specs)});
+                                }} className="w-full bg-gray-50 border border-gray-200 px-4 py-2 text-sm text-gray-900 rounded-lg focus:outline-none focus:border-[#ECAA00]" placeholder="e.g. 0-30°, 0-45°, 360°" />
                               </div>
                             </>
                           )}
