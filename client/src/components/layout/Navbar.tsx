@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-const logoWhite = "/logo-white.png";
+const logoWhite = "/logo-white-navbar.png";
 const logoBlack = "/logo-black.png";
 
 export default function Navbar({ darkText = false }: { darkText?: boolean }) {
