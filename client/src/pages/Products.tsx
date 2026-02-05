@@ -412,10 +412,10 @@ export default function Products() {
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-center max-w-3xl mx-auto"
           >
-            <div className="inline-block rounded-2xl px-10 py-8 border border-white/20 shadow-xl" style={{
-              background: 'linear-gradient(135deg, rgba(245, 242, 237, 0.15) 0%, rgba(245, 242, 237, 0.7) 100%)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)'
+            <div className="inline-block rounded-3xl px-12 py-10" style={{
+              background: 'radial-gradient(ellipse at center, rgba(245, 242, 237, 0.75) 0%, rgba(245, 242, 237, 0.5) 40%, rgba(245, 242, 237, 0.2) 70%, transparent 100%)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)'
             }}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
