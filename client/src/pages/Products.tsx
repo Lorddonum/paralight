@@ -6,6 +6,18 @@ import { Package, Loader2, X, SlidersHorizontal, Search, ArrowRight, ChevronRigh
 import { useLocation } from "wouter";
 import controlIntegrationImg from "@/assets/control-integration.png";
 
+// Lightweight type for grid view - only essential fields
+interface ProductGridItem {
+  id: number;
+  name: string;
+  modelNumber: string;
+  brand: string;
+  series: string[];
+  subSeries?: string[] | null;
+  image?: string | null;
+}
+
+// Full product type for detail view
 interface Product {
   id: number;
   name: string;
@@ -50,12 +62,13 @@ interface Product {
 }
 
 export default function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [gridProducts, setGridProducts] = useState<ProductGridItem[]>([]);
   const [activeBrand, setActiveBrand] = useState<string>("All");
   const [activeSeries, setActiveSeries] = useState<string>("All");
   const [activeSubSeries, setActiveSubSeries] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -69,14 +82,15 @@ export default function Products() {
   const detailRef = useRef<HTMLDivElement>(null);
   const [, setLocation] = useLocation();
 
+  // Fetch lightweight grid data for product list
   useEffect(() => {
     const fetchProducts = async (retries = 3) => {
       setIsLoading(true);
       try {
-        const res = await fetch('/api/products');
+        const res = await fetch('/api/products/grid');
         if (res.ok) {
           const data = await res.json();
-          setProducts(data);
+          setGridProducts(data);
         } else {
           const errorText = await res.text();
           console.error("API error:", res.status, errorText);
@@ -98,9 +112,30 @@ export default function Products() {
     fetchProducts();
   }, []);
 
+  // Fetch full product details when needed
+  const fetchProductDetail = useCallback(async (productId: number) => {
+    setIsLoadingDetail(true);
+    try {
+      const res = await fetch(`/api/products/${productId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setSelectedProduct(data);
+        setSelectedImageIndex(0);
+        setCurrentDrawingIndex(0);
+        setTimeout(() => {
+          detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    } catch (error) {
+      console.error("Failed to fetch product details:", error);
+    } finally {
+      setIsLoadingDetail(false);
+    }
+  }, []);
+
   const brandFilteredProducts = activeBrand === "All" 
-    ? products 
-    : products.filter(p => p.brand === activeBrand);
+    ? gridProducts 
+    : gridProducts.filter(p => p.brand === activeBrand);
 
   const seriesList = Array.from(new Set(brandFilteredProducts.flatMap(p => p.series || [])));
 
@@ -150,7 +185,7 @@ export default function Products() {
     const query = searchQuery.toLowerCase();
     const suggestions: { type: 'product' | 'series' | 'brand'; label: string; sublabel?: string; id?: number }[] = [];
     
-    const matchingProducts = products
+    const matchingProducts = gridProducts
       .filter(p => 
         p.name.toLowerCase().includes(query) || 
         p.modelNumber.toLowerCase().includes(query)
@@ -166,7 +201,7 @@ export default function Products() {
       });
     });
     
-    const matchingSeries = Array.from(new Set(products.flatMap(p => p.series || [])))
+    const matchingSeries = Array.from(new Set(gridProducts.flatMap(p => p.series || [])))
       .filter(s => s.toLowerCase().includes(query))
       .slice(0, 3);
     
@@ -185,11 +220,7 @@ export default function Products() {
 
   const handleSuggestionClick = (suggestion: typeof suggestions[0]) => {
     if (suggestion.type === 'product' && suggestion.id) {
-      const product = products.find(p => p.id === suggestion.id);
-      if (product) {
-        setSelectedProduct(product);
-        setSelectedImageIndex(0);
-      }
+      fetchProductDetail(suggestion.id);
     } else if (suggestion.type === 'series') {
       setActiveSeries(suggestion.label);
       setSearchQuery('');
@@ -197,13 +228,8 @@ export default function Products() {
     setShowSuggestions(false);
   };
 
-  const handleProductClick = (product: Product) => {
-    setSelectedProduct(product);
-    setSelectedImageIndex(0);
-    setCurrentDrawingIndex(0);
-    setTimeout(() => {
-      detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+  const handleProductClick = (product: ProductGridItem) => {
+    fetchProductDetail(product.id);
   };
 
   const handleBackToGrid = () => {
@@ -1164,7 +1190,7 @@ export default function Products() {
 
                     {/* Related Products Section */}
                     {(() => {
-                      const relatedProducts = products.filter(p => 
+                      const relatedProducts = gridProducts.filter(p => 
                         p.id !== selectedProduct.id && 
                         (p.brand === selectedProduct.brand || 
                          (p.series || []).some(s => (selectedProduct.series || []).includes(s)))
@@ -1197,13 +1223,8 @@ export default function Products() {
                                   key={product.id}
                                   whileHover={{ y: -4 }}
                                   onClick={() => {
-                                    setSelectedProduct(product);
-                                    setSelectedImageIndex(0);
-                                    setCurrentDrawingIndex(0);
                                     setExpandedFaq(null);
-                                    if (detailRef.current) {
-                                      detailRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                    }
+                                    fetchProductDetail(product.id);
                                   }}
                                   className="cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100"
                                   data-testid={`related-product-${product.id}`}

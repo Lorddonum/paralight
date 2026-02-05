@@ -10,7 +10,26 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
-  // Get all products (with in-memory caching)
+  // Get all products for grid view (optimized - only essential fields)
+  app.get("/api/products/grid", async (req, res) => {
+    try {
+      const cacheKey = 'products:grid';
+      let products = cache.get<any[]>(cacheKey);
+      
+      if (!products) {
+        products = await storage.getProductsForGrid();
+        cache.set(cacheKey, products, 120); // Cache for 2 minutes
+      }
+      
+      res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+      res.json(products);
+    } catch (error) {
+      console.error("Error fetching products for grid:", error);
+      res.status(500).json({ error: "Failed to fetch products", details: String(error) });
+    }
+  });
+
+  // Get all products (full data - for admin)
   app.get("/api/products", async (req, res) => {
     try {
       const cacheKey = 'products:all';
