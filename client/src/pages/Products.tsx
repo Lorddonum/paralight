@@ -303,7 +303,7 @@ export default function Products() {
     if (activeBrand === "All") return (
       <span style={{ color: '#d4c9b8' }}>LED Aluminum Profiles & Magnetic Track Lighting</span>
     );
-    if (activeBrand === "Paralight") return "Premium LED Aluminum Profiles";
+    if (activeBrand === "Paralight") return <span style={{ color: '#0088bb' }}>Premium LED Aluminum Profiles</span>;
     return "Magnetic Track Lighting & Commercial Lights Systems";
   };
 
@@ -443,7 +443,7 @@ export default function Products() {
                 {activeBrand === "All" ? (
                   <>Explore Our <span className="italic font-normal text-white">Collection</span></>
                 ) : activeBrand === "Paralight" ? (
-                  <>Paralight <span className="italic font-normal text-brand-cyan">Profiles</span></>
+                  <>Paralight <span className="italic font-normal" style={{ color: '#4dc9f0' }}>Profiles</span></>
                 ) : (
                   <>Maglinear <span className="italic font-normal text-brand-gold">Lighting</span></>
                 )}
