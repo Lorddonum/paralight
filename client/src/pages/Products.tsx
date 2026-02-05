@@ -1172,7 +1172,7 @@ export default function Products() {
                                   ) : (
                                     <div className="space-y-6">
                                       <div 
-                                        className="bg-white border border-gray-200 rounded-lg p-6 flex items-center justify-center min-h-[400px] cursor-pointer group"
+                                        className="relative bg-white border border-gray-200 rounded-lg p-6 flex items-center justify-center min-h-[400px] cursor-pointer group"
                                         onClick={() => setLightboxImage(currentDrawing)}
                                       >
                                         <img
@@ -1180,7 +1180,7 @@ export default function Products() {
                                           alt={`Technical Drawing ${safeDrawingIndex + 1}`}
                                           className="max-w-full max-h-[500px] object-contain"
                                         />
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center rounded-lg">
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center rounded-lg pointer-events-none">
                                           <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium bg-black/70 px-3 py-1.5 rounded-full">
                                             Click to enlarge
                                           </span>
