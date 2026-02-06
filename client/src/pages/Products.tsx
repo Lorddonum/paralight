@@ -956,7 +956,7 @@ export default function Products() {
                             {/* Maglinear Brand Group */}
                             {(() => {
                               const maglinearSeries = Array.from(new Set(
-                                gridProducts.filter(p => p.brand === "Maglinear Lighting").flatMap(p => p.series || [])
+                                gridProducts.filter(p => p.brand !== "Paralight").flatMap(p => p.series || [])
                               ));
                               if (maglinearSeries.length === 0) return null;
                               return (
@@ -975,7 +975,7 @@ export default function Products() {
                                   {expandedFilterBrand.maglinear && (
                                     <div className="mt-1 space-y-0.5 border-l-2 border-[#ECAA00]/20 ml-4 pl-2">
                                       {maglinearSeries.map(series => {
-                                        const seriesProducts = gridProducts.filter(p => p.brand === "Maglinear Lighting" && (p.series || []).includes(series));
+                                        const seriesProducts = gridProducts.filter(p => p.brand !== "Paralight" && (p.series || []).includes(series));
                                         const seriesSubSeries = Array.from(new Set(
                                           seriesProducts.flatMap(p => p.subSeries || []).filter((s): s is string => !!s)
                                         ));
@@ -983,7 +983,7 @@ export default function Products() {
                                         return (
                                           <div key={series}>
                                             <button
-                                              onClick={() => { setActiveBrand("Maglinear Lighting"); setActiveSeries(series); setActiveSubSeries("All"); }}
+                                              onClick={() => { setActiveBrand("Maglinear"); setActiveSeries(series); setActiveSubSeries("All"); }}
                                               data-testid={`filter-series-${series.toLowerCase().replace(/\s+/g, '-')}`}
                                               className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all flex items-center justify-between ${
                                                 isSeriesActive && activeSubSeries === "All"
