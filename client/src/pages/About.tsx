@@ -601,22 +601,6 @@ function ShowcaseSection() {
                 </h2>
               </motion.div>
 
-              {/* Frame hints behind circle - left */}
-              <motion.div
-                className="absolute border-2 border-[#8b7a60]/30 rounded-lg"
-                style={{ width: 'min(280px, 38vw)', height: 'min(350px, 48vw)', left: '8%', top: '15%' }}
-                initial={{ opacity: 0 }}
-                animate={phase === "circle" ? { opacity: 0.5 } : { opacity: 0 }}
-                transition={{ duration: 0.8, delay: 1 }}
-              />
-              {/* Frame hints behind circle - right */}
-              <motion.div
-                className="absolute border-2 border-[#8b7a60]/30 rounded-lg"
-                style={{ width: 'min(280px, 38vw)', height: 'min(350px, 48vw)', right: '8%', top: '15%' }}
-                initial={{ opacity: 0 }}
-                animate={phase === "circle" ? { opacity: 0.5 } : { opacity: 0 }}
-                transition={{ duration: 0.8, delay: 1.1 }}
-              />
             </div>
           )}
 
