@@ -850,21 +850,21 @@ export default function About() {
       </section>
 
       {/* Video Section */}
-      <section className="snap-start h-screen flex flex-col justify-center bg-white overflow-hidden">
-        <div className="container mx-auto px-8 lg:px-12">
+      <section className="snap-start h-screen flex flex-col bg-white overflow-hidden">
+        <div className="pt-24 pb-8 flex-1 flex flex-col container mx-auto px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8"
           >
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gray-400 mb-4 block">
+            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gray-400 mb-3 block">
               Manufacturing Excellence
             </span>
-            <h2 className="font-display text-3xl md:text-5xl text-gray-900 font-medium mb-4">
+            <h2 className="font-display text-3xl md:text-5xl text-gray-900 font-medium mb-3">
               Inside Our <span className="italic font-normal">Factory</span>
             </h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-lg">
+            <p className="text-gray-500 max-w-xl mx-auto text-base">
               A deep dive into precision lighting manufacturing where craftsmanship meets innovation.
             </p>
           </motion.div>
@@ -872,7 +872,7 @@ export default function About() {
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="aspect-video relative overflow-hidden rounded-2xl shadow-2xl group"
+            className="flex-1 min-h-0 relative overflow-hidden rounded-2xl shadow-2xl group"
           >
             <iframe
               src="https://www.youtube.com/embed/Jt2rWta5RRw?autoplay=1&mute=1&loop=1&playlist=Jt2rWta5RRw"
