@@ -482,9 +482,9 @@ function ShowcaseSection() {
 
   useEffect(() => {
     if (isInView && phase === "idle") {
-      sectionRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' });
       const scrollContainer = sectionRef.current?.closest('.snap-y') as HTMLElement | null;
-      if (scrollContainer) {
+      if (scrollContainer && sectionRef.current) {
+        scrollContainer.scrollTop = sectionRef.current.offsetTop;
         scrollContainer.style.overflow = 'hidden';
       }
       animatingRef.current = true;
