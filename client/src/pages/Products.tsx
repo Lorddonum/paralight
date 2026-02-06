@@ -1187,6 +1187,51 @@ export default function Products() {
                               </p>
                             </div>
 
+                            {/* Packaging Information - Paralight only */}
+                            {selectedProduct.brand === "Paralight" && (selectedProduct.packagingMethodADesc || selectedProduct.packagingMethodBDesc) && (
+                              <div className="border border-gray-200 rounded-xl overflow-hidden">
+                                <div 
+                                  className="px-6 py-4 border-b border-gray-200"
+                                  style={{ background: `linear-gradient(135deg, ${brandColor}10 0%, transparent 100%)` }}
+                                >
+                                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
+                                    <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
+                                    Packaging Information
+                                  </h3>
+                                </div>
+                                <div className="overflow-x-auto">
+                                  <table className="w-full text-sm">
+                                    <thead className="bg-gray-50">
+                                      <tr>
+                                        <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Method</th>
+                                        <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Description</th>
+                                        <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Specifications</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {selectedProduct.packagingMethodADesc && (
+                                        <tr className="border-b border-gray-100">
+                                          <td className="px-6 py-4 font-semibold text-gray-900">Method A</td>
+                                          <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodADesc}</td>
+                                          <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodASpec || '-'}</td>
+                                        </tr>
+                                      )}
+                                      {selectedProduct.packagingMethodBDesc && (
+                                        <tr>
+                                          <td className="px-6 py-4">
+                                            <span className="font-semibold" style={{ color: brandColor }}>Method B</span>
+                                            <span className="block text-[10px] text-gray-400">(Additional Fee)</span>
+                                          </td>
+                                          <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodBDesc}</td>
+                                          <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodBSpec || '-'}</td>
+                                        </tr>
+                                      )}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            )}
+
                             {/* Key Features */}
                             <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
                               <h3 className="text-base font-bold text-gray-900 uppercase tracking-wide mb-5 flex items-center gap-2">
@@ -1298,50 +1343,6 @@ export default function Products() {
                             </div>
                           </div>
 
-                          {/* Packaging Information - Paralight only */}
-                          {selectedProduct.brand === "Paralight" && (selectedProduct.packagingMethodADesc || selectedProduct.packagingMethodBDesc) && (
-                            <div className="border border-gray-200 rounded-xl overflow-hidden">
-                              <div 
-                                className="px-6 py-4 border-b border-gray-200"
-                                style={{ background: `linear-gradient(135deg, ${brandColor}10 0%, transparent 100%)` }}
-                              >
-                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
-                                  <div className="w-1 h-4 rounded-full" style={{ backgroundColor: brandColor }} />
-                                  Packaging Information
-                                </h3>
-                              </div>
-                              <div className="overflow-x-auto">
-                                <table className="w-full text-sm">
-                                  <thead className="bg-gray-50">
-                                    <tr>
-                                      <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Method</th>
-                                      <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Description</th>
-                                      <th className="px-6 py-3 text-left text-xs uppercase tracking-widest text-gray-500 font-bold border-b border-gray-200">Specifications</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {selectedProduct.packagingMethodADesc && (
-                                      <tr className="border-b border-gray-100">
-                                        <td className="px-6 py-4 font-semibold text-gray-900">Method A</td>
-                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodADesc}</td>
-                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodASpec || '-'}</td>
-                                      </tr>
-                                    )}
-                                    {selectedProduct.packagingMethodBDesc && (
-                                      <tr>
-                                        <td className="px-6 py-4">
-                                          <span className="font-semibold" style={{ color: brandColor }}>Method B</span>
-                                          <span className="block text-[10px] text-gray-400">(Additional Fee)</span>
-                                        </td>
-                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodBDesc}</td>
-                                        <td className="px-6 py-4 text-gray-600">{selectedProduct.packagingMethodBSpec || '-'}</td>
-                                      </tr>
-                                    )}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          )}
                         </motion.div>
                       )}
 
