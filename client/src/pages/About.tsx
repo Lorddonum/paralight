@@ -1045,8 +1045,8 @@ export default function About() {
       ))}
 
       {/* REDESIGNED: Core Team + Design Philosophy - Asymmetric Split Layout */}
-      <section className="snap-start h-screen relative overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+      <section className="snap-start h-screen relative overflow-hidden flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0">
           {/* Left: Core Team Image */}
           <div className="relative bg-[#0a1628]">
             <motion.div
@@ -1133,67 +1133,67 @@ export default function About() {
             </motion.div>
           </div>
         </div>
-      </section>
 
-      {/* Team Members Auto Slider */}
-      <section className="snap-start h-screen flex flex-col justify-center bg-[#0a1628] overflow-hidden">
-        <div className="container mx-auto px-8 lg:px-12 mb-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <span className="text-[#00A8E8] text-xs font-semibold uppercase tracking-widest mb-3 block">Our People</span>
-            <h2 className="font-display text-2xl lg:text-3xl text-white font-bold">Meet the Team</h2>
-          </motion.div>
-        </div>
-        <div className="relative">
-          <div className="flex animate-team-scroll gap-8 w-max">
-            {[
-              { name: "Mr. Ou", role: "Production Manager", image: "/team-mr-ou.jpg" },
-              { name: "Stephy", role: "Sales Manager", image: "/team-stephy.jpg" },
-              { name: "Taha", role: "Marketing Specialist", image: "/team-taha.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-1.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-2.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-3.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-4.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-5.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-6.jpg" },
-              { name: "Mr. Ou", role: "Production Manager", image: "/team-mr-ou.jpg" },
-              { name: "Stephy", role: "Sales Manager", image: "/team-stephy.jpg" },
-              { name: "Taha", role: "Marketing Specialist", image: "/team-taha.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-1.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-2.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-3.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-4.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-5.jpg" },
-              { name: "Name", role: "Role", image: "/team-member-6.jpg" },
-            ].map((member, idx) => (
-              <div key={idx} className="flex flex-col items-center gap-3 flex-shrink-0">
-                <div className="w-28 h-28 rounded-full overflow-hidden border-3 border-white/20 shadow-lg hover:border-[#00A8E8]/60 transition-all duration-300 hover:scale-105">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                </div>
-                <div className="text-center">
-                  <p className="text-white text-sm font-semibold">{member.name}</p>
-                  <p className="text-white/50 text-xs">{member.role}</p>
-                </div>
-              </div>
-            ))}
+        {/* Meet the Team - Auto Slider at bottom */}
+        <div className="bg-[#0a1628] py-6">
+          <div className="container mx-auto px-8 lg:px-12 mb-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <span className="text-[#00A8E8] text-xs font-semibold uppercase tracking-widest mb-2 block">Our People</span>
+              <h2 className="font-display text-xl lg:text-2xl text-white font-bold">Meet the Team</h2>
+            </motion.div>
           </div>
+          <div className="relative">
+            <div className="flex animate-team-scroll gap-6 w-max">
+              {[
+                { name: "Mr. Ou", role: "Production Manager", image: "/team-mr-ou.jpg" },
+                { name: "Stephy", role: "Sales Manager", image: "/team-stephy.jpg" },
+                { name: "Taha", role: "Marketing Specialist", image: "/team-taha.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-1.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-2.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-3.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-4.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-5.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-6.jpg" },
+                { name: "Mr. Ou", role: "Production Manager", image: "/team-mr-ou.jpg" },
+                { name: "Stephy", role: "Sales Manager", image: "/team-stephy.jpg" },
+                { name: "Taha", role: "Marketing Specialist", image: "/team-taha.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-1.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-2.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-3.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-4.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-5.jpg" },
+                { name: "Name", role: "Role", image: "/team-member-6.jpg" },
+              ].map((member, idx) => (
+                <div key={idx} className="flex flex-col items-center gap-2 flex-shrink-0">
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 shadow-lg hover:border-[#00A8E8]/60 transition-all duration-300 hover:scale-105">
+                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-white text-xs font-semibold">{member.name}</p>
+                    <p className="text-white/50 text-[10px]">{member.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <style>{`
+            @keyframes teamScroll {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .animate-team-scroll {
+              animation: teamScroll 30s linear infinite;
+            }
+            .animate-team-scroll:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
         </div>
-        <style>{`
-          @keyframes teamScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-team-scroll {
-            animation: teamScroll 30s linear infinite;
-          }
-          .animate-team-scroll:hover {
-            animation-play-state: paused;
-          }
-        `}</style>
       </section>
 
       {/* Showcase Animation Section with Circle Split Intro */}
