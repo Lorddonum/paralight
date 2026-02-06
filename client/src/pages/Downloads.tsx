@@ -42,9 +42,10 @@ function AnimatedBackground() {
     if (!ctx) return;
 
     const colors = [
-      { r: 0, g: 168, b: 232 },
-      { r: 236, g: 170, b: 0 },
-      { r: 255, g: 255, b: 255 },
+      { r: 139, g: 115, b: 85 },
+      { r: 210, g: 180, b: 140 },
+      { r: 196, g: 167, b: 125 },
+      { r: 160, g: 130, b: 109 },
     ];
 
     const initParticles = (w: number, h: number) => {
@@ -249,15 +250,15 @@ export default function Downloads() {
   const grouped = groupBySeries(filteredProducts);
 
   return (
-    <div className="min-h-screen bg-[#060d18] text-white selection:bg-[#00A8E8] selection:text-white font-sans">
+    <div className="min-h-screen bg-[#1a1610] text-white selection:bg-[#00A8E8] selection:text-white font-sans">
       <Navbar />
       
       <div className="relative pt-32 pb-24">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <AnimatedBackground />
-          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#00A8E8]/8 rounded-full blur-[150px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#ECAA00]/6 rounded-full blur-[150px]" />
-          <div className="absolute top-[60%] left-[10%] w-[400px] h-[400px] bg-[#00A8E8]/4 rounded-full blur-[120px]" />
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#8B7355]/10 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#ECAA00]/8 rounded-full blur-[150px]" />
+          <div className="absolute top-[60%] left-[10%] w-[400px] h-[400px] bg-[#D2B48C]/6 rounded-full blur-[120px]" />
         </div>
         
         <main className="relative z-10">
