@@ -478,12 +478,26 @@ function ShowcaseSection() {
 
   useEffect(() => {
     if (isInView && phase === "idle") {
+      sectionRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      const scrollContainer = sectionRef.current?.closest('.snap-y');
+      if (scrollContainer) {
+        (scrollContainer as HTMLElement).style.overflow = 'hidden';
+      }
+
       setPhase("circle");
       const splitTimer = setTimeout(() => setPhase("splitting"), 2200);
-      const revealTimer = setTimeout(() => setPhase("revealed"), 3800);
+      const revealTimer = setTimeout(() => {
+        setPhase("revealed");
+        if (scrollContainer) {
+          (scrollContainer as HTMLElement).style.overflow = 'auto';
+        }
+      }, 3800);
       return () => {
         clearTimeout(splitTimer);
         clearTimeout(revealTimer);
+        if (scrollContainer) {
+          (scrollContainer as HTMLElement).style.overflow = 'auto';
+        }
       };
     }
   }, [isInView, phase]);
