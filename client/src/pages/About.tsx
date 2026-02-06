@@ -801,6 +801,7 @@ export default function About() {
   }, [currentMilestone]);
 
   const [selectedEvent, setSelectedEvent] = useState<ExhibitionEvent | null>(null);
+  const [selectedTeamMember, setSelectedTeamMember] = useState<{ name: string; role: string; image: string } | null>(null);
 
   return (
     <div className="h-screen overflow-y-scroll snap-y snap-mandatory bg-white">
@@ -1134,19 +1135,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* Meet the Team - Auto Slider at bottom */}
-        <div className="bg-[#0a1628] py-6">
-          <div className="container mx-auto px-8 lg:px-12 mb-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <span className="text-[#00A8E8] text-xs font-semibold uppercase tracking-widest mb-2 block">Our People</span>
-              <h2 className="font-display text-xl lg:text-2xl text-white font-bold">Meet the Team</h2>
-            </motion.div>
-          </div>
+        {/* Team Slider bubbles at bottom */}
+        <div className="bg-[#0a1628] py-4">
           <div className="relative">
             <div className="flex animate-team-scroll gap-6 w-max">
               {[
@@ -1169,13 +1159,13 @@ export default function About() {
                 { name: "Name", role: "Role", image: "/team-member-5.jpg" },
                 { name: "Name", role: "Role", image: "/team-member-6.jpg" },
               ].map((member, idx) => (
-                <div key={idx} className="flex flex-col items-center gap-2 flex-shrink-0">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 shadow-lg hover:border-[#00A8E8]/60 transition-all duration-300 hover:scale-105">
+                <div
+                  key={idx}
+                  className="flex-shrink-0 cursor-pointer"
+                  onClick={() => setSelectedTeamMember(member)}
+                >
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 shadow-lg hover:border-[#00A8E8]/60 transition-all duration-300 hover:scale-110">
                     <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-white text-xs font-semibold">{member.name}</p>
-                    <p className="text-white/50 text-[10px]">{member.role}</p>
                   </div>
                 </div>
               ))}
@@ -1187,13 +1177,52 @@ export default function About() {
               100% { transform: translateX(-50%); }
             }
             .animate-team-scroll {
-              animation: teamScroll 30s linear infinite;
+              animation: teamScroll 45s linear infinite;
             }
             .animate-team-scroll:hover {
               animation-play-state: paused;
             }
           `}</style>
         </div>
+
+        <AnimatePresence>
+          {selectedTeamMember && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center"
+              onClick={() => setSelectedTeamMember(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring", damping: 25 }}
+                className="relative max-w-md w-full mx-4"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setSelectedTeamMember(null)}
+                  className="absolute -top-3 -right-3 z-10 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-4 h-4 text-gray-700" />
+                </button>
+                <div className="rounded-2xl overflow-hidden shadow-2xl">
+                  <img
+                    src={selectedTeamMember.image}
+                    alt={selectedTeamMember.name}
+                    className="w-full aspect-[3/4] object-cover"
+                  />
+                  <div className="bg-[#0a1628] px-6 py-4 text-center">
+                    <h3 className="text-white font-display font-bold text-lg">{selectedTeamMember.name}</h3>
+                    <p className="text-white/60 text-sm">{selectedTeamMember.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Showcase Animation Section with Circle Split Intro */}
