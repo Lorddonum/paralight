@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { FileText, Download, Loader2, FolderOpen, Search, ArrowRight, BookOpen, Layers, X } from "lucide-react";
@@ -13,6 +13,181 @@ interface Product {
   category: string;
   catalogueUrl: string | null;
   image: string | null;
+}
+
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  opacity: number;
+  color: string;
+  shape: 'circle' | 'square' | 'diamond';
+  rotation: number;
+  rotationSpeed: number;
+}
+
+function AnimatedBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const animationRef = useRef<number>(0);
+  const dimRef = useRef({ width: 0, height: 0 });
+  const timeRef = useRef(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const colors = [
+      { r: 0, g: 168, b: 232 },
+      { r: 236, g: 170, b: 0 },
+      { r: 255, g: 255, b: 255 },
+    ];
+
+    const initParticles = (w: number, h: number) => {
+      const particles: Particle[] = [];
+      const count = Math.max(25, Math.floor((w * h) / 35000));
+      const shapes: ('circle' | 'square' | 'diamond')[] = ['circle', 'square', 'diamond'];
+      
+      for (let i = 0; i < count; i++) {
+        const c = colors[i % colors.length];
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3 - 0.1,
+          size: 2 + Math.random() * 4,
+          opacity: 0.03 + Math.random() * 0.08,
+          color: `rgba(${c.r}, ${c.g}, ${c.b},`,
+          shape: shapes[Math.floor(Math.random() * shapes.length)],
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.01,
+        });
+      }
+      return particles;
+    };
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      dimRef.current = { width: rect.width, height: rect.height };
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      particlesRef.current = initParticles(rect.width, rect.height);
+    };
+
+    const observer = new ResizeObserver(resize);
+    observer.observe(canvas);
+    resize();
+
+    const drawGrid = (w: number, h: number, time: number) => {
+      const spacing = 80;
+      const wave = Math.sin(time * 0.0005) * 0.3;
+      
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.02 + wave * 0.01})`;
+      ctx.lineWidth = 0.5;
+      
+      for (let x = 0; x < w; x += spacing) {
+        const offset = Math.sin(x * 0.005 + time * 0.001) * 3;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x + offset, h);
+        ctx.stroke();
+      }
+      for (let y = 0; y < h; y += spacing) {
+        const offset = Math.cos(y * 0.005 + time * 0.001) * 3;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y + offset);
+        ctx.stroke();
+      }
+    };
+
+    const drawConnections = (particles: Particle[]) => {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            const alpha = (1 - dist / 150) * 0.04;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    const animate = () => {
+      const { width: w, height: h } = dimRef.current;
+      timeRef.current += 16;
+      ctx.clearRect(0, 0, w, h);
+
+      drawGrid(w, h, timeRef.current);
+
+      const particles = particlesRef.current;
+
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rotation += p.rotationSpeed;
+
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+      }
+
+      drawConnections(particles);
+
+      for (const p of particles) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.fillStyle = `${p.color} ${p.opacity})`;
+
+        if (p.shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (p.shape === 'square') {
+          ctx.fillRect(-p.size, -p.size, p.size * 2, p.size * 2);
+        } else {
+          ctx.beginPath();
+          ctx.moveTo(0, -p.size * 1.4);
+          ctx.lineTo(p.size * 1.4, 0);
+          ctx.lineTo(0, p.size * 1.4);
+          ctx.lineTo(-p.size * 1.4, 0);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      observer.disconnect();
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      style={{ opacity: 0.9 }}
+    />
+  );
 }
 
 export default function Downloads() {
@@ -79,9 +254,10 @@ export default function Downloads() {
       
       <div className="relative pt-32 pb-24">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <AnimatedBackground />
           <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#00A8E8]/8 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#ECAA00]/8 rounded-full blur-[150px]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[200px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#ECAA00]/6 rounded-full blur-[150px]" />
+          <div className="absolute top-[60%] left-[10%] w-[400px] h-[400px] bg-[#00A8E8]/4 rounded-full blur-[120px]" />
         </div>
         
         <main className="relative z-10">
