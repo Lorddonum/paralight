@@ -929,8 +929,17 @@ export default function About() {
       </section>
 
       {/* Showcase Animation Section */}
-      <section className="py-24 bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 overflow-hidden">
-        <div className="container mx-auto px-8 lg:px-12">
+      <section className="py-24 overflow-hidden relative" style={{ backgroundColor: '#c4b49a' }}>
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(160,140,110,0.15) 2px, rgba(160,140,110,0.15) 4px),
+            repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(180,160,130,0.1) 2px, rgba(180,160,130,0.1) 4px),
+            radial-gradient(ellipse at 20% 50%, rgba(200,185,160,0.4) 0%, transparent 70%),
+            radial-gradient(ellipse at 80% 50%, rgba(185,170,140,0.3) 0%, transparent 70%),
+            linear-gradient(180deg, rgba(210,195,170,0.3) 0%, transparent 30%, transparent 70%, rgba(170,155,130,0.3) 100%)
+          `
+        }} />
+        <div className="container mx-auto px-8 lg:px-12 relative z-10">
           <div className="relative h-[700px] lg:h-[800px]">
             {/* Image 3 - Top Left - Sketching */}
             <motion.div
@@ -1002,14 +1011,14 @@ export default function About() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-amber-800/50 backdrop-blur-sm p-6 lg:p-10 z-40 shadow-2xl"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-[#f5efe6]/85 backdrop-blur-sm p-6 lg:p-10 z-40 shadow-2xl border border-[#d4c9b8]"
             >
-              <h2 className="font-display text-2xl lg:text-3xl font-medium text-white mb-3 leading-tight">
+              <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#3d3428] mb-3 leading-tight">
                 <span className="italic">In-House Design.</span>
                 <br />
                 World-Class Quality
               </h2>
-              <p className="text-amber-100/90 text-sm lg:text-base leading-relaxed">
+              <p className="text-[#6b5d4d] text-sm lg:text-base leading-relaxed">
                 At Paralight Group, we bridge the gap between technical
                 innovation and manufacturing excellence. By designing and
                 producing our own products in-house, we deliver high-performance
@@ -1018,7 +1027,7 @@ export default function About() {
             </motion.div>
 
             {/* Decorative star */}
-            <div className="absolute bottom-6 right-6 text-amber-500/70">
+            <div className="absolute bottom-6 right-6 text-[#8b7a60]/50">
               <svg
                 width="32"
                 height="32"
