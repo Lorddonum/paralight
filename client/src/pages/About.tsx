@@ -498,8 +498,8 @@ function ShowcaseSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-24 overflow-hidden relative"
-      style={{ backgroundColor: '#c4b49a', minHeight: '900px' }}
+      className="snap-start h-screen overflow-hidden relative flex flex-col justify-center"
+      style={{ backgroundColor: '#c4b49a' }}
     >
       <div className="absolute inset-0" style={{
         backgroundImage: `
@@ -511,8 +511,8 @@ function ShowcaseSection() {
         `
       }} />
 
-      <div className="container mx-auto px-8 lg:px-12 relative z-10">
-        <div className="relative h-[700px] lg:h-[800px]">
+      <div className="container mx-auto px-8 lg:px-12 relative z-10 h-full">
+        <div className="relative h-full">
 
           {/* === CIRCLE SPLIT INTRO ANIMATION === */}
           {phase !== "revealed" && phase !== "idle" && (
@@ -803,11 +803,11 @@ export default function About() {
   const [selectedEvent, setSelectedEvent] = useState<ExhibitionEvent | null>(null);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-screen overflow-y-scroll snap-y snap-mandatory bg-white">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-40 pb-24 overflow-hidden bg-gray-900">
+      <section className="snap-start h-screen relative flex flex-col justify-center overflow-hidden bg-gray-900">
         <div className="absolute inset-0">
           <img src="/about-banner.jpg" alt="Paralight Factory" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gray-900/70" />
@@ -849,7 +849,7 @@ export default function About() {
       </section>
 
       {/* Video Section */}
-      <section className="py-24 bg-white">
+      <section className="snap-start h-screen flex flex-col justify-center bg-white overflow-hidden">
         <div className="container mx-auto px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -885,7 +885,7 @@ export default function About() {
       </section>
 
       {/* Development Journey */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
+      <section className="snap-start h-screen flex flex-col justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-20 w-64 h-64 bg-[#00A8E8] rounded-full blur-[100px]" />
           <div className="absolute bottom-20 right-20 w-80 h-80 bg-[#ECAA00] rounded-full blur-[120px]" />
@@ -997,11 +997,11 @@ export default function About() {
 
       {/* Executive Leadership */}
       {executives.map((exec, i) => (
-        <section key={i} className="relative overflow-hidden">
-          <div className={`bg-gradient-to-br ${exec.bgGradient}`}>
-            <div className="container mx-auto">
-              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[450px]`}>
-                <div className={`flex flex-col justify-center py-12 lg:py-16 px-8 lg:px-16 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
+        <section key={i} className="snap-start h-screen relative overflow-hidden flex flex-col">
+          <div className={`bg-gradient-to-br ${exec.bgGradient} flex-1 flex flex-col`}>
+            <div className="container mx-auto flex-1 flex flex-col">
+              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch flex-1`}>
+                <div className={`flex flex-col justify-center py-8 lg:py-12 px-8 lg:px-16 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
                   <motion.div
                     initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -1009,19 +1009,25 @@ export default function About() {
                     transition={{ duration: 0.6 }}
                   >
                     <span
-                      className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-5"
+                      className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
                       style={{ backgroundColor: `${exec.color}20`, color: exec.color }}
                     >
                       {exec.role}
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-display font-bold mb-5" style={{ color: exec.color }}>
+                    <h2 className="text-3xl md:text-4xl font-display font-bold mb-3" style={{ color: exec.color }}>
                       {exec.name}
                     </h2>
-                    <p className="text-lg md:text-2xl text-gray-700 font-light leading-relaxed italic">"{exec.tagline}"</p>
+                    <p className="text-base md:text-lg text-gray-700 font-light leading-relaxed italic mb-4">"{exec.tagline}"</p>
+                    <div className="relative pl-6 md:pl-8 border-l-2" style={{ borderColor: `${exec.color}30` }}>
+                      <h3 className="text-sm font-semibold mb-2" style={{ color: exec.color }}>
+                        {exec.subtitle}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed text-sm">{exec.bio}</p>
+                    </div>
                   </motion.div>
                 </div>
 
-                <div className={`relative h-[450px] overflow-hidden ${i % 2 === 1 ? "lg:order-1" : ""}`}>
+                <div className={`relative overflow-hidden ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -1035,43 +1041,14 @@ export default function About() {
               </div>
             </div>
           </div>
-
-          <div className="bg-white py-14">
-            <div className="container mx-auto px-6">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="max-w-4xl mx-auto relative pl-8 md:pl-12"
-              >
-                <Quote className="w-10 h-10 absolute -top-5 left-0 opacity-20" style={{ color: exec.color }} />
-                <h3 className="text-lg font-semibold mb-3" style={{ color: exec.color }}>
-                  {exec.subtitle}
-                </h3>
-                <p className="text-gray-600 leading-relaxed text-lg">{exec.bio}</p>
-                <Quote className="w-10 h-10 absolute -bottom-5 -right-5 opacity-20 rotate-180" style={{ color: exec.color }} />
-              </motion.div>
-            </div>
-          </div>
         </section>
       ))}
 
-      {/* Teams Section Header */}
-      <section className="py-12 bg-gray-900 text-white">
-        <div className="container mx-auto px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <span className="text-[#00A8E8] text-xs font-semibold uppercase tracking-widest">The People Behind Paralight</span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mt-2">Our Teams</h2>
-          </motion.div>
-        </div>
-      </section>
-
       {/* REDESIGNED: Core Team + Design Philosophy - Asymmetric Split Layout */}
-      <section className="relative overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
+      <section className="snap-start h-screen relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
           {/* Left: Core Team Image */}
-          <div className="relative h-[500px] lg:h-auto lg:min-h-[700px] bg-[#0a1628]">
+          <div className="relative bg-[#0a1628]">
             <motion.div
               initial={{ opacity: 0, scale: 1.1 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -1159,7 +1136,7 @@ export default function About() {
       </section>
 
       {/* Team Members Auto Slider */}
-      <section className="py-16 bg-[#0a1628] overflow-hidden">
+      <section className="snap-start h-screen flex flex-col justify-center bg-[#0a1628] overflow-hidden">
         <div className="container mx-auto px-8 lg:px-12 mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1223,7 +1200,7 @@ export default function About() {
       <ShowcaseSection />
 
       {/* REDESIGNED: Certifications + Honors - Side by Side */}
-      <section className="py-24 bg-gradient-to-br from-[#060d18] via-[#0a1628] to-[#0d1f38]">
+      <section className="snap-start h-screen flex flex-col justify-center bg-gradient-to-br from-[#060d18] via-[#0a1628] to-[#0d1f38] overflow-hidden">
         <div className="container mx-auto px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left: Certifications */}
@@ -1288,7 +1265,7 @@ export default function About() {
       </section>
 
       {/* REDESIGNED: Exhibitions - Dark theme grid */}
-      <section className="py-24 bg-[#0a1628]">
+      <section className="snap-start h-screen flex flex-col justify-center bg-[#0a1628] overflow-hidden">
         <div className="container mx-auto px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1320,7 +1297,7 @@ export default function About() {
       </section>
 
       {/* REDESIGNED: Global Delivery - Full width with stats */}
-      <section className="py-24 bg-gradient-to-r from-[#F5F0E8] to-white relative overflow-hidden">
+      <section className="snap-start h-screen flex flex-col justify-center bg-gradient-to-r from-[#F5F0E8] to-white relative overflow-hidden">
         <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-[#00A8E8]/5 to-transparent" />
         
         <div className="container mx-auto px-8 lg:px-12">
@@ -1384,7 +1361,9 @@ export default function About() {
         </div>
       </section>
 
-      <Footer />
+      <div className="snap-start">
+        <Footer />
+      </div>
     </div>
   );
 }
