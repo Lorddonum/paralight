@@ -223,7 +223,7 @@ function BouncingCircles() {
 }
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Package, Loader2, X, SlidersHorizontal, Search, ArrowRight, ChevronRight, ChevronDown, ChevronLeft, Sparkles, ArrowLeft, FileText, HelpCircle, Zap, Ruler, Palette, Sun, Eye, Layers, Box, Settings, Download, Image, Info, ListChecks, Wrench, Check, Mail, Phone, Flame } from "lucide-react";
+import { Package, Loader2, X, SlidersHorizontal, Search, ArrowRight, ChevronRight, ChevronDown, ChevronLeft, Sparkles, ArrowLeft, FileText, HelpCircle, Zap, Ruler, Palette, Sun, Eye, Layers, Box, Settings, Download, Image, Info, ListChecks, Wrench, Check, Mail, Phone, Flame, Facebook, Instagram, Linkedin, Youtube, Twitter, Music2 } from "lucide-react";
 import { useLocation } from "wouter";
 import controlIntegrationImg from "@/assets/control-integration.png";
 
@@ -781,6 +781,46 @@ export default function Products() {
                   />
                 )}
               </motion.button>
+            ))}
+          </motion.div>
+
+          {/* Social Media Links */}
+          <motion.div
+            className="flex justify-center gap-3 mt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            {[
+              { icon: Facebook, href: "https://www.facebook.com/paralightmaglinear/", label: "Facebook", color: "#1877F2" },
+              { icon: Instagram, href: "https://www.instagram.com/paralight.group/", label: "Instagram", color: "#E4405F" },
+              { icon: Linkedin, href: "https://www.linkedin.com/company/paralight-group/", label: "LinkedIn", color: "#0A66C2" },
+              { icon: Youtube, href: "https://www.youtube.com/@ParalightMaglinearLighting", label: "YouTube", color: "#FF0000" },
+              { icon: Twitter, href: "https://x.com/Paralight_Group", label: "Twitter", color: "#1DA1F2" },
+              { icon: Music2, href: "https://www.tiktok.com/@paralightmaglinear", label: "TikTok", color: "#00F2EA" },
+            ].map((social) => (
+              <motion.a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border border-transparent"
+                style={{ backgroundColor: social.color }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = social.color;
+                  e.currentTarget.style.borderColor = 'transparent';
+                }}
+                data-testid={`social-${social.label.toLowerCase()}`}
+              >
+                <social.icon className="w-4.5 h-4.5 text-white" />
+              </motion.a>
             ))}
           </motion.div>
         </div>
