@@ -641,7 +641,7 @@ export default function Products() {
             <img
               src="/paralight-hero.jpg"
               alt="Paralight Aluminum Profiles"
-              className="absolute inset-0 w-full h-full object-cover scale-125"
+              className="absolute inset-0 w-full h-full object-cover scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-gray-900/40 via-transparent to-gray-900/60" />
           </motion.div>
