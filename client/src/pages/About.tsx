@@ -532,6 +532,10 @@ function ShowcaseSection() {
           hasTriggeredRef.current = false;
           unlockScroll();
           animatingRef.current = false;
+          const section = sectionRef.current;
+          if (section && section.previousElementSibling) {
+            (section.previousElementSibling as HTMLElement).scrollIntoView({ behavior: 'smooth' });
+          }
         }, 800);
       }
     };
