@@ -544,8 +544,8 @@ function ShowcaseSection() {
           setTimeout(() => {
             unlockScroll();
             animatingRef.current = false;
-          }, 900);
-        }, 600);
+          }, 1000);
+        }, 800);
       }
     };
     blockWheelRef.current = blockWheel;
@@ -575,42 +575,24 @@ function ShowcaseSection() {
   ];
 
   const isOfficePhase = phase === "office-transition" || phase === "office";
-  const showRevealed = phase === "revealed" || phase === "office-transition";
+  const showcaseVisible = phase === "revealed";
+  const showcaseExiting = phase === "office-transition";
 
   return (
     <section
       ref={sectionRef}
       className="snap-start h-screen overflow-hidden relative flex flex-col justify-center"
-      style={{ backgroundColor: isOfficePhase ? '#d6eaf8' : '#c4b49a', transition: 'background-color 0.8s ease' }}
+      style={{ backgroundColor: '#c4b49a' }}
     >
-      {/* Beige background pattern */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{ opacity: isOfficePhase ? 0 : 1 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          backgroundImage: `
-            repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(160,140,110,0.15) 2px, rgba(160,140,110,0.15) 4px),
-            repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(180,160,130,0.1) 2px, rgba(180,160,130,0.1) 4px),
-            radial-gradient(ellipse at 20% 50%, rgba(200,185,160,0.4) 0%, transparent 70%),
-            radial-gradient(ellipse at 80% 50%, rgba(185,170,140,0.3) 0%, transparent 70%),
-            linear-gradient(180deg, rgba(210,195,170,0.3) 0%, transparent 30%, transparent 70%, rgba(170,155,130,0.3) 100%)
-          `
-        }}
-      />
-
-      {/* Blue crosshatch background pattern for office phase */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{ opacity: isOfficePhase ? 1 : 0 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          backgroundImage: `
-            repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(100,160,210,0.08) 3px, rgba(100,160,210,0.08) 4px),
-            repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(100,160,210,0.08) 3px, rgba(100,160,210,0.08) 4px)
-          `
-        }}
-      />
+      <div className="absolute inset-0" style={{
+        backgroundImage: `
+          repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(160,140,110,0.15) 2px, rgba(160,140,110,0.15) 4px),
+          repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(180,160,130,0.1) 2px, rgba(180,160,130,0.1) 4px),
+          radial-gradient(ellipse at 20% 50%, rgba(200,185,160,0.4) 0%, transparent 70%),
+          radial-gradient(ellipse at 80% 50%, rgba(185,170,140,0.3) 0%, transparent 70%),
+          linear-gradient(180deg, rgba(210,195,170,0.3) 0%, transparent 30%, transparent 70%, rgba(170,155,130,0.3) 100%)
+        `
+      }} />
 
       <div className="relative w-full h-full max-w-7xl mx-auto px-8 lg:px-12 z-10">
         <div className="relative h-full">
@@ -618,31 +600,12 @@ function ShowcaseSection() {
           {/* === CIRCLE SPLIT INTRO ANIMATION === */}
           {phase !== "revealed" && phase !== "idle" && !isOfficePhase && (
             <div className="absolute inset-0 z-50 flex items-center justify-center">
-              {/* Left half of circle */}
               <motion.div
                 className="absolute"
-                style={{
-                  width: 'min(500px, 70vw)',
-                  height: 'min(500px, 70vw)',
-                  borderRadius: '50%',
-                  overflow: 'hidden',
-                  clipPath: 'inset(0 50% 0 0)',
-                }}
+                style={{ width: 'min(500px, 70vw)', height: 'min(500px, 70vw)', borderRadius: '50%', overflow: 'hidden', clipPath: 'inset(0 50% 0 0)' }}
                 initial={{ opacity: 0, scale: 0.3 }}
-                animate={
-                  phase === "circle"
-                    ? { opacity: 1, scale: 1, y: 0 }
-                    : phase === "reversing"
-                    ? { opacity: 0, scale: 0.3, y: 0 }
-                    : { y: 300, opacity: 0 }
-                }
-                transition={
-                  phase === "circle"
-                    ? { duration: 1.2, ease: "easeOut" }
-                    : phase === "reversing"
-                    ? { duration: 0.7, ease: "easeIn" }
-                    : { duration: 1.2, ease: [0.76, 0, 0.24, 1] }
-                }
+                animate={phase === "circle" ? { opacity: 1, scale: 1, y: 0 } : phase === "reversing" ? { opacity: 0, scale: 0.3, y: 0 } : { y: 300, opacity: 0 }}
+                transition={phase === "circle" ? { duration: 1.2, ease: "easeOut" } : phase === "reversing" ? { duration: 0.7, ease: "easeIn" } : { duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
               >
                 <div className="w-full h-full relative">
                   <img src={circleImages[0]} alt="" className="absolute top-0 left-0 w-1/2 h-1/2 object-cover" />
@@ -652,32 +615,12 @@ function ShowcaseSection() {
                   <div className="absolute inset-0 bg-[#c4b49a]/30" />
                 </div>
               </motion.div>
-
-              {/* Right half of circle */}
               <motion.div
                 className="absolute"
-                style={{
-                  width: 'min(500px, 70vw)',
-                  height: 'min(500px, 70vw)',
-                  borderRadius: '50%',
-                  overflow: 'hidden',
-                  clipPath: 'inset(0 0 0 50%)',
-                }}
+                style={{ width: 'min(500px, 70vw)', height: 'min(500px, 70vw)', borderRadius: '50%', overflow: 'hidden', clipPath: 'inset(0 0 0 50%)' }}
                 initial={{ opacity: 0, scale: 0.3 }}
-                animate={
-                  phase === "circle"
-                    ? { opacity: 1, scale: 1, y: 0 }
-                    : phase === "reversing"
-                    ? { opacity: 0, scale: 0.3, y: 0 }
-                    : { y: -300, opacity: 0 }
-                }
-                transition={
-                  phase === "circle"
-                    ? { duration: 1.2, ease: "easeOut" }
-                    : phase === "reversing"
-                    ? { duration: 0.7, ease: "easeIn" }
-                    : { duration: 1.2, ease: [0.76, 0, 0.24, 1] }
-                }
+                animate={phase === "circle" ? { opacity: 1, scale: 1, y: 0 } : phase === "reversing" ? { opacity: 0, scale: 0.3, y: 0 } : { y: -300, opacity: 0 }}
+                transition={phase === "circle" ? { duration: 1.2, ease: "easeOut" } : phase === "reversing" ? { duration: 0.7, ease: "easeIn" } : { duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
               >
                 <div className="w-full h-full relative">
                   <img src={circleImages[0]} alt="" className="absolute top-0 left-0 w-1/2 h-1/2 object-cover" />
@@ -687,21 +630,11 @@ function ShowcaseSection() {
                   <div className="absolute inset-0 bg-[#c4b49a]/30" />
                 </div>
               </motion.div>
-
-              {/* Text overlay on circle */}
               <motion.div
                 className="absolute z-10 text-center pointer-events-none"
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={
-                  phase === "circle"
-                    ? { opacity: 1, scale: 1 }
-                    : { opacity: 0, scale: 0.5 }
-                }
-                transition={
-                  phase === "circle"
-                    ? { duration: 0.8, delay: 0.6 }
-                    : { duration: 0.5 }
-                }
+                animate={phase === "circle" ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                transition={phase === "circle" ? { duration: 0.8, delay: 0.6 } : { duration: 0.5 }}
               >
                 <h2 className="font-display text-4xl lg:text-6xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
                   <span className="italic">In-House Design.</span>
@@ -709,144 +642,140 @@ function ShowcaseSection() {
                   <span className="text-3xl lg:text-5xl">World-Class Quality</span>
                 </h2>
               </motion.div>
-
             </div>
           )}
 
-          {/* === REVEALED CONTENT (showcase images) === */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{ opacity: showRevealed ? 1 : 0 }}
-            transition={{ duration: phase === "office-transition" ? 0.5 : 0.3 }}
-          >
-            {/* Image 3 - Top Left - Sketching */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              animate={phase === "revealed" || phase === "office-transition" ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="absolute top-[-3%] left-[5%] w-[45%] lg:w-[40%] z-30"
-            >
-              <img src="/images/showcase-3.png" alt="Design sketching"
-                className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
-            </motion.div>
+          {/* === SHOWCASE IMAGES — reverse-animate out on office-transition === */}
+          {(showcaseVisible || showcaseExiting) && (
+            <div className="absolute inset-0">
+              {/* Image 3 - Top Left - from left, exits back left */}
+              <motion.div
+                className="absolute top-[-3%] left-[5%] w-[45%] lg:w-[40%] z-30"
+                initial={{ opacity: 0, x: -100 }}
+                animate={showcaseExiting ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <img src="/images/showcase-3.png" alt="Design sketching"
+                  className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
+              </motion.div>
 
-            {/* Image 2 - Bottom Left - Living Room */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              animate={phase === "revealed" || phase === "office-transition" ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="absolute bottom-0 left-0 w-[35%] lg:w-[30%] z-20"
-            >
-              <img src="/images/showcase-2.png" alt="Modern living room lighting"
-                className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
-            </motion.div>
+              {/* Image 2 - Bottom Left - from left, exits back left */}
+              <motion.div
+                className="absolute bottom-0 left-0 w-[35%] lg:w-[30%] z-20"
+                initial={{ opacity: 0, x: -100 }}
+                animate={showcaseExiting ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: showcaseExiting ? 0.05 : 0.2, ease: "easeOut" }}
+              >
+                <img src="/images/showcase-2.png" alt="Modern living room lighting"
+                  className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
+              </motion.div>
 
-            {/* Image 1 - Top Right - Showroom */}
-            <motion.div
-              initial={{ opacity: 0, x: 100 }}
-              animate={phase === "revealed" || phase === "office-transition" ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-              className="absolute top-[2%] right-[-3%] w-[45%] lg:w-[40%] z-10"
-            >
-              <img src="/images/showcase-1.png" alt="Modern showroom"
-                className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
-            </motion.div>
+              {/* Image 1 - Top Right - from right, exits back right */}
+              <motion.div
+                className="absolute top-[2%] right-[-3%] w-[45%] lg:w-[40%] z-10"
+                initial={{ opacity: 0, x: 100 }}
+                animate={showcaseExiting ? { opacity: 0, x: 100 } : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: showcaseExiting ? 0.05 : 0.1, ease: "easeOut" }}
+              >
+                <img src="/images/showcase-1.png" alt="Modern showroom"
+                  className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
+              </motion.div>
 
-            {/* Image 4 - Bottom Right - Measuring */}
-            <motion.div
-              initial={{ opacity: 0, x: 100 }}
-              animate={phase === "revealed" || phase === "office-transition" ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              className="absolute bottom-[-5%] right-[15%] w-[50%] lg:w-[45%] z-20"
-            >
-              <img src="/images/showcase-4.png" alt="Precision measurement"
-                className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
-            </motion.div>
+              {/* Image 4 - Bottom Right - from right, exits back right */}
+              <motion.div
+                className="absolute bottom-[-5%] right-[15%] w-[50%] lg:w-[45%] z-20"
+                initial={{ opacity: 0, x: 100 }}
+                animate={showcaseExiting ? { opacity: 0, x: 100 } : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: showcaseExiting ? 0.1 : 0.3, ease: "easeOut" }}
+              >
+                <img src="/images/showcase-4.png" alt="Precision measurement"
+                  className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
+              </motion.div>
 
-            {/* Center Text Block */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={phase === "revealed" || phase === "office-transition" ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-[#f5efe6]/85 backdrop-blur-sm p-6 lg:p-10 z-40 shadow-2xl border border-[#d4c9b8]"
-            >
-              <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#3d3428] mb-3 leading-tight">
-                <span className="italic">In-House Design.</span>
-                <br />
-                World-Class Quality
-              </h2>
-              <p className="text-[#6b5d4d] text-sm lg:text-base leading-relaxed">
-                At Paralight Group, we bridge the gap between technical
-                innovation and manufacturing excellence. By designing and
-                producing our own products in-house, we deliver high-performance
-                lighting solutions built with meticulous precision.
-              </p>
-            </motion.div>
+              {/* Center Text Block - scales down and fades */}
+              <motion.div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-[#f5efe6]/85 backdrop-blur-sm p-6 lg:p-10 z-40 shadow-2xl border border-[#d4c9b8]"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={showcaseExiting ? { opacity: 0, scale: 0.5 } : { opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: showcaseExiting ? 0 : 0.2 }}
+              >
+                <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#3d3428] mb-3 leading-tight">
+                  <span className="italic">In-House Design.</span>
+                  <br />
+                  World-Class Quality
+                </h2>
+                <p className="text-[#6b5d4d] text-sm lg:text-base leading-relaxed">
+                  At Paralight Group, we bridge the gap between technical
+                  innovation and manufacturing excellence. By designing and
+                  producing our own products in-house, we deliver high-performance
+                  lighting solutions built with meticulous precision.
+                </p>
+              </motion.div>
 
-            {/* Decorative star */}
-            <motion.div
-              className="absolute bottom-6 right-6 text-[#8b7a60]/50"
-              animate={phase === "revealed" ? { opacity: 1 } : {}}
-              transition={{ delay: 0.5 }}
-            >
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" />
-              </svg>
-            </motion.div>
-          </motion.div>
+              <motion.div
+                className="absolute bottom-6 right-6 text-[#8b7a60]/50"
+                animate={showcaseExiting ? { opacity: 0 } : { opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" />
+                </svg>
+              </motion.div>
+            </div>
+          )}
 
-          {/* === OFFICE CONTENT === */}
+          {/* === OFFICE CONTENT — animates in as showcase exits === */}
           {isOfficePhase && (
             <>
-              {/* Top image - animated from top */}
+              {/* Top image - from top */}
               <motion.div
                 className="absolute top-[4%] left-[12%] w-[55%] z-10"
                 initial={{ opacity: 0, y: -120 }}
-                animate={phase === "office" ? { opacity: 1, y: 0 } : { opacity: 0, y: -120 }}
-                transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
+                animate={phase === "office" ? { opacity: 1, y: 0 } : { opacity: 0, y: -60 }}
+                transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
               >
                 <img src={officeImages[0].src} alt={officeImages[0].alt}
                   className="w-full h-auto max-h-[35vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Left image - animated from left */}
+              {/* Left image - from left */}
               <motion.div
                 className="absolute top-[30%] left-[2%] w-[30%] z-20"
                 initial={{ opacity: 0, x: -120 }}
-                animate={phase === "office" ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+                animate={phase === "office" ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
                 transition={{ duration: 0.9, ease: "easeOut", delay: 0.25 }}
               >
                 <img src={officeImages[1].src} alt={officeImages[1].alt}
                   className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Right image - animated from right */}
+              {/* Right image - from right */}
               <motion.div
                 className="absolute top-[22%] right-[2%] w-[32%] z-20"
                 initial={{ opacity: 0, x: 120 }}
-                animate={phase === "office" ? { opacity: 1, x: 0 } : { opacity: 0, x: 120 }}
+                animate={phase === "office" ? { opacity: 1, x: 0 } : { opacity: 0, x: 60 }}
                 transition={{ duration: 0.9, ease: "easeOut", delay: 0.3 }}
               >
                 <img src={officeImages[2].src} alt={officeImages[2].alt}
                   className="w-full h-auto max-h-[35vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Bottom-left image - animated from bottom-left */}
+              {/* Bottom-left image - from bottom-left */}
               <motion.div
                 className="absolute bottom-[4%] left-[8%] w-[35%] z-10"
                 initial={{ opacity: 0, x: -80, y: 120 }}
-                animate={phase === "office" ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -80, y: 120 }}
+                animate={phase === "office" ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -40, y: 60 }}
                 transition={{ duration: 0.9, ease: "easeOut", delay: 0.4 }}
               >
                 <img src={officeImages[3].src} alt={officeImages[3].alt}
                   className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Bottom image - animated from bottom */}
+              {/* Bottom image - from bottom */}
               <motion.div
                 className="absolute bottom-[4%] right-[5%] w-[40%] z-10"
                 initial={{ opacity: 0, y: 120 }}
-                animate={phase === "office" ? { opacity: 1, y: 0 } : { opacity: 0, y: 120 }}
+                animate={phase === "office" ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
                 transition={{ duration: 0.9, ease: "easeOut", delay: 0.5 }}
               >
                 <img src={officeImages[4].src} alt={officeImages[4].alt}
@@ -855,17 +784,17 @@ function ShowcaseSection() {
 
               {/* Center text block */}
               <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[30%] bg-white/80 backdrop-blur-sm p-6 lg:p-10 z-30 shadow-2xl border border-[#b8d4e8] rounded-lg"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[30%] bg-[#f5efe6]/85 backdrop-blur-sm p-6 lg:p-10 z-30 shadow-2xl border border-[#d4c9b8]"
                 initial={{ opacity: 0, scale: 0.7 }}
                 animate={phase === "office" ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
               >
-                <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#1a3a5c] mb-3 leading-tight">
+                <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#3d3428] mb-3 leading-tight">
                   <span className="italic">Our Workspace.</span>
                   <br />
                   Where Ideas Take Shape
                 </h2>
-                <p className="text-[#4a6a8a] text-sm lg:text-base leading-relaxed">
+                <p className="text-[#6b5d4d] text-sm lg:text-base leading-relaxed">
                   From product design and 3D modeling to engineering and quality control, our offices are the creative engine behind every Paralight product. A dedicated team of professionals works together to bring lighting innovation to life.
                 </p>
               </motion.div>
