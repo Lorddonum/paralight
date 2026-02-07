@@ -1056,18 +1056,27 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative h-full"
+            className="relative h-full flex items-center justify-center p-8 lg:p-12"
           >
-            <img src={executives[0].image} alt={executives[0].name} loading="eager" className="w-full h-full object-cover object-top" />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10" />
+            <img src={executives[0].image} alt={executives[0].name} loading="eager" className="w-full h-[85%] object-cover object-top rounded-2xl shadow-2xl" />
           </motion.div>
 
-          <div className="flex flex-col justify-center px-10 lg:px-16">
+          <div className="relative flex flex-col justify-center px-10 lg:px-16 overflow-hidden">
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `linear-gradient(to bottom, rgba(0,168,232,0.06) 1px, transparent 1px), linear-gradient(to right, rgba(0,168,232,0.06) 1px, transparent 1px)`,
+                backgroundSize: '40px 40px',
+                maskImage: 'linear-gradient(to bottom left, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, transparent 70%)',
+                WebkitMaskImage: 'linear-gradient(to bottom left, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, transparent 70%)',
+              }}
+            />
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative z-10"
             >
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-[#00A8E8]/10 text-[#00A8E8] mb-4 uppercase tracking-widest">{executives[0].role}</span>
               <h2 className="text-3xl lg:text-5xl font-display font-bold text-gray-900 mb-3">{executives[0].name}</h2>
