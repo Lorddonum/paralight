@@ -45,7 +45,14 @@ import {
   Sparkles,
   Target,
   Zap,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Twitter,
 } from "lucide-react";
+import TikTokIcon from "@/components/icons/TikTokIcon";
+import PinterestIcon from "@/components/icons/PinterestIcon";
 import { useState, useEffect, useRef } from "react";
 
 interface ExhibitionEvent {
@@ -896,6 +903,43 @@ export default function About() {
                 <div className="font-display text-2xl md:text-3xl text-[#F5F0E8] font-medium">{stat.value}</div>
                 <div className="text-[10px] font-medium tracking-[0.15em] uppercase text-[#F5F0E8]/70 mt-2">{stat.label}</div>
               </div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex justify-center gap-3 mt-8"
+          >
+            {[
+              { icon: Facebook, href: "https://www.facebook.com/paralightmaglinear/", label: "Facebook", color: "#1877F2" },
+              { icon: Instagram, href: "https://www.instagram.com/paralight.group/", label: "Instagram", color: "#E4405F" },
+              { icon: Linkedin, href: "https://www.linkedin.com/company/paralight-group/", label: "LinkedIn", color: "#0A66C2" },
+              { icon: Youtube, href: "https://www.youtube.com/@ParalightMaglinearLighting", label: "YouTube", color: "#FF0000" },
+              { icon: Twitter, href: "https://x.com/Paralight_Group", label: "Twitter", color: "#1DA1F2" },
+              { icon: TikTokIcon, href: "https://www.tiktok.com/@paralightmaglinear", label: "TikTok", color: "#00F2EA" },
+              { icon: PinterestIcon, href: "https://www.pinterest.com/ParalightMaglinear/", label: "Pinterest", color: "#E60023" },
+            ].map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 bg-transparent hover:scale-110"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = social.color;
+                  e.currentTarget.style.borderColor = 'transparent';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                }}
+                data-testid={`about-social-${social.label.toLowerCase()}`}
+              >
+                <social.icon className="w-4.5 h-4.5 text-white" />
+              </a>
             ))}
           </motion.div>
         </div>
