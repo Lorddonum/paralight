@@ -1148,6 +1148,37 @@ export default function Products() {
                         </div>
                       </a>
                     </div>
+                    <div className="flex justify-center gap-2 mt-4 pt-4 border-t border-white/10">
+                      {[
+                        { icon: Facebook, href: "https://www.facebook.com/paralightmaglinear/", label: "Facebook", color: "#1877F2" },
+                        { icon: Instagram, href: "https://www.instagram.com/paralight.group/", label: "Instagram", color: "#E4405F" },
+                        { icon: Linkedin, href: "https://www.linkedin.com/company/paralight-group/", label: "LinkedIn", color: "#0A66C2" },
+                        { icon: Youtube, href: "https://www.youtube.com/@ParalightMaglinearLighting", label: "YouTube", color: "#FF0000" },
+                        { icon: Twitter, href: "https://x.com/Paralight_Group", label: "Twitter", color: "#1DA1F2" },
+                        { icon: TikTokIcon, href: "https://www.tiktok.com/@paralightmaglinear", label: "TikTok", color: "#00F2EA" },
+                        { icon: PinterestIcon, href: "https://www.pinterest.com/ParalightMaglinear/", label: "Pinterest", color: "#E60023" },
+                      ].map((social) => (
+                        <a
+                          key={social.label}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={social.label}
+                          className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 border border-white/15 bg-transparent hover:scale-110"
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = social.color;
+                            e.currentTarget.style.borderColor = 'transparent';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+                          }}
+                          data-testid={`sidebar-social-${social.label.toLowerCase()}`}
+                        >
+                          <social.icon className="w-3.5 h-3.5 text-white" />
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 )}
               </motion.div>
