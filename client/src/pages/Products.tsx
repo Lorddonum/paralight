@@ -671,7 +671,7 @@ export default function Products() {
               src="/images/maglinear-hero.webp"
               alt="Maglinear Lighting Track Systems"
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: 'center 30%' }}
+              style={{ objectPosition: 'center 15%' }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-gray-900/40 via-transparent to-gray-900/60" />
           </motion.div>
