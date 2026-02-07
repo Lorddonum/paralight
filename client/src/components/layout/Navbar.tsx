@@ -21,7 +21,7 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
   }, []);
 
   useEffect(() => {
-    if (location !== '/') {
+    if (location !== '/' && location !== '/about') {
       setIsLightSection(false);
       setIsFooterSection(false);
       return;
@@ -31,15 +31,32 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
     if (!scrollContainer) return;
 
     const checkSection = () => {
-      const sections = scrollContainer.querySelectorAll('section.snap-start');
+      const sections = scrollContainer.querySelectorAll('section.snap-start, div.snap-start');
       
-      sections.forEach((section, index) => {
+      sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= 100 && rect.bottom > 100) {
-          // Sections with light backgrounds: BrandSplit (1), GlobalNetwork (2), Exhibition (3)
-          setIsLightSection(index === 1 || index === 2 || index === 3);
-          // Dark sections: ProjectGallery (4), Footer (5) have dark backgrounds
-          setIsFooterSection(index === 4 || index === 5);
+          const bg = window.getComputedStyle(section).backgroundColor;
+          const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+          if (match) {
+            const r = parseInt(match[1]);
+            const g = parseInt(match[2]);
+            const b = parseInt(match[3]);
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            setIsLightSection(brightness > 150);
+            setIsFooterSection(brightness < 50);
+          } else {
+            const classList = section.className || '';
+            const isLight = classList.includes('bg-white') || 
+                           classList.includes('from-sky-50') || 
+                           classList.includes('from-gray-50') ||
+                           classList.includes('from-[#F5F0E8]');
+            const isDark = classList.includes('bg-gray-900') || 
+                          classList.includes('bg-[#0a1628]') || 
+                          classList.includes('from-[#060d18]');
+            setIsLightSection(isLight);
+            setIsFooterSection(isDark);
+          }
         }
       });
     };
