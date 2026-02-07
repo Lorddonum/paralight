@@ -668,7 +668,7 @@ export default function Products() {
             }}
           >
             <img
-              src="/maglinear-hero.jpg"
+              src="/images/maglinear-hero.webp"
               alt="Maglinear Lighting Track Systems"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ objectPosition: 'center 30%' }}
