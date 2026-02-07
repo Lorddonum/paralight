@@ -50,11 +50,12 @@ export default function Navbar({ darkText = false }: { darkText?: boolean }) {
             // 4: CEO (light) → dark
             // 5: Core Team (split) → dark + bg
             // 6: Showcase (beige) → white
-            // 7: Certifications (dark) → white
-            // 8: Exhibitions (dark) → white
-            // 9: Global Delivery (light) → dark
-            // 10: Footer (dark) → white
-            setIsLightSection((index >= 1 && index <= 5) || index === 9);
+            // 7: Office (light blue) → dark
+            // 8: Certifications (dark) → white
+            // 9: Exhibitions (dark) → white
+            // 10: Global Delivery (light) → dark
+            // 11: Footer (dark) → white
+            setIsLightSection((index >= 1 && index <= 5) || index === 7 || index === 10);
             setIsFooterSection(false);
             setHasNavBg(index === 5);
           }

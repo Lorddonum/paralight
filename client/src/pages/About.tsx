@@ -771,6 +771,120 @@ function ShowcaseSection() {
   );
 }
 
+function OfficeSection() {
+  const officeImages = [
+    { src: "/images/office-1.jpg", alt: "Office work", from: "top" },
+    { src: "/images/office-2.jpg", alt: "Design team", from: "left" },
+    { src: "/images/office-3.jpg", alt: "Office collaboration", from: "right" },
+    { src: "/images/office-4.jpg", alt: "Team workspace", from: "bottom-left" },
+    { src: "/images/office-5.png", alt: "3D product design", from: "bottom" },
+  ];
+
+  const getInitial = (from: string) => {
+    switch (from) {
+      case "top": return { opacity: 0, y: -120 };
+      case "left": return { opacity: 0, x: -120 };
+      case "right": return { opacity: 0, x: 120 };
+      case "bottom-left": return { opacity: 0, x: -80, y: 120 };
+      case "bottom": return { opacity: 0, y: 120 };
+      default: return { opacity: 0 };
+    }
+  };
+
+  return (
+    <section className="snap-start h-screen overflow-hidden relative flex items-center justify-center"
+      style={{ backgroundColor: '#d6eaf8' }}
+    >
+      <div className="absolute inset-0" style={{
+        backgroundImage: `
+          repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(100,160,210,0.08) 3px, rgba(100,160,210,0.08) 4px),
+          repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(100,160,210,0.08) 3px, rgba(100,160,210,0.08) 4px)
+        `
+      }} />
+
+      <div className="relative w-full h-full max-w-7xl mx-auto px-8 lg:px-12">
+        {/* Top image */}
+        <motion.div
+          className="absolute top-[4%] left-[12%] w-[55%] z-10"
+          initial={getInitial("top")}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
+        >
+          <img src={officeImages[0].src} alt={officeImages[0].alt}
+            className="w-full h-auto max-h-[35vh] object-cover rounded-lg shadow-xl" />
+        </motion.div>
+
+        {/* Left image */}
+        <motion.div
+          className="absolute top-[30%] left-[2%] w-[30%] z-20"
+          initial={getInitial("left")}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.25 }}
+        >
+          <img src={officeImages[1].src} alt={officeImages[1].alt}
+            className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
+        </motion.div>
+
+        {/* Right image */}
+        <motion.div
+          className="absolute top-[22%] right-[2%] w-[32%] z-20"
+          initial={getInitial("right")}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.3 }}
+        >
+          <img src={officeImages[2].src} alt={officeImages[2].alt}
+            className="w-full h-auto max-h-[35vh] object-cover rounded-lg shadow-xl" />
+        </motion.div>
+
+        {/* Bottom-left image */}
+        <motion.div
+          className="absolute bottom-[4%] left-[8%] w-[35%] z-10"
+          initial={getInitial("bottom-left")}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.4 }}
+        >
+          <img src={officeImages[3].src} alt={officeImages[3].alt}
+            className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
+        </motion.div>
+
+        {/* Bottom image */}
+        <motion.div
+          className="absolute bottom-[4%] right-[5%] w-[40%] z-10"
+          initial={getInitial("bottom")}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.5 }}
+        >
+          <img src={officeImages[4].src} alt={officeImages[4].alt}
+            className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
+        </motion.div>
+
+        {/* Center text block */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] lg:w-[30%] bg-white/80 backdrop-blur-sm p-6 lg:p-10 z-30 shadow-2xl border border-[#b8d4e8] rounded-lg"
+          initial={{ opacity: 0, scale: 0.7 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+        >
+          <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#1a3a5c] mb-3 leading-tight">
+            <span className="italic">Our Workspace.</span>
+            <br />
+            Where Ideas Take Shape
+          </h2>
+          <p className="text-[#4a6a8a] text-sm lg:text-base leading-relaxed">
+            From product design and 3D modeling to engineering and quality control, our offices are the creative engine behind every Paralight product. A dedicated team of professionals works together to bring lighting innovation to life.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 export default function About() {
   const stats = [
     { label: "Production Facility", value: "30,000㎡", icon: Package },
@@ -1552,6 +1666,9 @@ export default function About() {
 
       {/* Showcase Animation Section with Circle Split Intro */}
       <ShowcaseSection />
+
+      {/* Office & Workspace Section */}
+      <OfficeSection />
 
       {/* REDESIGNED: Certifications + Honors - Side by Side */}
       <section className="snap-start h-screen flex flex-col justify-center bg-gradient-to-br from-[#060d18] via-[#0a1628] to-[#0d1f38] overflow-hidden">
