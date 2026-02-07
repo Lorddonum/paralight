@@ -544,7 +544,7 @@ function ShowcaseSection() {
     setTimeout(() => { animatingRef.current = false; }, 1200);
 
     return () => unlockScroll();
-  }, [isInView, phase]);
+  }, [isInView]);
 
   const circleImages = [
     "/images/showcase-1.png",
