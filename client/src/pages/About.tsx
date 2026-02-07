@@ -1226,7 +1226,7 @@ export default function About() {
                               className="flex items-center gap-3 cursor-pointer group"
                               onClick={() => setSelectedTeamMember(member)}
                             >
-                              <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-gray-200 group-hover:ring-[#00A8E8] transition-all duration-300">
+                              <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-gray-200 group-hover:ring-[#00A8E8] transition-all duration-300">
                                 <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                               </div>
                               <div className="min-w-0">
