@@ -1035,54 +1035,47 @@ export default function About() {
         </div>
       </section>
 
-      {/* Executive Leadership */}
-      {executives.map((exec, i) => (
-        <section key={i} className="snap-start h-screen relative overflow-hidden flex flex-col">
-          <div className={`bg-gradient-to-br ${exec.bgGradient} flex-1 flex flex-col`}>
-            <div className="container mx-auto flex-1 flex flex-col">
-              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch flex-1`}>
-                <div className={`flex flex-col justify-center py-8 lg:py-12 px-8 lg:px-16 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
-                  <motion.div
-                    initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <span
-                      className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
-                      style={{ backgroundColor: `${exec.color}20`, color: exec.color }}
-                    >
-                      {exec.role}
-                    </span>
-                    <h2 className="text-3xl md:text-4xl font-display font-bold mb-3" style={{ color: exec.color }}>
-                      {exec.name}
-                    </h2>
-                    <p className="text-base md:text-lg text-gray-700 font-light leading-relaxed italic mb-4">"{exec.tagline}"</p>
-                    <div className="relative pl-6 md:pl-8 border-l-2" style={{ borderColor: `${exec.color}30` }}>
-                      <h3 className="text-sm font-semibold mb-2" style={{ color: exec.color }}>
-                        {exec.subtitle}
-                      </h3>
-                      <p className="text-gray-600 leading-relaxed text-sm">{exec.bio}</p>
-                    </div>
-                  </motion.div>
-                </div>
-
-                <div className={`relative overflow-hidden ${i % 2 === 1 ? "lg:order-1" : ""}`}>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="h-full w-full"
-                  >
-                    <img src={exec.image} alt={exec.name} loading="eager" className="w-full h-full object-contain object-center" />
-                  </motion.div>
-                </div>
+      {/* Executive Leadership - Both in one section */}
+      <section className="snap-start h-screen relative overflow-hidden flex flex-col bg-gradient-to-br from-sky-50 via-white to-amber-50">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 min-h-0">
+          {executives.map((exec, i) => (
+            <div key={i} className="flex flex-col h-full overflow-hidden">
+              <div className="relative flex-1 min-h-0">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.2 }}
+                  className="h-full w-full"
+                >
+                  <img src={exec.image} alt={exec.name} loading="eager" className="w-full h-full object-contain object-top" />
+                </motion.div>
               </div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 + i * 0.2 }}
+                className="px-6 lg:px-10 py-4 bg-white/80 backdrop-blur-sm"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs font-semibold"
+                    style={{ backgroundColor: `${exec.color}20`, color: exec.color }}
+                  >
+                    {exec.role}
+                  </span>
+                  <h2 className="text-xl lg:text-2xl font-display font-bold" style={{ color: exec.color }}>
+                    {exec.name}
+                  </h2>
+                </div>
+                <p className="text-sm text-gray-700 font-light italic mb-2">"{exec.tagline}"</p>
+                <p className="text-gray-600 leading-relaxed text-xs line-clamp-3">{exec.bio}</p>
+              </motion.div>
             </div>
-          </div>
-        </section>
-      ))}
+          ))}
+        </div>
+      </section>
 
       {/* REDESIGNED: Core Team + Design Philosophy - Asymmetric Split Layout */}
       <section className="snap-start h-screen relative overflow-hidden flex flex-col">
