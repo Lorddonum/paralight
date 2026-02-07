@@ -1062,6 +1062,7 @@ export default function About() {
           </motion.div>
 
           <div className="relative flex flex-col justify-center px-10 lg:px-16 overflow-hidden">
+            {/* Grid pattern - top right */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -1069,6 +1070,26 @@ export default function About() {
                 backgroundSize: '32px 32px',
                 maskImage: 'linear-gradient(to bottom left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
                 WebkitMaskImage: 'linear-gradient(to bottom left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
+              }}
+            />
+            {/* Dot pattern - bottom left */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `radial-gradient(rgba(0,168,232,0.12) 1.5px, transparent 1.5px)`,
+                backgroundSize: '20px 20px',
+                backgroundPosition: '10px 10px',
+                maskImage: 'linear-gradient(to top right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
+                WebkitMaskImage: 'linear-gradient(to top right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
+              }}
+            />
+            {/* Diagonal lines - center accent */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(0,168,232,0.04) 60px, rgba(0,168,232,0.04) 61px)`,
+                maskImage: 'radial-gradient(ellipse at 70% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
+                WebkitMaskImage: 'radial-gradient(ellipse at 70% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
               }}
             />
             <motion.div
@@ -1092,6 +1113,7 @@ export default function About() {
       <section className={`snap-start h-screen relative overflow-hidden bg-gradient-to-br ${executives[1].bgGradient}`}>
         <div className="h-full grid grid-cols-1 lg:grid-cols-2">
           <div className="relative flex flex-col justify-center px-10 lg:px-16 order-2 lg:order-1 overflow-hidden">
+            {/* Grid pattern - top left */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -1099,6 +1121,26 @@ export default function About() {
                 backgroundSize: '32px 32px',
                 maskImage: 'linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
                 WebkitMaskImage: 'linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
+              }}
+            />
+            {/* Dot pattern - bottom right */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `radial-gradient(rgba(236,170,0,0.12) 1.5px, transparent 1.5px)`,
+                backgroundSize: '20px 20px',
+                backgroundPosition: '10px 10px',
+                maskImage: 'linear-gradient(to top left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
+                WebkitMaskImage: 'linear-gradient(to top left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
+              }}
+            />
+            {/* Diagonal lines - center accent */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(236,170,0,0.04) 60px, rgba(236,170,0,0.04) 61px)`,
+                maskImage: 'radial-gradient(ellipse at 30% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
+                WebkitMaskImage: 'radial-gradient(ellipse at 30% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
               }}
             />
             <motion.div
