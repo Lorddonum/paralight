@@ -592,18 +592,19 @@ function ShowcaseSection() {
     { src: "/images/office-5.png", alt: "3D product design" },
   ];
 
-  const isOfficePhase = phase === "office-transition" || phase === "office" || phase === "office-reversing";
-  const showcaseVisible = phase === "revealed" || phase === "office-reversing";
-  const showcaseExiting = phase === "office-transition" || phase === "reveal-reversing";
-  const showcaseEntering = phase === "revealed" || phase === "office-reversing";
-  const officeExiting = phase === "office-reversing";
-  const circlePhases = ["circle", "reversing", "splitting", "reveal-reversing"];
+  const showCircle = phase !== "revealed" && phase !== "idle" && phase !== "office-transition" && phase !== "office" && phase !== "office-reversing";
+  const circleIn = phase === "circle" || phase === "reveal-reversing";
+  const showShowcase = phase === "revealed" || phase === "office-transition" || phase === "reveal-reversing" || phase === "office-reversing";
+  const showcaseIn = phase === "revealed" || phase === "office-reversing";
+  const showOffice = phase === "office-transition" || phase === "office" || phase === "office-reversing";
+  const officeIn = phase === "office";
+  const gpuLayer = { willChange: 'transform, opacity' as const, backfaceVisibility: 'hidden' as const };
 
   return (
     <section
       ref={sectionRef}
       className="snap-start h-screen overflow-hidden relative flex flex-col justify-center"
-      style={{ backgroundColor: '#c4b49a' }}
+      style={{ backgroundColor: '#c4b49a', contain: 'layout style paint' }}
     >
       <div className="absolute inset-0" style={{
         backgroundImage: `
@@ -619,14 +620,14 @@ function ShowcaseSection() {
         <div className="relative h-full">
 
           {/* === CIRCLE SPLIT INTRO ANIMATION === */}
-          {phase !== "revealed" && phase !== "idle" && !isOfficePhase && (
+          {showCircle && (
             <div className="absolute inset-0 z-50 flex items-center justify-center">
               <motion.div
                 className="absolute"
-                style={{ width: 'min(500px, 70vw)', height: 'min(500px, 70vw)', borderRadius: '50%', overflow: 'hidden', clipPath: 'inset(0 50% 0 0)' }}
+                style={{ ...gpuLayer, width: 'min(500px, 70vw)', height: 'min(500px, 70vw)', borderRadius: '50%', overflow: 'hidden', clipPath: 'inset(0 50% 0 0)' }}
                 initial={{ opacity: 0, scale: 0.3 }}
                 animate={
-                  phase === "circle" || phase === "reveal-reversing"
+                  circleIn
                     ? { opacity: 1, scale: 1, y: 0 }
                     : phase === "reversing"
                     ? { opacity: 0, scale: 0.3, y: 0 }
@@ -652,10 +653,10 @@ function ShowcaseSection() {
               </motion.div>
               <motion.div
                 className="absolute"
-                style={{ width: 'min(500px, 70vw)', height: 'min(500px, 70vw)', borderRadius: '50%', overflow: 'hidden', clipPath: 'inset(0 0 0 50%)' }}
+                style={{ ...gpuLayer, width: 'min(500px, 70vw)', height: 'min(500px, 70vw)', borderRadius: '50%', overflow: 'hidden', clipPath: 'inset(0 0 0 50%)' }}
                 initial={{ opacity: 0, scale: 0.3 }}
                 animate={
-                  phase === "circle" || phase === "reveal-reversing"
+                  circleIn
                     ? { opacity: 1, scale: 1, y: 0 }
                     : phase === "reversing"
                     ? { opacity: 0, scale: 0.3, y: 0 }
@@ -681,8 +682,9 @@ function ShowcaseSection() {
               </motion.div>
               <motion.div
                 className="absolute z-10 text-center pointer-events-none"
+                style={gpuLayer}
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={phase === "circle" || phase === "reveal-reversing" ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                animate={circleIn ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
                 transition={phase === "circle" ? { duration: 0.8, delay: 0.6 } : phase === "reveal-reversing" ? { duration: 0.6, delay: 0.3 } : { duration: 0.5 }}
               >
                 <h2 className="font-display text-4xl lg:text-6xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
@@ -694,59 +696,59 @@ function ShowcaseSection() {
             </div>
           )}
 
-          {/* === SHOWCASE IMAGES — reverse-animate out on office-transition === */}
-          {(showcaseVisible || showcaseExiting) && (
+          {/* === SHOWCASE IMAGES === */}
+          {showShowcase && (
             <div className="absolute inset-0">
-              {/* Image 3 - Top Left - from left, exits back left */}
               <motion.div
                 className="absolute top-[-3%] left-[5%] w-[45%] lg:w-[40%] z-30"
+                style={gpuLayer}
                 initial={{ opacity: 0, x: -100 }}
-                animate={showcaseExiting ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                animate={showcaseIn ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
               >
                 <img src="/images/showcase-3.png" alt="Design sketching"
                   className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
               </motion.div>
 
-              {/* Image 2 - Bottom Left - from left, exits back left */}
               <motion.div
                 className="absolute bottom-0 left-0 w-[35%] lg:w-[30%] z-20"
+                style={gpuLayer}
                 initial={{ opacity: 0, x: -100 }}
-                animate={showcaseExiting ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: showcaseExiting ? 0.05 : 0.2, ease: "easeOut" }}
+                animate={showcaseIn ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+                transition={{ duration: 0.7, delay: showcaseIn ? 0.15 : 0.05, ease: "easeOut" }}
               >
                 <img src="/images/showcase-2.png" alt="Modern living room lighting"
                   className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
               </motion.div>
 
-              {/* Image 1 - Top Right - from right, exits back right */}
               <motion.div
                 className="absolute top-[2%] right-[-3%] w-[45%] lg:w-[40%] z-10"
+                style={gpuLayer}
                 initial={{ opacity: 0, x: 100 }}
-                animate={showcaseExiting ? { opacity: 0, x: 100 } : { opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: showcaseExiting ? 0.05 : 0.1, ease: "easeOut" }}
+                animate={showcaseIn ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+                transition={{ duration: 0.7, delay: showcaseIn ? 0.1 : 0.05, ease: "easeOut" }}
               >
                 <img src="/images/showcase-1.png" alt="Modern showroom"
                   className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
               </motion.div>
 
-              {/* Image 4 - Bottom Right - from right, exits back right */}
               <motion.div
                 className="absolute bottom-[-5%] right-[15%] w-[50%] lg:w-[45%] z-20"
+                style={gpuLayer}
                 initial={{ opacity: 0, x: 100 }}
-                animate={showcaseExiting ? { opacity: 0, x: 100 } : { opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: showcaseExiting ? 0.1 : 0.3, ease: "easeOut" }}
+                animate={showcaseIn ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+                transition={{ duration: 0.7, delay: showcaseIn ? 0.25 : 0.1, ease: "easeOut" }}
               >
                 <img src="/images/showcase-4.png" alt="Precision measurement"
                   className="w-full h-auto rounded-lg shadow-2xl grayscale" loading="eager" />
               </motion.div>
 
-              {/* Center Text Block - scales down and fades */}
               <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-[#f5efe6]/85 backdrop-blur-sm p-6 lg:p-10 z-40 shadow-2xl border border-[#d4c9b8]"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[32%] bg-[#f5efe6]/85 p-6 lg:p-10 z-40 shadow-2xl border border-[#d4c9b8]"
+                style={gpuLayer}
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={showcaseExiting ? { opacity: 0, scale: 0.5 } : { opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: showcaseExiting ? 0 : 0.2 }}
+                animate={showcaseIn ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.5, delay: showcaseIn ? 0.15 : 0 }}
               >
                 <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#3d3428] mb-3 leading-tight">
                   <span className="italic">In-House Design.</span>
@@ -763,7 +765,7 @@ function ShowcaseSection() {
 
               <motion.div
                 className="absolute bottom-6 right-6 text-[#8b7a60]/50"
-                animate={showcaseExiting ? { opacity: 0 } : { opacity: 1 }}
+                animate={showcaseIn ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
@@ -773,70 +775,70 @@ function ShowcaseSection() {
             </div>
           )}
 
-          {/* === OFFICE CONTENT — animates in as showcase exits === */}
-          {isOfficePhase && (
+          {/* === OFFICE CONTENT === */}
+          {showOffice && (
             <>
-              {/* Top image - from top */}
               <motion.div
                 className="absolute top-[4%] left-[12%] w-[55%] z-10"
+                style={gpuLayer}
                 initial={{ opacity: 0, y: -120 }}
-                animate={phase === "office" ? { opacity: 1, y: 0 } : { opacity: 0, y: -120 }}
-                transition={{ duration: officeExiting ? 0.7 : 0.9, ease: "easeOut", delay: officeExiting ? 0 : 0.15 }}
+                animate={officeIn ? { opacity: 1, y: 0 } : { opacity: 0, y: -120 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: officeIn ? 0.1 : 0 }}
               >
                 <img src={officeImages[0].src} alt={officeImages[0].alt}
                   className="w-full h-auto max-h-[35vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Left image - from left */}
               <motion.div
                 className="absolute top-[30%] left-[2%] w-[30%] z-20"
+                style={gpuLayer}
                 initial={{ opacity: 0, x: -120 }}
-                animate={phase === "office" ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
-                transition={{ duration: officeExiting ? 0.7 : 0.9, ease: "easeOut", delay: officeExiting ? 0.05 : 0.25 }}
+                animate={officeIn ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: officeIn ? 0.15 : 0.05 }}
               >
                 <img src={officeImages[1].src} alt={officeImages[1].alt}
                   className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Right image - from right */}
               <motion.div
                 className="absolute top-[22%] right-[2%] w-[32%] z-20"
+                style={gpuLayer}
                 initial={{ opacity: 0, x: 120 }}
-                animate={phase === "office" ? { opacity: 1, x: 0 } : { opacity: 0, x: 120 }}
-                transition={{ duration: officeExiting ? 0.7 : 0.9, ease: "easeOut", delay: officeExiting ? 0.05 : 0.3 }}
+                animate={officeIn ? { opacity: 1, x: 0 } : { opacity: 0, x: 120 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: officeIn ? 0.2 : 0.05 }}
               >
                 <img src={officeImages[2].src} alt={officeImages[2].alt}
                   className="w-full h-auto max-h-[35vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Bottom-left image - from bottom-left */}
               <motion.div
                 className="absolute bottom-[4%] left-[8%] w-[35%] z-10"
+                style={gpuLayer}
                 initial={{ opacity: 0, x: -80, y: 120 }}
-                animate={phase === "office" ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -80, y: 120 }}
-                transition={{ duration: officeExiting ? 0.7 : 0.9, ease: "easeOut", delay: officeExiting ? 0.1 : 0.4 }}
+                animate={officeIn ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -80, y: 120 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: officeIn ? 0.25 : 0.1 }}
               >
                 <img src={officeImages[3].src} alt={officeImages[3].alt}
                   className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Bottom image - from bottom */}
               <motion.div
                 className="absolute bottom-[4%] right-[5%] w-[40%] z-10"
+                style={gpuLayer}
                 initial={{ opacity: 0, y: 120 }}
-                animate={phase === "office" ? { opacity: 1, y: 0 } : { opacity: 0, y: 120 }}
-                transition={{ duration: officeExiting ? 0.7 : 0.9, ease: "easeOut", delay: officeExiting ? 0.1 : 0.5 }}
+                animate={officeIn ? { opacity: 1, y: 0 } : { opacity: 0, y: 120 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: officeIn ? 0.3 : 0.1 }}
               >
                 <img src={officeImages[4].src} alt={officeImages[4].alt}
                   className="w-full h-auto max-h-[30vh] object-cover rounded-lg shadow-xl" />
               </motion.div>
 
-              {/* Center text block */}
               <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[30%] bg-[#f5efe6]/85 backdrop-blur-sm p-6 lg:p-10 z-30 shadow-2xl border border-[#d4c9b8]"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42%] lg:w-[30%] bg-[#f5efe6]/85 p-6 lg:p-10 z-30 shadow-2xl border border-[#d4c9b8]"
+                style={gpuLayer}
                 initial={{ opacity: 0, scale: 0.7 }}
-                animate={phase === "office" ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
-                transition={{ duration: officeExiting ? 0.5 : 0.7, ease: "easeOut", delay: officeExiting ? 0 : 0.2 }}
+                animate={officeIn ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: officeIn ? 0.15 : 0 }}
               >
                 <h2 className="font-display text-2xl lg:text-3xl font-medium text-[#3d3428] mb-3 leading-tight">
                   <span className="italic">Our Workspace.</span>
