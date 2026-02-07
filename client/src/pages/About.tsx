@@ -946,8 +946,23 @@ export default function About() {
       </section>
 
       {/* Video Section */}
-      <section className="snap-start h-screen flex flex-col bg-white overflow-hidden">
-        <div className="pt-24 pb-8 flex-1 flex flex-col container mx-auto px-8 lg:px-12">
+      <section className="snap-start h-screen flex flex-col bg-white overflow-hidden relative">
+        {/* Background textures */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#00A8E8]/[0.03] rounded-full blur-[80px]" />
+          <div className="absolute -bottom-32 -left-20 w-[500px] h-[500px] bg-[#ECAA00]/[0.03] rounded-full blur-[100px]" />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px)`,
+              backgroundSize: '24px 24px',
+            }}
+          />
+          <div className="absolute top-12 right-12 w-48 h-48 border border-gray-100 rounded-full" />
+          <div className="absolute top-20 right-20 w-32 h-32 border border-gray-100/60 rounded-full" />
+          <div className="absolute bottom-16 left-16 w-40 h-40 border border-gray-100 rounded-full" />
+        </div>
+        <div className="pt-24 pb-8 flex-1 flex flex-col container mx-auto px-8 lg:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
