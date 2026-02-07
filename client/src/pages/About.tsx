@@ -1083,7 +1083,7 @@ export default function About() {
             }}
           />
           {/* Decorative hexagon shapes - top right (large, overflowing) */}
-          <svg className="absolute -top-32 -right-32 w-[600px] h-[600px] text-[#00A8E8]/[0.08]" viewBox="0 0 200 200" fill="none">
+          <svg className="absolute -top-32 -right-64 w-[600px] h-[600px] text-[#00A8E8]/[0.08]" viewBox="0 0 200 200" fill="none">
             <polygon points="100,10 170,45 170,115 100,150 30,115 30,45" stroke="currentColor" strokeWidth="1" />
             <polygon points="100,25 155,52 155,108 100,135 45,108 45,52" stroke="currentColor" strokeWidth="0.8" />
             <polygon points="100,40 140,60 140,100 100,120 60,100 60,60" stroke="currentColor" strokeWidth="0.7" />
