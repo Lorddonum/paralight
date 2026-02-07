@@ -1050,9 +1050,69 @@ export default function About() {
 
       {/* Development Journey */}
       <section className="snap-start h-screen flex flex-col justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-20 w-64 h-64 bg-[#00A8E8] rounded-full blur-[100px]" />
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-[#ECAA00] rounded-full blur-[120px]" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Color glows */}
+          <div className="absolute -top-10 -left-10 w-[400px] h-[400px] bg-[#00A8E8]/[0.07] rounded-full blur-[90px]" />
+          <div className="absolute -bottom-10 -right-10 w-[450px] h-[450px] bg-[#ECAA00]/[0.06] rounded-full blur-[90px]" />
+          {/* Dot grid */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(rgba(0,0,0,0.05) 1.5px, transparent 1.5px)`,
+              backgroundSize: '22px 22px',
+            }}
+          />
+          {/* Grid lines - cyan from top-left */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `linear-gradient(to bottom, rgba(0,168,232,0.05) 1px, transparent 1px), linear-gradient(to right, rgba(0,168,232,0.05) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px',
+              maskImage: 'linear-gradient(to bottom right, rgba(0,0,0,0.8) 0%, transparent 55%)',
+              WebkitMaskImage: 'linear-gradient(to bottom right, rgba(0,0,0,0.8) 0%, transparent 55%)',
+            }}
+          />
+          {/* Grid lines - gold from bottom-right */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `linear-gradient(to bottom, rgba(236,170,0,0.05) 1px, transparent 1px), linear-gradient(to right, rgba(236,170,0,0.05) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px',
+              maskImage: 'linear-gradient(to top left, rgba(0,0,0,0.8) 0%, transparent 55%)',
+              WebkitMaskImage: 'linear-gradient(to top left, rgba(0,0,0,0.8) 0%, transparent 55%)',
+            }}
+          />
+          {/* Decorative hexagon shapes - top right */}
+          <svg className="absolute top-8 right-8 w-64 h-64 text-[#00A8E8]/[0.08]" viewBox="0 0 200 200" fill="none">
+            <polygon points="100,10 170,45 170,115 100,150 30,115 30,45" stroke="currentColor" strokeWidth="1.5" />
+            <polygon points="100,30 150,55 150,105 100,130 50,105 50,55" stroke="currentColor" strokeWidth="1" />
+            <polygon points="100,50 130,65 130,95 100,110 70,95 70,65" stroke="currentColor" strokeWidth="0.8" />
+          </svg>
+          {/* Decorative diamond + cross - bottom left */}
+          <svg className="absolute bottom-8 left-8 w-56 h-56 text-[#ECAA00]/[0.1]" viewBox="0 0 200 200" fill="none">
+            <rect x="60" y="60" width="80" height="80" transform="rotate(45 100 100)" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="75" y="75" width="50" height="50" transform="rotate(45 100 100)" stroke="currentColor" strokeWidth="1" />
+            <line x1="100" y1="20" x2="100" y2="180" stroke="currentColor" strokeWidth="0.8" />
+            <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="0.8" />
+          </svg>
+          {/* Decorative triangles - top left */}
+          <svg className="absolute top-16 left-16 w-40 h-40 text-[#00A8E8]/[0.06]" viewBox="0 0 150 150" fill="none">
+            <polygon points="75,10 140,130 10,130" stroke="currentColor" strokeWidth="1.5" />
+            <polygon points="75,35 120,115 30,115" stroke="currentColor" strokeWidth="1" />
+            <polygon points="75,55 100,100 50,100" stroke="currentColor" strokeWidth="0.8" />
+          </svg>
+          {/* Decorative arc pattern - right center */}
+          <svg className="absolute top-1/2 -translate-y-1/2 right-4 w-48 h-96 text-[#ECAA00]/[0.06]" viewBox="0 0 100 200" fill="none">
+            <path d="M 100 20 A 80 80 0 0 0 100 180" stroke="currentColor" strokeWidth="1.2" />
+            <path d="M 100 40 A 60 60 0 0 0 100 160" stroke="currentColor" strokeWidth="1" />
+            <path d="M 100 60 A 40 40 0 0 0 100 140" stroke="currentColor" strokeWidth="0.8" />
+            <path d="M 100 80 A 20 20 0 0 0 100 120" stroke="currentColor" strokeWidth="0.6" />
+          </svg>
+          {/* Small scattered circles */}
+          <div className="absolute top-[15%] right-[30%] w-3 h-3 rounded-full border-2 border-[#00A8E8]/10" />
+          <div className="absolute top-[25%] right-[15%] w-2 h-2 rounded-full bg-[#00A8E8]/[0.08]" />
+          <div className="absolute bottom-[20%] left-[25%] w-4 h-4 rounded-full border-2 border-[#ECAA00]/10" />
+          <div className="absolute bottom-[30%] left-[40%] w-2 h-2 rounded-full bg-[#ECAA00]/[0.08]" />
         </div>
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
