@@ -1066,30 +1066,30 @@ export default function About() {
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `linear-gradient(to bottom, rgba(0,168,232,0.18) 1px, transparent 1px), linear-gradient(to right, rgba(0,168,232,0.18) 1px, transparent 1px)`,
+                backgroundImage: `linear-gradient(to bottom, rgba(0,168,232,0.35) 1px, transparent 1px), linear-gradient(to right, rgba(0,168,232,0.35) 1px, transparent 1px)`,
                 backgroundSize: '32px 32px',
-                maskImage: 'linear-gradient(to bottom left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
-                WebkitMaskImage: 'linear-gradient(to bottom left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
+                maskImage: 'linear-gradient(to bottom left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, transparent 70%)',
+                WebkitMaskImage: 'linear-gradient(to bottom left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, transparent 70%)',
               }}
             />
             {/* Dot pattern - bottom left */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `radial-gradient(rgba(0,168,232,0.12) 1.5px, transparent 1.5px)`,
-                backgroundSize: '20px 20px',
-                backgroundPosition: '10px 10px',
-                maskImage: 'linear-gradient(to top right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
-                WebkitMaskImage: 'linear-gradient(to top right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
+                backgroundImage: `radial-gradient(rgba(0,168,232,0.25) 2px, transparent 2px)`,
+                backgroundSize: '18px 18px',
+                backgroundPosition: '9px 9px',
+                maskImage: 'linear-gradient(to top right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 35%, transparent 60%)',
+                WebkitMaskImage: 'linear-gradient(to top right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 35%, transparent 60%)',
               }}
             />
             {/* Diagonal lines - center accent */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(0,168,232,0.04) 60px, rgba(0,168,232,0.04) 61px)`,
-                maskImage: 'radial-gradient(ellipse at 70% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
-                WebkitMaskImage: 'radial-gradient(ellipse at 70% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
+                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(0,168,232,0.1) 50px, rgba(0,168,232,0.1) 51.5px)`,
+                maskImage: 'radial-gradient(ellipse at 70% 50%, rgba(0,0,0,0.7) 0%, transparent 65%)',
+                WebkitMaskImage: 'radial-gradient(ellipse at 70% 50%, rgba(0,0,0,0.7) 0%, transparent 65%)',
               }}
             />
             <motion.div
@@ -1117,30 +1117,30 @@ export default function About() {
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `linear-gradient(to bottom, rgba(236,170,0,0.18) 1px, transparent 1px), linear-gradient(to right, rgba(236,170,0,0.18) 1px, transparent 1px)`,
+                backgroundImage: `linear-gradient(to bottom, rgba(236,170,0,0.35) 1px, transparent 1px), linear-gradient(to right, rgba(236,170,0,0.35) 1px, transparent 1px)`,
                 backgroundSize: '32px 32px',
-                maskImage: 'linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
-                WebkitMaskImage: 'linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
+                maskImage: 'linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, transparent 70%)',
+                WebkitMaskImage: 'linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, transparent 70%)',
               }}
             />
             {/* Dot pattern - bottom right */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `radial-gradient(rgba(236,170,0,0.12) 1.5px, transparent 1.5px)`,
-                backgroundSize: '20px 20px',
-                backgroundPosition: '10px 10px',
-                maskImage: 'linear-gradient(to top left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
-                WebkitMaskImage: 'linear-gradient(to top left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 30%, transparent 55%)',
+                backgroundImage: `radial-gradient(rgba(236,170,0,0.25) 2px, transparent 2px)`,
+                backgroundSize: '18px 18px',
+                backgroundPosition: '9px 9px',
+                maskImage: 'linear-gradient(to top left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 35%, transparent 60%)',
+                WebkitMaskImage: 'linear-gradient(to top left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 35%, transparent 60%)',
               }}
             />
             {/* Diagonal lines - center accent */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(236,170,0,0.04) 60px, rgba(236,170,0,0.04) 61px)`,
-                maskImage: 'radial-gradient(ellipse at 30% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
-                WebkitMaskImage: 'radial-gradient(ellipse at 30% 50%, rgba(0,0,0,0.5) 0%, transparent 60%)',
+                backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent 50px, rgba(236,170,0,0.1) 50px, rgba(236,170,0,0.1) 51.5px)`,
+                maskImage: 'radial-gradient(ellipse at 30% 50%, rgba(0,0,0,0.7) 0%, transparent 65%)',
+                WebkitMaskImage: 'radial-gradient(ellipse at 30% 50%, rgba(0,0,0,0.7) 0%, transparent 65%)',
               }}
             />
             <motion.div
